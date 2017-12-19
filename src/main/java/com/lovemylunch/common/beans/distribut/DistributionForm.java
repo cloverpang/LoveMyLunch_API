@@ -1,0 +1,8 @@
+package com.lovemylunch.common.beans.distribut;
+
+/**
+ * Created by Administrator on 2017/12/11.
+ */
+//≈‰ÀÕµ•
+public class DistributionForm {
+}
