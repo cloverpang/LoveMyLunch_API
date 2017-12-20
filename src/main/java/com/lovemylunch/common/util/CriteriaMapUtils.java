@@ -12,7 +12,7 @@ import java.util.Map;
  * Created by clover on 2017/10/11.
  */
 public class CriteriaMapUtils {
-    public static Map<String, Object> commonCriteriaMapGenerate(String startDate, String endDate, String keyWord, int pageSize, int
+    public static Map<String, Object> commonCriteriaMapGenerate(String startDate, String endDate, String conditionsStr, int pageSize, int
             pageNo, String sortColumn, String sortType){
         Map<String, Object> criteriaMap = new HashMap<String, Object>();
         if(StringUtils.isNotEmpty(startDate)){
@@ -21,8 +21,10 @@ public class CriteriaMapUtils {
         if(StringUtils.isNotEmpty(endDate)){
             criteriaMap.put("endDate", endDate);
         }
-        if(StringUtils.isNotEmpty(keyWord)){
-            criteriaMap.put("keyWord", keyWord);
+
+        List<ConditionBean> conditions = CriteriaMapUtils.commonConditionsGenerate(conditionsStr);
+        if(null != conditions && conditions.size() > 0){
+            criteriaMap.put("conditions",conditions);
         }
 
         if(StringUtils.isNotEmpty(sortColumn)){
@@ -40,6 +42,7 @@ public class CriteriaMapUtils {
         int end = start + pageSize - 1;
         criteriaMap.put("startRowNumber", start);
         criteriaMap.put("endRowNumber", end);
+
 
         return criteriaMap;
     }
