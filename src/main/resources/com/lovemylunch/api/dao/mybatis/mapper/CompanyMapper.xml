@@ -29,9 +29,11 @@
    a.companyCode as companyCode,
    a.companyName as companyName,
    a.operationCenterCode as operationCenterCode,
+   a.companyAddress as companyAddress,
    a.companyLogoPath as companyLogoPath,
    a.status as status,
-   a.joinTime as joinTime
+   a.joinTime as joinTime,
+   a.createTime as createTime
 	</sql>
 
 	<sql id="search_fromClause">
@@ -62,7 +64,7 @@
 
 	<sql id="search_sortingClause">
 		<if test="sortColumn == null or sortColumn == ''">
-			ORDER BY a.companyId
+			ORDER BY a.createTime
 		</if>
 		<if test="sortColumn != null and sortColumn != ''">
 			ORDER BY a.${sortColumn}
@@ -85,22 +87,26 @@
 		companyCode,
 		companyName,
 		operationCenterCode,
+		companyAddress,
 		companyLogoPath,
 		status,
-		joinTime
+		joinTime,
+		createTime
 		) VALUES (
 		#{companyId,jdbcType=VARCHAR},
 		#{companyCode,jdbcType=VARCHAR},
 		#{companyName,jdbcType=VARCHAR},
 		#{operationCenterCode,jdbcType=VARCHAR},
+		#{companyAddress,jdbcType=VARCHAR},
 		#{companyLogoPath,jdbcType=VARCHAR},
 		#{status,jdbcType=NUMERIC},
-		#{joinTime,jdbcType=TIMESTAMP}
+		#{joinTime,jdbcType=TIMESTAMP},
+		#{createTime,jdbcType=TIMESTAMP}
 		)
 	</insert>
 
 	<delete id="delete" parameterType="string">
-		DELETE FROM awf_company WHERE customerId = #{id}
+		DELETE FROM awf_company WHERE companyId = #{id}
 	</delete>
 
 	<update id="update" parameterType="com.lovemylunch.common.beans.client.Company">
@@ -109,6 +115,7 @@
 		companyName = #{companyName,jdbcType=VARCHAR},
 		companyCode = #{companyCode,jdbcType=VARCHAR},
 		operationCenterCode = #{operationCenterCode,jdbcType=VARCHAR},
+		companyAddress = #{companyAddress,jdbcType=VARCHAR},
 		companyLogoPath = #{companyLogoPath,jdbcType=VARCHAR},
 		status = #{status,jdbcType=NUMERIC},
 		joinTime = #{joinTime,jdbcType=TIMESTAMP}

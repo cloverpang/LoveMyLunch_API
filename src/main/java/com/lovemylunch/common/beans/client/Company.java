@@ -8,10 +8,13 @@ public class Company {
     private String companyCode;//公司代码 (AsiaInspection)
     private String operationCenterCode;//运营中心代码
 
+    private String companyAddress;//address
     private String companyLogoPath;// logo
     private Integer status;// 状态 0 正常 1 注销
 
     private Date joinTime;//加入时间
+
+    private Date createTime;
 
     public String getCompanyId() {
         return companyId;
@@ -67,5 +70,21 @@ public class Company {
 
     public void setJoinTime(Date joinTime) {
         this.joinTime = joinTime;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCompanyAddress() {
+        return companyAddress;
+    }
+
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
     }
 }

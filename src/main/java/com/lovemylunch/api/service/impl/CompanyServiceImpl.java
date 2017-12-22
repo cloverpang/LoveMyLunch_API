@@ -40,13 +40,14 @@ public class CompanyServiceImpl extends BaseService implements com.lovemylunch.a
     @Override
     public Boolean insert(Company company) throws Exception {
         try{
-            if (StringUtils.isEmpty(company.getCompanyId())){
-                company.setCompanyId(IDUtils.generateID());
-            }
+            //re-set the companyId
+            company.setCompanyId(IDUtils.generateID());
 
             if(null == company.getJoinTime()){
                 company.setJoinTime(DateUtils.now());
             }
+
+            company.setCreateTime(DateUtils.now());
 
             companyMapper.insert(company);
             return true;

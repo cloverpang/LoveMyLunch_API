@@ -52,7 +52,7 @@ public class CompanyController extends BaseController{
     public ResponseEntity<ApiCallResult> search(@RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
                                                 @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
                                                 @ApiParam(value = "column name")
-                                                @RequestParam(value = "sortColumn", required = false, defaultValue = "companyId") String sortColumn,
+                                                @RequestParam(value = "sortColumn", required = false, defaultValue = "createTime") String sortColumn,
                                                 @ApiParam(value = "desc or asc,default value is desc")
                                                 @RequestParam(value = "sortType", required = false, defaultValue = "desc") String sortType,
                                                 @ApiParam(value = "like this - name::like::clover$type::=::AI")
