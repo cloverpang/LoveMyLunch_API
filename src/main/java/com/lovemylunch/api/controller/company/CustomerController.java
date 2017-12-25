@@ -1,10 +1,10 @@
-package com.lovemylunch.api.controller.company;
+package com.lovemylunch.api.controller.customer;
 
 import com.lovemylunch.api.controller.BaseController;
-import com.lovemylunch.api.service.CompanyService;
+import com.lovemylunch.api.service.CustomerService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.PageBean;
-import com.lovemylunch.common.beans.client.Company;
+import com.lovemylunch.common.beans.client.Customer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -19,35 +19,35 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SpringBootApplication
-//@RequestMapping("/company")
-@Api(tags = {"company"}, description = "Company APIs")
-public class CompanyController extends BaseController{
-    protected Logger logger = LoggerFactory.getLogger(CompanyController.class);
+//@RequestMapping("/customer")
+@Api(tags = {"customer"}, description = "Customer APIs")
+public class CustomerController extends BaseController{
+    protected Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
     @Autowired
-    private CompanyService companyService;
+    private CustomerService customerService;
 
-    @ApiOperation(value="get Company ", notes="",response = Company.class)
-    @RequestMapping(value={"/company/{id}"}, method= RequestMethod.GET)
+    @ApiOperation(value="get Customer ", notes="",response = Customer.class)
+    @RequestMapping(value={"/customer/{id}"}, method= RequestMethod.GET)
     public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
-        logger.info("invoke: " + "/company/" + id);
+        logger.info("invoke: " + "/customer/" + id);
         ApiCallResult result = new ApiCallResult();
         try{
-            Company company = companyService.get(id);
-            if (null != company) {
-                result.setContent(company);
+            Customer customer = customerService.get(id);
+            if (null != customer) {
+                result.setContent(customer);
             } else {
-                result.setMessage("can not found out this company ");
+                result.setMessage("can not found out this customer ");
             }
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
-            result.setMessage("get company by id failed : " + e.getStackTrace());
+            result.setMessage("get customer by id failed : " + e.getStackTrace());
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @RequestMapping(value={"/companies"}, method= RequestMethod.GET)
-    @ApiOperation(value = "Search company API", response = Company.class,responseContainer =
+    @RequestMapping(value={"/customers"}, method= RequestMethod.GET)
+    @ApiOperation(value = "Search customer API", response = Customer.class,responseContainer =
             "List")
     public ResponseEntity<ApiCallResult> search(@RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
                                                 @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
@@ -57,63 +57,63 @@ public class CompanyController extends BaseController{
                                                 @RequestParam(value = "sortType", required = false, defaultValue = "desc") String sortType,
                                                 @ApiParam(value = "like this - name::like::clover$type::=::AI")
                                                 @RequestParam(value = "conditionsStr", required = false, defaultValue = "") String conditionsStr){
-        logger.info("invoke: " + "/companies");
+        logger.info("invoke: " + "/customers");
         ApiCallResult result = new ApiCallResult();
         try{
-            PageBean<Company> companyPageBean = companyService.page(conditionsStr, pageSize, pageNumber, sortColumn, sortType);
-            result.setContent(companyPageBean);
+            PageBean<Customer> customerPageBean = customerService.page(conditionsStr, pageSize, pageNumber, sortColumn, sortType);
+            result.setContent(customerPageBean);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
-            result.setMessage("search company failed : " + ExceptionUtils.getFullStackTrace(e));
+            result.setMessage("search customer failed : " + ExceptionUtils.getFullStackTrace(e));
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @RequestMapping(value = "/company", method = RequestMethod.POST)
-    @ApiOperation(value = "Create company API", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> createCompany(
-            @RequestBody Company company) {
-        logger.info("invoke: " + "/company/");
+    @RequestMapping(value = "/customer", method = RequestMethod.POST)
+    @ApiOperation(value = "Create customer API", response = Boolean.class)
+    public ResponseEntity<ApiCallResult> createCustomer(
+            @RequestBody Customer customer) {
+        logger.info("invoke: " + "/customer/");
         ApiCallResult result = new ApiCallResult();
         try{
-            Boolean excute = companyService.insert(company);
+            Boolean excute = customerService.insert(customer);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
-            result.setMessage("create company failed : " + ExceptionUtils.getFullStackTrace(e));
+            result.setMessage("create customer failed : " + ExceptionUtils.getFullStackTrace(e));
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @RequestMapping(value = "/company", method = RequestMethod.PUT)
-    @ApiOperation(value = "Save company API", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> saveCompany(
-            @RequestBody Company company) {
-        logger.info("invoke: " + "/company/");
+    @RequestMapping(value = "/customer", method = RequestMethod.PUT)
+    @ApiOperation(value = "Save customer API", response = Boolean.class)
+    public ResponseEntity<ApiCallResult> saveCustomer(
+            @RequestBody Customer customer) {
+        logger.info("invoke: " + "/customer/");
         ApiCallResult result = new ApiCallResult();
         try{
-            Boolean excute = companyService.update(company);
+            Boolean excute = customerService.update(customer);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
-            result.setMessage("save company failed : " + ExceptionUtils.getFullStackTrace(e));
+            result.setMessage("save customer failed : " + ExceptionUtils.getFullStackTrace(e));
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
-    @RequestMapping(value = "company/{id}", method = RequestMethod.DELETE)
-    @ApiOperation(value = "Delete company API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> deleteCompany(
+    @RequestMapping(value = "customer/{id}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "Delete customer API", response = boolean.class)
+    public ResponseEntity<ApiCallResult> deleteCustomer(
             @ApiParam(value = "id", required = true)
             @PathVariable("id") String id) {
-        logger.info("invoke: " + "/company/");
+        logger.info("invoke: " + "/customer/");
         ApiCallResult result = new ApiCallResult();
         try{
-            Boolean excute = companyService.delete(id);
+            Boolean excute = customerService.delete(id);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
-            result.setMessage("delete company failed : " + ExceptionUtils.getFullStackTrace(e));
+            result.setMessage("delete customer failed : " + ExceptionUtils.getFullStackTrace(e));
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

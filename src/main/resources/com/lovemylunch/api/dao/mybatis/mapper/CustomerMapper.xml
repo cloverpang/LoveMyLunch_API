@@ -1,0 +1,139 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lovemylunch.api.dao.mybatis.mapper.CustomerMapper">
+	<select id="get" parameterType="string" resultType="com.lovemylunch.common.beans.client.Customer">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		WHERE a.customerId = #{id}
+	</select>
+
+	<select id="getByLogin" parameterType="string" resultType="com.lovemylunch.common.beans.client.Customer">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		WHERE a.customerLogin = #{login}
+	</select>
+
+	<select id="search" parameterType="map" resultType="com.lovemylunch.common.beans.client.Customer">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		<include refid="search_whereClause"/>
+		<include refid="search_sortingClause"/>
+		<include refid="search_pageClause"/>
+	</select>
+
+	<select id="count" parameterType="map" resultType="int">
+		SELECT COUNT(1)
+		<include refid="search_fromClause"/>
+		<include refid="search_whereClause"/>
+	</select>
+
+	<sql id="search_selectFields">
+	SELECT
+   a.customerId as customerId,
+   a.customerLogin as customerLogin,
+   a.customerPassword as customerPassword,
+   a.customerName as customerName,
+   a.companyId as companyId,
+   a.companyName as companyName,
+   a.weChatAccount as weChatAccount,
+   a.mobileNumber as mobileNumber,
+   a.customerScore as customerScore,
+   a.customerType as customerType,
+   a.status as status,
+   a.createTime as createTime
+	</sql>
+
+	<sql id="search_fromClause">
+		FROM awf_customer a
+	</sql>
+
+	<sql id="search_whereClause">
+		<where>
+			<if test="conditions != null">
+				<foreach item="condition" collection="conditions" index="index" separator="and">
+					<choose>
+						<when
+								test="condition.conditionExpression != null and (condition.conditionExpression == 'eq'.toString() or condition.conditionExpression == '='.toString())">
+							${condition.conditionName} = #{condition.conditionValue}
+						</when>
+						<when
+								test="condition.conditionExpression != null and condition.conditionExpression == 'like'.toString() ">
+							(${condition.conditionName} is not null AND UPPER(${condition.conditionName}) LIKE UPPER('%${condition.conditionValue}%'))
+						</when>
+						<otherwise>
+							${condition.conditionName} = #{condition.conditionValue}
+						</otherwise>
+					</choose>
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="search_sortingClause">
+		<if test="sortColumn == null or sortColumn == ''">
+			ORDER BY a.createTime
+		</if>
+		<if test="sortColumn != null and sortColumn != ''">
+			ORDER BY a.${sortColumn}
+		</if>
+		<if test="sortType != null and sortType == 'asc'">
+			ASC
+		</if>
+		<if test="sortType != null and sortType == 'desc'">
+			DESC
+		</if>
+	</sql>
+
+	<sql id="search_pageClause">
+		limit #{startRowNumber},#{pageSize}
+	</sql>
+
+	<insert id="insert" parameterType="com.lovemylunch.common.beans.client.Customer">
+		INSERT INTO awf_customer (
+    customerId,
+    customerLogin,
+    customerPassword,
+    customerName,
+    companyId,
+    companyName,
+    weChatAccount,
+    mobileNumber,
+    customerScore,
+    customerType,
+    status,
+    createTime
+		) VALUES (
+		#{customerId,jdbcType=VARCHAR},
+		#{customerLogin,jdbcType=VARCHAR},
+		#{customerPassword,jdbcType=VARCHAR},
+		#{customerName,jdbcType=VARCHAR},
+		#{companyId,jdbcType=VARCHAR},
+		#{companyName,jdbcType=VARCHAR},
+		#{weChatAccount,jdbcType=VARCHAR},
+		#{mobileNumber,jdbcType=VARCHAR},
+		#{customerScore,jdbcType=NUMERIC},
+		#{customerType,jdbcType=NUMERIC},
+		#{status,jdbcType=NUMERIC},
+		#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM awf_customer WHERE customerId = #{id}
+	</delete>
+
+	<update id="update" parameterType="com.lovemylunch.common.beans.client.Customer">
+		UPDATE awf_customer
+		SET
+		customerPassword = #{customerPassword,jdbcType=VARCHAR},
+		customerName = #{customerName,jdbcType=VARCHAR},
+		weChatAccount = #{weChatAccount,jdbcType=VARCHAR},
+		mobileNumber = #{mobileNumber,jdbcType=VARCHAR},
+		customerScore = #{customerScore,jdbcType=VARCHAR},
+		customerType = #{customerType,jdbcType=VARCHAR},
+		status = #{status,jdbcType=NUMERIC}
+		WHERE customerId = #{customerId}
+	</update>
+</mapper>
