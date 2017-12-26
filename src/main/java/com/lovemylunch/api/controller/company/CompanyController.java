@@ -5,6 +5,7 @@ import com.lovemylunch.api.service.CompanyService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.PageBean;
 import com.lovemylunch.common.beans.client.Company;
+import com.lovemylunch.common.beans.client.extensions.CompanyExtension;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -114,6 +115,29 @@ public class CompanyController extends BaseController{
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
             result.setMessage("delete company failed : " + ExceptionUtils.getFullStackTrace(e));
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value={"/companyExtends"}, method= RequestMethod.GET)
+    @ApiOperation(value = "Search company API", response = Company.class,responseContainer =
+            "List")
+    public ResponseEntity<ApiCallResult> searchFull(@RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
+                                                @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
+                                                @ApiParam(value = "column name")
+                                                @RequestParam(value = "sortColumn", required = false, defaultValue = "createTime") String sortColumn,
+                                                @ApiParam(value = "desc or asc,default value is desc")
+                                                @RequestParam(value = "sortType", required = false, defaultValue = "desc") String sortType,
+                                                @ApiParam(value = "like this - name::like::clover$type::=::AI")
+                                                @RequestParam(value = "conditionsStr", required = false, defaultValue = "") String conditionsStr){
+        logger.info("invoke: " + "/companyExtends");
+        ApiCallResult result = new ApiCallResult();
+        try{
+            PageBean<CompanyExtension> companyPageBean = companyService.pageExtend(conditionsStr, pageSize, pageNumber, sortColumn, sortType);
+            result.setContent(companyPageBean);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (Exception e){
+            result.setMessage("search company failed : " + ExceptionUtils.getFullStackTrace(e));
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

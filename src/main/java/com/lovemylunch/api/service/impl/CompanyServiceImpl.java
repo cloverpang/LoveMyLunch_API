@@ -4,6 +4,8 @@ import com.lovemylunch.api.dao.mybatis.mapper.CompanyMapper;
 import com.lovemylunch.api.service.BaseService;
 import com.lovemylunch.common.beans.PageBean;
 import com.lovemylunch.common.beans.client.Company;
+import com.lovemylunch.common.beans.client.extensions.CompanyExtension;
+import com.lovemylunch.common.beans.client.extensions.CustomerExtension;
 import com.lovemylunch.common.util.CriteriaMapUtils;
 import com.lovemylunch.common.util.DateUtils;
 import com.lovemylunch.common.util.IDUtils;
@@ -106,6 +108,8 @@ public class CompanyServiceImpl extends BaseService implements com.lovemylunch.a
         }
     }
 
+
+
     @Override
     public List<Company> search(String conditionsStr, int pageSize, int pageNo, String sortColumn, String sortType) throws Exception {
         try{
@@ -113,6 +117,32 @@ public class CompanyServiceImpl extends BaseService implements com.lovemylunch.a
                     pageSize, pageNo, sortColumn, sortType);
 
             return companyMapper.search(criteriaMap);
+        }catch (Exception e){
+            throw new Exception("Search company exception : " + e.getMessage());
+        }
+    }
+
+    @Override
+    public PageBean<CompanyExtension> pageExtend(String conditionsStr, int pageSize, int pageNo, String sortColumn, String sortType) throws Exception {
+        try{
+            Map<String, Object> criteriaMap = CriteriaMapUtils.commonCriteriaMapGenerate("","",conditionsStr,
+                    pageSize,pageNo,sortColumn,sortType);
+
+            PageBean<CompanyExtension> companyPageBean = new PageBean<CompanyExtension>();
+            int totalRecords = companyMapper.count(criteriaMap);
+
+            companyPageBean.setTotalSize(totalRecords);
+            companyPageBean.setPageNo(pageNo);
+            int numOfPages = Double.valueOf(Math.ceil((1.0 * totalRecords) / pageSize)).intValue();
+            companyPageBean.setTotalPageNum(numOfPages);
+
+            List<CompanyExtension> fundBasics = companyMapper.searchFull(criteriaMap);
+            if(CollectionUtils.isEmpty(fundBasics)){
+                fundBasics = Collections.emptyList();
+            }
+
+            companyPageBean.setItem(fundBasics);
+            return companyPageBean;
         }catch (Exception e){
             throw new Exception("Search company exception : " + e.getMessage());
         }

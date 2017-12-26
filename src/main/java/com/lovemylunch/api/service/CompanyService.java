@@ -2,6 +2,8 @@ package com.lovemylunch.api.service;
 
 import com.lovemylunch.common.beans.PageBean;
 import com.lovemylunch.common.beans.client.Company;
+import com.lovemylunch.common.beans.client.extensions.CompanyExtension;
+import com.lovemylunch.common.beans.client.extensions.CustomerExtension;
 
 import java.util.List;
 import java.util.Map;
@@ -19,4 +21,7 @@ public interface CompanyService {
                              String sortColumn, String sortType) throws Exception;
 
     List<Company> search(String conditionsStr, int pageSize, int pageNo, String sortColumn, String sortType) throws Exception;
+
+    PageBean<CompanyExtension> pageExtend(String conditionsStr, int pageSize, int pageNo,
+                                          String sortColumn, String sortType) throws Exception;
 }

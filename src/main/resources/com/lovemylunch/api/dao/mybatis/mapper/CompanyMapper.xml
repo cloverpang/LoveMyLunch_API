@@ -17,6 +17,14 @@
 		<include refid="search_pageClause"/>
 	</select>
 
+	<select id="searchFull" parameterType="map" resultType="com.lovemylunch.common.beans.client.extensions.CompanyExtension">
+		<include refid="search_selectFullFields"/>
+		<include refid="search_fromClause"/>
+		<include refid="search_whereClause"/>
+		<include refid="search_sortingClause"/>
+		<include refid="search_pageClause"/>
+	</select>
+
 	<select id="count" parameterType="map" resultType="int">
 		SELECT COUNT(1)
 		<include refid="search_fromClause"/>
@@ -34,6 +42,20 @@
    a.status as status,
    a.joinTime as joinTime,
    a.createTime as createTime
+	</sql>
+
+	<sql id="search_selectFullFields">
+		SELECT
+		a.companyId as companyId,
+		a.companyCode as companyCode,
+		a.companyName as companyName,
+		a.operationCenterCode as operationCenterCode,
+		a.companyAddress as companyAddress,
+		a.companyLogoPath as companyLogoPath,
+		a.status as status,
+		a.joinTime as joinTime,
+		a.createTime as createTime,
+		(select count(customerId) from awf_customer where companyId = a.companyId) as companyCustomerQuantity
 	</sql>
 
 	<sql id="search_fromClause">

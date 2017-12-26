@@ -2,6 +2,7 @@ package com.lovemylunch.api.service;
 
 import com.lovemylunch.common.beans.PageBean;
 import com.lovemylunch.common.beans.client.Customer;
+import com.lovemylunch.common.beans.client.extensions.CustomerExtension;
 
 import java.util.List;
 
