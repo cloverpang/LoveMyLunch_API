@@ -6,6 +6,7 @@ import com.lovemylunch.common.beans.PageBean;
 import com.lovemylunch.common.beans.client.Company;
 import com.lovemylunch.common.beans.client.extensions.CompanyExtension;
 import com.lovemylunch.common.beans.client.extensions.CustomerExtension;
+import com.lovemylunch.common.consts.Consts;
 import com.lovemylunch.common.util.CriteriaMapUtils;
 import com.lovemylunch.common.util.DateUtils;
 import com.lovemylunch.common.util.IDUtils;
@@ -16,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +26,7 @@ import java.util.Map;
 
 @Component
 @Service
+@EnableTransactionManagement// 开启注解事务管理，等同于xml配置文件中的 <tx:annotation-driven/>
 public class CompanyServiceImpl extends BaseService implements com.lovemylunch.api.service.CompanyService {
     protected Logger logger = LoggerFactory.getLogger(CompanyServiceImpl.class);
 
@@ -75,6 +79,27 @@ public class CompanyServiceImpl extends BaseService implements com.lovemylunch.a
         try{
             Company originCompany = get(id);
             companyMapper.delete(originCompany.getCompanyId());
+            return true;
+        }catch (Exception e){
+            logger.error("failed on delete company : " + e.getMessage());
+            throw new Exception("failed on delete company : ",e);
+        }
+    }
+
+    @Transactional
+    @Override
+    public Boolean batchDelete(String ids) throws Exception {
+        try{
+            if(StringUtils.isEmpty(ids)){
+                throw new Exception("Ids can not empty!");
+            }
+            String[] idArr = ids.split(Consts.COMMA);
+            for(String id : idArr){
+                if(StringUtils.isNotEmpty(id)){
+                    Company originCompany = get(id);
+                    companyMapper.delete(originCompany.getCompanyId());
+                }
+            }
             return true;
         }catch (Exception e){
             logger.error("failed on delete company : " + e.getMessage());

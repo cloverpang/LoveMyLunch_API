@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @EnableScheduling
 @EnableCaching
+@EnableTransactionManagement
 public class LoveMyLunchBackendApiApplication {
 
 	@RequestMapping("/")

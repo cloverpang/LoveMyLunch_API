@@ -17,6 +17,8 @@ public interface CompanyService {
 
     Boolean delete(String id) throws Exception;
 
+    Boolean batchDelete(String ids) throws Exception;
+
     PageBean<Company> page(String conditionsStr, int pageSize, int pageNo,
                              String sortColumn, String sortType) throws Exception;
 

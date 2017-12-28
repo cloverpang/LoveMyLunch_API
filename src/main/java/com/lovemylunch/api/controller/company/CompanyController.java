@@ -103,8 +103,8 @@ public class CompanyController extends BaseController{
     }
     
     @RequestMapping(value = "company/{id}", method = RequestMethod.DELETE)
-    @ApiOperation(value = "Delete company API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> deleteCompany(
+         @ApiOperation(value = "Delete company API", response = boolean.class)
+         public ResponseEntity<ApiCallResult> deleteCompany(
             @ApiParam(value = "id", required = true)
             @PathVariable("id") String id) {
         logger.info("invoke: " + "/company/");
@@ -115,6 +115,23 @@ public class CompanyController extends BaseController{
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
             result.setMessage("delete company failed : " + ExceptionUtils.getFullStackTrace(e));
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "companies/{ids}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "Delete companies API", response = boolean.class)
+    public ResponseEntity<ApiCallResult> batchDeleteCompany(
+            @ApiParam(value = "ids", required = true)
+            @PathVariable("ids") String ids) {
+        logger.info("invoke: " + "/companies/" + ids);
+        ApiCallResult result = new ApiCallResult();
+        try{
+            Boolean excute = companyService.batchDelete(ids);
+            result.setContent(excute);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (Exception e){
+            result.setMessage("batch delete companies failed : " + ExceptionUtils.getFullStackTrace(e));
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
