@@ -1,0 +1,140 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lovemylunch.api.dao.mybatis.mapper.DishMapper">
+	<select id="get" parameterType="string" resultType="com.lovemylunch.common.beans.food.Dish">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		WHERE a.dishId = #{id}
+	</select>
+
+	<select id="search" parameterType="map" resultType="com.lovemylunch.common.beans.food.Dish">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		<include refid="search_whereClause"/>
+		<include refid="search_sortingClause"/>
+		<include refid="search_pageClause"/>
+	</select>
+
+	<select id="count" parameterType="map" resultType="int">
+		SELECT COUNT(1)
+		<include refid="search_fromClause"/>
+		<include refid="search_whereClause"/>
+	</select>
+
+	<sql id="search_selectFields">
+	SELECT
+   a.dishId as dishId,
+   a.dishName as dishName,
+   a.dishType as dishType,
+   a.dishPrice as dishPrice,
+   a.status as status,
+   a.dishImageSmall as dishImageSmall,
+   a.dishImageMiddle as dishImageMiddle,
+   a.dishImageLarge as dishImageLarge,
+   a.dishStyle as dishStyle,
+   a.component as component,
+   a.pepper as pepper,
+   a.createTime as createTime
+	</sql>
+
+	<sql id="search_fromClause">
+		FROM awf_dish a
+	</sql>
+
+	<sql id="search_whereClause">
+		<where>
+			<if test="conditions != null">
+				<foreach item="condition" collection="conditions" index="index" separator="and">
+					<choose>
+						<when
+								test="condition.conditionExpression != null and (condition.conditionExpression == 'eq'.toString() or condition.conditionExpression == '='.toString())">
+							${condition.conditionName} = #{condition.conditionValue}
+						</when>
+						<when
+								test="condition.conditionExpression != null and condition.conditionExpression == 'like'.toString() ">
+							(${condition.conditionName} is not null AND UPPER(${condition.conditionName}) LIKE UPPER('%${condition.conditionValue}%'))
+						</when>
+						<otherwise>
+							${condition.conditionName} = #{condition.conditionValue}
+						</otherwise>
+					</choose>
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="search_sortingClause">
+		<if test="sortColumn == null or sortColumn == ''">
+			ORDER BY a.createTime
+		</if>
+		<if test="sortColumn != null and sortColumn != ''">
+			ORDER BY a.${sortColumn}
+		</if>
+		<if test="sortType != null and sortType == 'asc'">
+			ASC
+		</if>
+		<if test="sortType != null and sortType == 'desc'">
+			DESC
+		</if>
+	</sql>
+
+	<sql id="search_pageClause">
+		limit #{startRowNumber},#{pageSize}
+	</sql>
+
+	<insert id="insert" parameterType="com.lovemylunch.common.beans.food.Dish">
+		INSERT INTO awf_dish (
+		dishId,
+		dishName,
+		dishPrice,
+		status,
+		dishImageSmall,
+		dishImageMiddle,
+		dishImageLarge,
+		dishStyle,
+		component,
+		pepper,
+		createTime
+		) VALUES (
+		#{dishId,jdbcType=VARCHAR},
+		#{dishName,jdbcType=VARCHAR},
+		#{dishPrice,jdbcType=NUMERIC},
+		#{status,jdbcType=NUMERIC},
+		#{dishImageSmall,jdbcType=VARCHAR},
+		#{dishImageMiddle,jdbcType=VARCHAR},
+		#{dishImageLarge,jdbcType=VARCHAR},
+		#{dishStyle,jdbcType=VARCHAR},
+		#{component,jdbcType=NUMERIC},
+		#{pepper,jdbcType=NUMERIC},
+		#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM awf_dish WHERE dishId = #{id}
+	</delete>
+
+	<update id="markeNotOpen" parameterType="string">
+		UPDATE awf_dish
+		SET
+		status = 1
+		WHERE dishId = #{id}
+	</update>
+
+	<update id="update" parameterType="com.lovemylunch.common.beans.food.Dish">
+		UPDATE awf_dish
+		SET
+		dishName = #{dishName,jdbcType=VARCHAR},
+		dishPrice = #{dishPrice,jdbcType=NUMERIC},
+		status = #{status,jdbcType=NUMERIC},
+		dishImageSmall = #{dishImageSmall,jdbcType=VARCHAR},
+		dishImageMiddle = #{dishImageMiddle,jdbcType=VARCHAR},
+		dishImageLarge = #{dishImageLarge,jdbcType=VARCHAR},
+		dishStyle = #{dishStyle,jdbcType=VARCHAR},
+		component = #{component,jdbcType=VARCHAR},
+		pepper = #{pepper,jdbcType=NUMERIC}
+		WHERE dishId = #{dishId}
+	</update>
+</mapper>
