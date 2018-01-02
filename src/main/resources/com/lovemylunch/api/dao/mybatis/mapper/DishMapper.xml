@@ -88,6 +88,7 @@
 		INSERT INTO awf_dish (
 		dishId,
 		dishName,
+		dishType,
 		dishPrice,
 		status,
 		dishImageSmall,
@@ -100,6 +101,7 @@
 		) VALUES (
 		#{dishId,jdbcType=VARCHAR},
 		#{dishName,jdbcType=VARCHAR},
+		#{dishType,jdbcType=VARCHAR},
 		#{dishPrice,jdbcType=NUMERIC},
 		#{status,jdbcType=NUMERIC},
 		#{dishImageSmall,jdbcType=VARCHAR},

@@ -10,7 +10,7 @@ public class Dish {
     private String dishId;//菜品主键ID
     private String dishName;//菜品名称
 
-    private Integer dishType; // 类型 0 菜, 1  汤 , 2 米饭 3 炒饭 等
+    private String dishType; // 类型 dish,soup ...
 
     private Integer dishPrice;//菜品价格 1,3,5,7,9,11 or 2,4,6,8,10,12
     private Integer status;//菜品是否开放 0 开放 1 不开放
@@ -44,11 +44,11 @@ public class Dish {
         this.dishName = dishName;
     }
 
-    public Integer getDishType() {
+    public String getDishType() {
         return dishType;
     }
 
-    public void setDishType(Integer dishType) {
+    public void setDishType(String dishType) {
         this.dishType = dishType;
     }
 
