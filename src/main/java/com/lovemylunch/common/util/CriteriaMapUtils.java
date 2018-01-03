@@ -62,7 +62,9 @@ public class CriteriaMapUtils {
                         ConditionBean conditionBean = new ConditionBean();
                         conditionBean.setConditionName(condition[0]);
                         conditionBean.setConditionExpression(condition[1]);
+                        String[] conditionValueArr = condition[2].split(Consts.COMMA);
                         conditionBean.setConditionValue(condition[2]);
+                        conditionBean.setConditionValueArr(conditionValueArr);
                         conditions.add(conditionBean);
                     }catch (Exception e){
 

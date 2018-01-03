@@ -1,0 +1,52 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Common">
+	<sql id="search_whereClause">
+		<where>
+			<if test="conditions != null">
+				<foreach item="condition" collection="conditions" index="index" separator="and">
+					<choose>
+						<when test="condition.conditionExpression != null and (condition.conditionExpression == 'eq'.toString() or condition.conditionExpression == '='.toString())">
+							<foreach item="value" collection="condition.conditionValueArr" open="(" separator="or" close=")">
+								${condition.conditionName} = #{value}
+							</foreach>
+						</when>
+
+						<when test="condition.conditionExpression != null and (condition.conditionExpression == 'noteq'.toString() or condition.conditionExpression == '!='.toString())">
+							<foreach item="value" collection="condition.conditionValueArr" open="(" separator="and" close=")">
+								${condition.conditionName} != #{value}
+							</foreach>
+						</when>
+						<when test="condition.conditionExpression != null and condition.conditionExpression == 'like'.toString() ">
+							(${condition.conditionName} is not null AND UPPER(${condition.conditionName}) LIKE UPPER('%${condition.conditionValue}%'))
+						</when>
+						<otherwise>
+							${condition.conditionName} = #{condition.conditionValue}
+						</otherwise>
+					</choose>
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="search_sortingClause">
+		<if test="sortColumn == null or sortColumn == ''">
+			ORDER BY a.createTime
+		</if>
+		<if test="sortColumn != null and sortColumn != ''">
+			ORDER BY a.${sortColumn}
+		</if>
+		<if test="sortType != null and sortType == 'asc'">
+			ASC
+		</if>
+		<if test="sortType != null and sortType == 'desc'">
+			DESC
+		</if>
+	</sql>
+
+	<sql id="search_pageClause">
+		limit #{startRowNumber},#{pageSize}
+	</sql>
+</mapper>

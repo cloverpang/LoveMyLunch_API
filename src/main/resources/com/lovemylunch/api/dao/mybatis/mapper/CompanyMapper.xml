@@ -12,23 +12,23 @@
 	<select id="search" parameterType="map" resultType="com.lovemylunch.common.beans.client.Company">
 		<include refid="search_selectFields"/>
 		<include refid="search_fromClause"/>
-		<include refid="search_whereClause"/>
-		<include refid="search_sortingClause"/>
-		<include refid="search_pageClause"/>
+		<include refid="Common.search_whereClause"/>
+		<include refid="Common.search_sortingClause"/>
+		<include refid="Common.search_pageClause"/>
 	</select>
 
 	<select id="searchFull" parameterType="map" resultType="com.lovemylunch.common.beans.client.extensions.CompanyExtension">
 		<include refid="search_selectFullFields"/>
 		<include refid="search_fromClause"/>
-		<include refid="search_whereClause"/>
-		<include refid="search_sortingClause"/>
-		<include refid="search_pageClause"/>
+		<include refid="Common.search_whereClause"/>
+		<include refid="Common.search_sortingClause"/>
+		<include refid="Common.search_pageClause"/>
 	</select>
 
 	<select id="count" parameterType="map" resultType="int">
 		SELECT COUNT(1)
 		<include refid="search_fromClause"/>
-		<include refid="search_whereClause"/>
+		<include refid="Common.search_whereClause"/>
 	</select>
 
 	<sql id="search_selectFields">
@@ -60,47 +60,6 @@
 
 	<sql id="search_fromClause">
 		FROM awf_company a
-	</sql>
-
-	<sql id="search_whereClause">
-		<where>
-			<if test="conditions != null">
-				<foreach item="condition" collection="conditions" index="index" separator="and">
-					<choose>
-						<when
-								test="condition.conditionExpression != null and (condition.conditionExpression == 'eq'.toString() or condition.conditionExpression == '='.toString())">
-							${condition.conditionName} = #{condition.conditionValue}
-						</when>
-						<when
-								test="condition.conditionExpression != null and condition.conditionExpression == 'like'.toString() ">
-							(${condition.conditionName} is not null AND UPPER(${condition.conditionName}) LIKE UPPER('%${condition.conditionValue}%'))
-						</when>
-						<otherwise>
-							${condition.conditionName} = #{condition.conditionValue}
-						</otherwise>
-					</choose>
-				</foreach>
-			</if>
-		</where>
-	</sql>
-
-	<sql id="search_sortingClause">
-		<if test="sortColumn == null or sortColumn == ''">
-			ORDER BY a.createTime
-		</if>
-		<if test="sortColumn != null and sortColumn != ''">
-			ORDER BY a.${sortColumn}
-		</if>
-		<if test="sortType != null and sortType == 'asc'">
-			ASC
-		</if>
-		<if test="sortType != null and sortType == 'desc'">
-			DESC
-		</if>
-	</sql>
-
-	<sql id="search_pageClause">
-		limit #{startRowNumber},#{pageSize}
 	</sql>
 
 	<insert id="insert" parameterType="com.lovemylunch.common.beans.client.Company">
