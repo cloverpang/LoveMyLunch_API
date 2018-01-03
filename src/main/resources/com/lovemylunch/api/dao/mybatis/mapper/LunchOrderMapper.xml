@@ -1,0 +1,120 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lovemylunch.api.dao.mybatis.mapper.LunchOrderMapper">
+	<select id="get" parameterType="string" resultType="com.lovemylunch.common.beans.order.LunchOrder">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		WHERE a.orderId = #{id}
+	</select>
+
+	<select id="search" parameterType="map" resultType="com.lovemylunch.common.beans.order.LunchOrder">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		<include refid="Common.search_whereClause"/>
+		<include refid="Common.search_sortingClause"/>
+		<include refid="Common.search_pageClause"/>
+	</select>
+
+	<select id="count" parameterType="map" resultType="int">
+		SELECT COUNT(1)
+		<include refid="search_fromClause"/>
+		<include refid="Common.search_whereClause"/>
+	</select>
+
+	<sql id="search_selectFields">
+	SELECT
+   a.orderId as orderId,
+   a.orderNumber as orderNumber,
+   a.distributNumber as distributNumber,
+   a.bookTime as bookTime,
+   a.customerName as customerName,
+   a.customerMobile as customerMobile,
+   a.customerId as customerId,
+   a.companyId as companyId,
+   a.content as content,
+   a.dishIds as dishIds,
+   a.remark as remark,
+   a.originPrice as originPrice,
+   a.discoutPrice as discoutPrice,
+   a.realPrice as realPrice,
+   a.star as star,
+   a.appraise as appraise,
+   a.orderStatus as orderStatus,
+   a.paymentStatus as paymentStatus,
+   a.createTime as createTime
+	</sql>
+
+	<sql id="search_fromClause">
+		FROM awf_lunchorder a
+	</sql>
+
+	<insert id="insert" parameterType="com.lovemylunch.common.beans.order.LunchOrder">
+		INSERT INTO awf_lunchorder (
+		orderId,
+		orderNumber,
+		distributNumber,
+		bookTime,
+		customerName,
+		customerMobile,
+		customerId,
+		companyId,
+		content,
+		dishIds,
+		remark,
+		originPrice,
+		discoutPrice,
+		realPrice,
+		star,
+		appraise,
+		orderStatus,
+		paymentStatus,
+		createTime
+		) VALUES (
+		#{orderId,jdbcType=VARCHAR},
+		#{orderNumber,jdbcType=VARCHAR},
+		#{distributNumber,jdbcType=VARCHAR},
+		#{bookTime,jdbcType=TIMESTAMP},
+		#{customerName,jdbcType=VARCHAR},
+		#{customerMobile,jdbcType=VARCHAR},
+		#{customerId,jdbcType=VARCHAR},
+		#{companyId,jdbcType=VARCHAR},
+		#{content,jdbcType=VARCHAR},
+		#{dishIds,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{originPrice,jdbcType=NUMERIC},
+		#{discoutPrice,jdbcType=NUMERIC},
+		#{realPrice,jdbcType=NUMERIC},
+		#{star,jdbcType=NUMERIC},
+		#{appraise,jdbcType=VARCHAR},
+		#{orderStatus,jdbcType=NUMERIC},
+		#{paymentStatus,jdbcType=NUMERIC},
+		#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM awf_lunchorder WHERE orderId = #{id}
+	</delete>
+
+	<update id="cancal" parameterType="string">
+		UPDATE awf_lunchorder
+		SET
+		paymentStatus = 1
+		WHERE orderId = #{id}
+	</update>
+
+	<update id="update" parameterType="com.lovemylunch.common.beans.order.LunchOrder">
+		UPDATE awf_lunchorder
+		SET
+		distributNumber = #{distributNumber,jdbcType=VARCHAR},
+		customerMobile = #{customerMobile,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		content = #{content,jdbcType=VARCHAR},
+		dishIds = #{dishIds,jdbcType=VARCHAR},
+		orderStatus = #{orderStatus,jdbcType=NUMERIC},
+		paymentStatus = #{paymentStatus,jdbcType=NUMERIC}
+		WHERE orderId = #{orderId}
+	</update>
+</mapper>

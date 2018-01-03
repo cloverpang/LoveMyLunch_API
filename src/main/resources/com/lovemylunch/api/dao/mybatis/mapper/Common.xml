@@ -19,12 +19,15 @@
 								${condition.conditionName} != #{value}
 							</foreach>
 						</when>
+
 						<when test="condition.conditionExpression != null and condition.conditionExpression == 'like'.toString() ">
 							(${condition.conditionName} is not null AND UPPER(${condition.conditionName}) LIKE UPPER('%${condition.conditionValue}%'))
 						</when>
+
 						<otherwise>
 							${condition.conditionName} = #{condition.conditionValue}
 						</otherwise>
+
 					</choose>
 				</foreach>
 			</if>

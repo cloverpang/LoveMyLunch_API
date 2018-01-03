@@ -22,6 +22,8 @@ public class LunchOrder {
     private String customerId;
     private String companyId;
 
+    private String content;// 订单内容 （菜品名称集合）
+    private String dishIds;// 菜品ID集合
     private String remark;//下单备注
 
     private Double originPrice;//原始价格
@@ -171,5 +173,29 @@ public class LunchOrder {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public List<Dish> getDishs() {
+        return dishs;
+    }
+
+    public void setDishs(List<Dish> dishs) {
+        this.dishs = dishs;
+    }
+
+    public String getDishIds() {
+        return dishIds;
+    }
+
+    public void setDishIds(String dishIds) {
+        this.dishIds = dishIds;
     }
 }
