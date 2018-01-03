@@ -16,6 +16,7 @@ public class LunchOrder {
     private String distributNumber; //配送单号 DL-AsiaInspection-171211
 
     private Date bookTime;//下单时间
+    private Date lunchTime;//订餐使用时间
     private String customerName;//下单人姓名
     private String customerMobile;//下单人电话
 
@@ -197,5 +198,13 @@ public class LunchOrder {
 
     public void setDishIds(String dishIds) {
         this.dishIds = dishIds;
+    }
+
+    public Date getLunchTime() {
+        return lunchTime;
+    }
+
+    public void setLunchTime(Date lunchTime) {
+        this.lunchTime = lunchTime;
     }
 }
