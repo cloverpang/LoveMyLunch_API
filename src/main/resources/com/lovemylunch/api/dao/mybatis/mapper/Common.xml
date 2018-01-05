@@ -27,6 +27,14 @@
 							</foreach>
 						</when>
 
+						<when test="condition.conditionExpression != null and (condition.conditionExpression == 'gt'.toString())">
+							${condition.conditionName} &gt; #{condition.conditionValue}
+						</when>
+
+						<when test="condition.conditionExpression != null and (condition.conditionExpression == 'lt'.toString())">
+							${condition.conditionName} &lt; #{condition.conditionValue}
+						</when>
+
 						<when test="condition.conditionExpression != null and condition.conditionExpression == 'like'.toString() ">
 							(${condition.conditionName} is not null AND UPPER(${condition.conditionName}) LIKE UPPER('%${condition.conditionValue}%'))
 						</when>
