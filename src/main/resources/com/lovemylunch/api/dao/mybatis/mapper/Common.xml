@@ -20,6 +20,13 @@
 							</foreach>
 						</when>
 
+						<when test="condition.conditionExpression != null and (condition.conditionExpression == 'between'.toString())">
+							${condition.conditionName} between
+							<foreach item="value" collection="condition.conditionValueArr" open="" separator="and" close="">
+								 #{value}
+							</foreach>
+						</when>
+
 						<when test="condition.conditionExpression != null and condition.conditionExpression == 'like'.toString() ">
 							(${condition.conditionName} is not null AND UPPER(${condition.conditionName}) LIKE UPPER('%${condition.conditionValue}%'))
 						</when>
