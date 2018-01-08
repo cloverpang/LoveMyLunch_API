@@ -1,0 +1,70 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lovemylunch.api.dao.mybatis.mapper.OperationLogMapper">
+	<select id="get" parameterType="string" resultType="com.lovemylunch.common.beans.system.OperationLog">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		WHERE a.operationId = #{id}
+	</select>
+
+	<select id="search" parameterType="map" resultType="com.lovemylunch.common.beans.system.OperationLog">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		<include refid="Common.search_whereClause"/>
+		<include refid="Common.search_sortingClause"/>
+		<include refid="Common.search_pageClause"/>
+	</select>
+
+	<select id="count" parameterType="map" resultType="int">
+		SELECT COUNT(1)
+		<include refid="search_fromClause"/>
+		<include refid="Common.search_whereClause"/>
+	</select>
+
+	<sql id="search_selectFields">
+	SELECT
+   a.operationId as operationId,
+   a.operationUrl as operationUrl,
+   a.operationName as operationName,
+   a.requestParameters as requestParameters,
+   a.operationReturn as operationReturn,
+   a.operationException as operationException,
+   a.operationUser as operationUser,
+   a.operationToken as operationToken,
+   a.createTime as createTime
+	</sql>
+
+	<sql id="search_fromClause">
+		FROM awf_operation_log a
+	</sql>
+
+	<insert id="insert" parameterType="com.lovemylunch.common.beans.system.OperationLog">
+		INSERT INTO awf_operation_log (
+		operationId,
+		operationUrl,
+		operationName,
+		requestParameters,
+		operationReturn,
+		operationException,
+		operationUser,
+		operationToken,
+		createTime
+		) VALUES (
+		#{operationId,jdbcType=VARCHAR},
+		#{operationUrl,jdbcType=VARCHAR},
+		#{operationName,jdbcType=VARCHAR},
+		#{requestParameters,jdbcType=VARCHAR},
+		#{operationReturn,jdbcType=VARCHAR},
+		#{operationException,jdbcType=VARCHAR},
+		#{operationUser,jdbcType=VARCHAR},
+		#{operationToken,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM awf_operation_log WHERE operationId = #{id}
+	</delete>
+</mapper>
