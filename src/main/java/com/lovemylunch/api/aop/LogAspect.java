@@ -89,7 +89,7 @@ public class LogAspect {
         long runTime = end - start;
 
         try{
-            if(StringUtils.isNotEmpty(operationName) && (operationName != "Search operationLog" || operationName != "get OperationLog")){
+            if(StringUtils.isNotEmpty(operationName) && !operationName.equals("Search operationLog")){
                 OperationLog operationLog = new OperationLog();
                 operationLog.setOperationUser("clover");//todo
                 operationLog.setOperationToken("clover token");//todo
