@@ -1,0 +1,71 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lovemylunch.api.dao.mybatis.mapper.DistributerMapper">
+	<select id="get" parameterType="string" resultType="com.lovemylunch.common.beans.distribut.Distributer">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		WHERE a.distributerId = #{id}
+	</select>
+
+	<select id="search" parameterType="map" resultType="com.lovemylunch.common.beans.distribut.Distributer">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		<include refid="Common.search_whereClause"/>
+		<include refid="Common.search_sortingClause"/>
+		<include refid="Common.search_pageClause"/>
+	</select>
+
+	<select id="count" parameterType="map" resultType="int">
+		SELECT COUNT(1)
+		<include refid="search_fromClause"/>
+		<include refid="Common.search_whereClause"/>
+	</select>
+
+	<sql id="search_selectFields">
+	SELECT
+   a.distributerId as distributerId,
+   a.distributerName as distributerName,
+   a.mobile as mobile,
+   a.photoPath as photoPath,
+   a.status as status,
+   (select count(distributionFormId) from awf_distribution_form where distributerId = a.distributerId and status = 1) as distributerTimes,
+   a.createTime as createTime
+	</sql>
+
+	<sql id="search_fromClause">
+		FROM awf_distributer a
+	</sql>
+
+	<insert id="insert" parameterType="com.lovemylunch.common.beans.distribut.Distributer">
+		INSERT INTO awf_distributer (
+		distributerId,
+		distributerName,
+		mobile,
+		photoPath,
+		status,
+		createTime
+		) VALUES (
+		#{distributerId,jdbcType=VARCHAR},
+		#{distributerName,jdbcType=VARCHAR},
+		#{mobile,jdbcType=VARCHAR},
+		#{photoPath,jdbcType=VARCHAR},
+		#{status,jdbcType=NUMERIC},
+		#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.lovemylunch.common.beans.distribut.Distributer">
+		UPDATE awf_distributer
+		SET
+		mobile = #{mobile,jdbcType=VARCHAR},
+		photoPath = #{photoPath,jdbcType=VARCHAR},
+		status = #{status,jdbcType=NUMERIC}
+		WHERE distributerId = #{distributerId}
+	</update>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM awf_distributer WHERE distributerId = #{id}
+	</delete>
+</mapper>
