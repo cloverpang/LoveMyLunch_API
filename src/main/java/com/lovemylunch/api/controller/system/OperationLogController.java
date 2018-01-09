@@ -27,7 +27,7 @@ public class OperationLogController extends BaseController{
     @Autowired
     private OperationLogService operationLogService;
 
-    @ApiOperation(value="get OperationLog ", notes="",response = OperationLog.class)
+    @ApiOperation(value="get OperationLog", notes="",response = OperationLog.class)
     @RequestMapping(value={"/operationLog/{id}"}, method= RequestMethod.GET)
     public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
         logger.info("invoke: " + "/operationLog/" + id);
@@ -47,7 +47,7 @@ public class OperationLogController extends BaseController{
     }
 
     @RequestMapping(value={"/operationLogs"}, method= RequestMethod.GET)
-    @ApiOperation(value = "Search operationLog API", response = OperationLog.class,responseContainer =
+    @ApiOperation(value = "Search operationLog", response = OperationLog.class,responseContainer =
             "List")
     public ResponseEntity<ApiCallResult> search(@RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
                                                 @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,

@@ -12,6 +12,7 @@ public class OperationLog {
     private String operationException;
     private String operationUser;
     private String operationToken;
+    private Long runTime;
     private Date createTime;
 
     public String getOperationId() {
@@ -76,6 +77,14 @@ public class OperationLog {
 
     public void setOperationToken(String operationToken) {
         this.operationToken = operationToken;
+    }
+
+    public Long getRunTime() {
+        return runTime;
+    }
+
+    public void setRunTime(Long runTime) {
+        this.runTime = runTime;
     }
 
     public Date getCreateTime() {

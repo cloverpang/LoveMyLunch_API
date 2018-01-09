@@ -33,6 +33,7 @@
    a.operationException as operationException,
    a.operationUser as operationUser,
    a.operationToken as operationToken,
+   a.runTime as runTime,
    a.createTime as createTime
 	</sql>
 
@@ -50,6 +51,7 @@
 		operationException,
 		operationUser,
 		operationToken,
+		runTime,
 		createTime
 		) VALUES (
 		#{operationId,jdbcType=VARCHAR},
@@ -60,6 +62,7 @@
 		#{operationException,jdbcType=VARCHAR},
 		#{operationUser,jdbcType=VARCHAR},
 		#{operationToken,jdbcType=VARCHAR},
+		#{runTime,jdbcType=NUMERIC},
 		#{createTime,jdbcType=TIMESTAMP}
 		)
 	</insert>
