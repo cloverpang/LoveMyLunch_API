@@ -1,0 +1,93 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lovemylunch.api.dao.mybatis.mapper.DistributionFormMapper">
+	<select id="get" parameterType="string" resultType="com.lovemylunch.common.beans.distribut.DistributionForm">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		WHERE a.distributionFormId = #{id}
+	</select>
+
+	<select id="getByNumber" parameterType="string" resultType="com.lovemylunch.common.beans.distribut.DistributionForm">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		WHERE a.formNumber = #{formNumber} limit 1
+	</select>
+
+	<select id="search" parameterType="map" resultType="com.lovemylunch.common.beans.distribut.DistributionForm">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		<include refid="Common.search_whereClause"/>
+		<include refid="Common.search_sortingClause"/>
+		<include refid="Common.search_pageClause"/>
+	</select>
+
+	<select id="count" parameterType="map" resultType="int">
+		SELECT COUNT(1)
+		<include refid="search_fromClause"/>
+		<include refid="Common.search_whereClause"/>
+	</select>
+
+	<sql id="search_selectFields">
+	SELECT
+   a.distributionFormId as distributionFormId,
+   a.formNumber as formNumber,
+   a.companyId as companyId,
+   a.companyName as companyName,
+   a.companyAddress as companyAddress,
+   a.lastArriveTime as lastArriveTime,
+   a.distributerId as distributerId,
+   a.distributerName as distributerName,
+   a.orderIds as orderIds,
+   a.status as status,
+   a.createTime as createTime
+	</sql>
+
+	<sql id="search_fromClause">
+		FROM awf_distribution_form a
+	</sql>
+
+	<insert id="insert" parameterType="com.lovemylunch.common.beans.distribut.DistributionForm">
+		INSERT INTO awf_distribution_form (
+		distributionFormId,
+		formNumber,
+		companyId,
+		companyName,
+		companyAddress,
+		lastArriveTime,
+		distributerId,
+		distributerName,
+		orderIds,
+		status,
+		createTime
+		) VALUES (
+		#{distributionFormId,jdbcType=VARCHAR},
+		#{formNumber,jdbcType=VARCHAR},
+		#{companyId,jdbcType=VARCHAR},
+		#{companyName,jdbcType=VARCHAR},
+		#{companyAddress,jdbcType=VARCHAR},
+		#{lastArriveTime,jdbcType=VARCHAR},
+		#{distributerId,jdbcType=VARCHAR},
+		#{distributerName,jdbcType=VARCHAR},
+		#{orderIds,jdbcType=VARCHAR},
+		#{status,jdbcType=NUMERIC},
+		#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.lovemylunch.common.beans.distribut.DistributionForm">
+		UPDATE awf_distribution_form
+		SET
+		lastArriveTime = #{lastArriveTime,jdbcType=VARCHAR},
+		distributerId = #{distributerId,jdbcType=VARCHAR},
+		distributerName = #{distributerName,jdbcType=VARCHAR},
+		orderIds = #{orderIds,jdbcType=VARCHAR},
+		status = #{status,jdbcType=NUMERIC}
+		WHERE distributionFormId = #{distributionFormId}
+	</update>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM awf_distribution_form WHERE distributionFormId = #{id}
+	</delete>
+</mapper>

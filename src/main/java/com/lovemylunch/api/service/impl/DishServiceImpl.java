@@ -8,12 +8,14 @@ import com.lovemylunch.common.beans.food.Dish;
 import com.lovemylunch.common.util.CriteriaMapUtils;
 import com.lovemylunch.common.util.DateUtils;
 import com.lovemylunch.common.util.IDUtils;
+import com.lovemylunch.common.util.StringUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.Map;
 
 @Component
 @Service
+@EnableTransactionManagement// 开启注解事务管理，等同于xml配置文件中的 <tx:annotation-driven/>
 public class DishServiceImpl extends BaseService implements DishService {
     protected Logger logger = LoggerFactory.getLogger(DishServiceImpl.class);
 
@@ -40,8 +43,8 @@ public class DishServiceImpl extends BaseService implements DishService {
     @Override
     public Boolean insert(Dish dish) throws Exception {
         try{
-            if(null == dish.getDishName()){
-                throw new Exception("dish login is null! ");
+            if(StringUtils.isEmpty(dish.getDishName())){
+                throw new Exception("dish name can not empty! ");
             }
 
             //re-set the DishId

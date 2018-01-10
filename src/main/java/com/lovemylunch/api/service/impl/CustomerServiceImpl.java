@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 @Component
 @Service
+@EnableTransactionManagement// 开启注解事务管理，等同于xml配置文件中的 <tx:annotation-driven/>
 public class CustomerServiceImpl extends BaseService implements com.lovemylunch.api.service.CustomerService {
     protected Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 

@@ -9,8 +9,9 @@ import java.util.List;
 public class DistributionForm {
     private String distributionFormId;
 
-    private String companyId;
     private String formNumber;//{{companyCode}}_{{date}} AsiaInspection_2018-01-13
+
+    private String companyId;
     private String companyName;
     private String companyAddress;
     private String lastArriveTime;
