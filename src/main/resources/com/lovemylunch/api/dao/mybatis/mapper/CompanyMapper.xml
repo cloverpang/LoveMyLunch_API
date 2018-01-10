@@ -9,6 +9,12 @@
 		WHERE a.companyId = #{id}
 	</select>
 
+	<select id="getByCode" parameterType="string" resultType="com.lovemylunch.common.beans.client.Company">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		WHERE a.companyCode = #{code} limit 1
+	</select>
+
 	<select id="search" parameterType="map" resultType="com.lovemylunch.common.beans.client.Company">
 		<include refid="search_selectFields"/>
 		<include refid="search_fromClause"/>

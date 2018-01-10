@@ -81,7 +81,7 @@ public class CompanyController extends BaseController{
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
-            result.setMessage("create company failed : " + ExceptionUtils.getFullStackTrace(e));
+            result.setMessage("create company failed : " + e.getMessage());
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -97,7 +97,7 @@ public class CompanyController extends BaseController{
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
-            result.setMessage("save company failed : " + ExceptionUtils.getFullStackTrace(e));
+            result.setMessage("save company failed : " + e.getMessage());
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

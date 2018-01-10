@@ -11,6 +11,8 @@ import java.util.Map;
 public interface CompanyService {
     Company get(String id) throws Exception;
 
+    Company getByCode(String code) throws Exception;
+
     Boolean insert(Company Company) throws Exception;
 
     Boolean update(Company Company) throws Exception;

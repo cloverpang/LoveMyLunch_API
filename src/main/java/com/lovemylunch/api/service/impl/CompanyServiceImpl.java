@@ -44,8 +44,27 @@ public class CompanyServiceImpl extends BaseService implements com.lovemylunch.a
     }
 
     @Override
+    public Company getByCode(String code) throws Exception {
+        try{
+            return companyMapper.getByCode(code);
+        }catch (Exception e){
+            logger.error("failed on get company info : " + e.getMessage());
+            throw new Exception("failed on get company : ",e);
+        }
+    }
+
+    @Override
     public Boolean insert(Company company) throws Exception {
         try{
+            if(StringUtils.isEmpty(company.getCompanyCode())){
+                throw new Exception("company code cannot empty! ");
+            }
+
+            Company originCompany = getByCode(company.getCompanyCode());
+            if(null != originCompany){
+                throw new Exception("This customer code is existing, please change an new company code! ");
+            }
+
             //re-set the companyId
             company.setCompanyId(IDUtils.generateID());
 
@@ -59,7 +78,7 @@ public class CompanyServiceImpl extends BaseService implements com.lovemylunch.a
             return true;
         }catch (Exception e){
             logger.error("failed on insert company : " + e.getMessage());
-            throw new Exception("failed on insert company : ",e);
+            throw new Exception(e);
         }
     }
 

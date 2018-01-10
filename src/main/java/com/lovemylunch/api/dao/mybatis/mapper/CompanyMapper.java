@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 public interface CompanyMapper {
     public Company get(String id);
 
+    public Company getByCode(String code);
+
     public void insert(Company Company);
 
     public void update(Company Company);
