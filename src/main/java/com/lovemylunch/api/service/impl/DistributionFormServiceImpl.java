@@ -105,6 +105,20 @@ public class DistributionFormServiceImpl extends BaseService implements Distribu
     }
 
     @Override
+    public Boolean selectDistributer(String id, String distributerId, String distributerName) throws Exception {
+        try{
+            DistributionForm distributionForm = distributionFormMapper.get(id);
+            distributionForm.setDistributerId(distributerId);
+            distributionForm.setDistributerName(distributerName);
+            distributionFormMapper.update(distributionForm);
+            return true;
+        }catch (Exception e){
+            logger.error("failed on update DistributionForm : " + e.getMessage());
+            throw new Exception("failed on update DistributionForm : ",e);
+        }
+    }
+
+    @Override
     public Boolean markArrived(String id) throws Exception {
         try{
             distributionFormMapper.makeArrived(id);

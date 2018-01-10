@@ -132,6 +132,24 @@ public class DistributionFormController extends BaseController{
         }
     }
 
+    @RequestMapping(value = "distributionForm/selectDistributer/{id}", method = RequestMethod.PUT)
+    @ApiOperation(value = "DistributionForm selectDistributer API", response = boolean.class)
+    public ResponseEntity<ApiCallResult> selectDistributer(@ApiParam(value = "id", required = true)
+                                                           @PathVariable("id") String id,
+                                                           @RequestParam(value = "distributerId", required = true, defaultValue = "") String distributerId,
+                                                           @RequestParam(value = "distributerName", required = true, defaultValue = "") String distributerName) {
+        logger.info("invoke: " + "/distributionForm/selectDistributer/" + id);
+        ApiCallResult result = new ApiCallResult();
+        try{
+            Boolean excute = distributionFormService.selectDistributer(id, distributerId, distributerName);
+            result.setContent(excute);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (Exception e){
+            result.setMessage("DistributionForm selectDistributer failed : " + ExceptionUtils.getFullStackTrace(e));
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @RequestMapping(value = "distributionForm/markArrived/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "MarkArrived distributionForm API", response = boolean.class)
     public ResponseEntity<ApiCallResult> markArrived(

@@ -18,6 +18,8 @@ public interface DistributionFormService {
 
     Boolean markArrived(String id) throws Exception;
 
+    Boolean selectDistributer(String id,String distributerId,String distributerName) throws Exception;
+
     Boolean makeAllArrived() throws Exception;
 
     PageBean<DistributionForm> page(String conditionsStr, int pageSize, int pageNo,
