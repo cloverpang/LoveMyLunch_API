@@ -105,6 +105,28 @@ public class DistributionFormServiceImpl extends BaseService implements Distribu
     }
 
     @Override
+    public Boolean markArrived(String id) throws Exception {
+        try{
+            distributionFormMapper.makeArrived(id);
+            return true;
+        }catch (Exception e){
+            logger.error("Mark DistributionForm arrived failed: " + e.getMessage());
+            throw new Exception("Mark DistributionForm arrived failed : ",e);
+        }
+    }
+
+    @Override
+    public Boolean makeAllArrived() throws Exception {
+        try{
+            distributionFormMapper.makeAllArrived();
+            return true;
+        }catch (Exception e){
+            logger.error("Mark All DistributionForm arrived failed: " + e.getMessage());
+            throw new Exception("Mark All DistributionForm arrived failed : ",e);
+        }
+    }
+
+    @Override
     public Boolean delete(String id) throws Exception {
         try{
             DistributionForm originDistributionForm = distributionFormMapper.get(id);

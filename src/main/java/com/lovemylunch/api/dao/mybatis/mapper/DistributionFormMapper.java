@@ -18,6 +18,10 @@ public interface DistributionFormMapper {
 
     public void update(DistributionForm distributionForm);
 
+    public void makeArrived(String id);
+
+    public void makeAllArrived();
+
     public void delete(String id);
 
     public List<DistributionForm> search(Map<String, Object> param);

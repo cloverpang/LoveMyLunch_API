@@ -131,4 +131,36 @@ public class DistributionFormController extends BaseController{
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @RequestMapping(value = "distributionForm/markArrived/{id}", method = RequestMethod.PUT)
+    @ApiOperation(value = "MarkArrived distributionForm API", response = boolean.class)
+    public ResponseEntity<ApiCallResult> markArrived(
+            @ApiParam(value = "id", required = true)
+            @PathVariable("id") String id) {
+        logger.info("invoke: " + "/distributionForm/markArrived/" + id);
+        ApiCallResult result = new ApiCallResult();
+        try{
+            Boolean excute = distributionFormService.markArrived(id);
+            result.setContent(excute);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (Exception e){
+            result.setMessage("MarkArrived distributionForm failed : " + ExceptionUtils.getFullStackTrace(e));
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "distributionForm/markAllArrived", method = RequestMethod.PUT)
+    @ApiOperation(value = "MarkArrived all distributionForm API", response = boolean.class)
+    public ResponseEntity<ApiCallResult> markAllArrived() {
+        logger.info("invoke: " + "/distributionForm/markArrived" );
+        ApiCallResult result = new ApiCallResult();
+        try{
+            Boolean excute = distributionFormService.makeAllArrived();
+            result.setContent(excute);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (Exception e){
+            result.setMessage("MarkArrived all distributionForm failed : " + ExceptionUtils.getFullStackTrace(e));
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

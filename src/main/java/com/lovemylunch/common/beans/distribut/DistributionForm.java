@@ -14,7 +14,7 @@ public class DistributionForm {
     private String companyId;
     private String companyName;
     private String companyAddress;
-    private String lastArriveTime;
+    private Date lastArriveTime;
 
     private String distributerId;
     private String distributerName;
@@ -59,11 +59,11 @@ public class DistributionForm {
         this.companyAddress = companyAddress;
     }
 
-    public String getLastArriveTime() {
+    public Date getLastArriveTime() {
         return lastArriveTime;
     }
 
-    public void setLastArriveTime(String lastArriveTime) {
+    public void setLastArriveTime(Date lastArriveTime) {
         this.lastArriveTime = lastArriveTime;
     }
 

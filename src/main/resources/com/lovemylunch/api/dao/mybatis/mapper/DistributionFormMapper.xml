@@ -67,7 +67,7 @@
 		#{companyId,jdbcType=VARCHAR},
 		#{companyName,jdbcType=VARCHAR},
 		#{companyAddress,jdbcType=VARCHAR},
-		#{lastArriveTime,jdbcType=VARCHAR},
+		#{lastArriveTime,jdbcType=TIMESTAMP},
 		#{distributerId,jdbcType=VARCHAR},
 		#{distributerName,jdbcType=VARCHAR},
 		#{orderIds,jdbcType=VARCHAR},
@@ -85,6 +85,21 @@
 		orderIds = #{orderIds,jdbcType=VARCHAR},
 		status = #{status,jdbcType=NUMERIC}
 		WHERE distributionFormId = #{distributionFormId}
+	</update>
+
+	<update id="makeArrived" parameterType="string">
+		UPDATE awf_distribution_form
+		SET
+		lastArriveTime = sysdate(),
+		status = 1
+		WHERE distributionFormId = #{id}
+	</update>
+
+	<update id="makeAllArrived">
+		UPDATE awf_distribution_form
+		SET
+		lastArriveTime = sysdate(),
+		status = 1
 	</update>
 
 	<delete id="delete" parameterType="string">

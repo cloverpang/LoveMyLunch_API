@@ -16,6 +16,10 @@ public interface DistributionFormService {
 
     Boolean delete(String id) throws Exception;
 
+    Boolean markArrived(String id) throws Exception;
+
+    Boolean makeAllArrived() throws Exception;
+
     PageBean<DistributionForm> page(String conditionsStr, int pageSize, int pageNo,
                         String sortColumn, String sortType) throws Exception;
 
