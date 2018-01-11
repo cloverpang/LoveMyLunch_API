@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @SpringBootApplication
 //@RequestMapping("/distributionForm")
@@ -136,11 +138,12 @@ public class DistributionFormController extends BaseController{
     @ApiOperation(value = "DistributionForm selectDistributer API", response = boolean.class)
     public ResponseEntity<ApiCallResult> selectDistributer(@ApiParam(value = "id", required = true)
                                                            @PathVariable("id") String id,
-                                                           @RequestParam(value = "distributerId", required = true, defaultValue = "") String distributerId,
-                                                           @RequestParam(value = "distributerName", required = true, defaultValue = "") String distributerName) {
+                                                           @RequestBody(required = true) Map map) {
         logger.info("invoke: " + "/distributionForm/selectDistributer/" + id);
         ApiCallResult result = new ApiCallResult();
         try{
+            String distributerId = (String) map.get("distributerId");
+            String distributerName = (String) map.get("distributerName");
             Boolean excute = distributionFormService.selectDistributer(id, distributerId, distributerName);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
