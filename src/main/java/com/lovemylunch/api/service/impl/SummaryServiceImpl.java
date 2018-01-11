@@ -38,7 +38,7 @@ public class SummaryServiceImpl extends BaseService implements SummaryService{
         String endTime = endDate + " 23:59:59";
 
         List<SumItem> sumItems = new ArrayList<SumItem>();
-        String conditionStr = "bookTime::between::" + startTime + "," + endTime;
+        String conditionStr = "lunchTime::between::" + startTime + "," + endTime;
         List<LunchOrder> orders = lunchOrderService.search(conditionStr, 10000, 1, "", "");
 
         //start to group
