@@ -260,7 +260,7 @@ public class DistributionFormServiceImpl extends BaseService implements Distribu
         try{
             for(LunchOrder order : lunchOrderList){
 
-                if(resultMap.containsKey(order.getCompanyId())){//map中异常批次已存在，将该数据存放到同一个key（key存放的是异常批次）的map中
+                if(resultMap.containsKey(order.getCompanyId())){//map中companyId已存在，将该数据存放到同一个key（key存放的companyId）的map中
                     resultMap.get(order.getCompanyId()).add(order.getOrderId());
                 }else{//map中不存在，新建key，用来存放数据
                     List<String> tmpList = new ArrayList<String>();
@@ -270,7 +270,7 @@ public class DistributionFormServiceImpl extends BaseService implements Distribu
             }
 
         }catch(Exception e){
-            throw new Exception("按照异常批次号对已开单数据进行分组时出现异常", e);
+            throw new Exception("按照companyId对已开单数据进行分组时出现异常", e);
         }
         return resultMap;
     }
