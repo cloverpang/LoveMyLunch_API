@@ -3,15 +3,7 @@ package com.lovemylunch.common.beans.dashboard;
 
 public class ChartData {
     private String[] titles;
-    private String[] datas;
-
-    public String[] getDatas() {
-        return datas;
-    }
-
-    public void setDatas(String[] datas) {
-        this.datas = datas;
-    }
+    private Double[] datas;
 
     public String[] getTitles() {
         return titles;
@@ -19,5 +11,13 @@ public class ChartData {
 
     public void setTitles(String[] titles) {
         this.titles = titles;
+    }
+
+    public Double[] getDatas() {
+        return datas;
+    }
+
+    public void setDatas(Double[] datas) {
+        this.datas = datas;
     }
 }

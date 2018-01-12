@@ -47,7 +47,7 @@ public class DashboradServiceImpl extends BaseService implements DashboardServic
 
         List<CreateCount> orderCount = dashboardMapper.getOrderCreated(criteriaMap);
         String[] dayArr = generateDayListArr(startDate, endDate);
-        String[] orderCountArr = generateCountArr(dayArr, orderCount);
+        Double[] orderCountArr = generateCountArr(dayArr, orderCount);
 
         ChartData chartData = new ChartData();
         chartData.setDatas(orderCountArr);
@@ -70,7 +70,7 @@ public class DashboradServiceImpl extends BaseService implements DashboardServic
         List<CreateCount> customerCount =  dashboardMapper.getCustomerCreated(criteriaMap);
 
         String[] dayArr = generateDayListArr(startDate, endDate);
-        String[] customerCountArr = generateCountArr(dayArr, customerCount);
+        Double[] customerCountArr = generateCountArr(dayArr, customerCount);
 
         ChartData chartData = new ChartData();
         chartData.setDatas(customerCountArr);
@@ -102,15 +102,15 @@ public class DashboradServiceImpl extends BaseService implements DashboardServic
         return list.toArray(new String[list.size()]);
     }
 
-    private String[] generateCountArr(String[] dayArr, List<CreateCount> createCounts){
-        List<String> list = new ArrayList<String>();
+    private Double[] generateCountArr(String[] dayArr, List<CreateCount> createCounts){
+        List<Double> list = new ArrayList<Double>();
 
         for(String day : dayArr){
             boolean mapping = false;
             if(CollectionUtils.isNotEmpty(createCounts)){
                 for(CreateCount c : createCounts){
                     if(day.equals(c.getCreatedDate())){
-                        list.add(c.getCreatedCount());
+                        list.add(Double.valueOf(c.getCreatedCount()));
                         mapping = true;
                         break;
                     }
@@ -118,10 +118,10 @@ public class DashboradServiceImpl extends BaseService implements DashboardServic
             }
 
             if(!mapping){
-                list.add("0");
+                list.add(0d);
             }
         }
 
-        return list.toArray(new String[list.size()]);
+        return list.toArray(new Double[list.size()]);
     }
 }
