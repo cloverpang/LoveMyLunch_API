@@ -88,11 +88,11 @@ public class DashboradServiceImpl extends BaseService implements DashboardServic
         if(countDays == 0) {
             list.add(startDate);
         }else if(countDays == 1){
-            list.add(endDate);
+            list.add(startDate);
             list.add(endDate);
         }else{
             list.add(startDate);
-            for(int i = 0;i<countDays;i++){
+            for(int i = 0;i<countDays-1;i++){
                 Date nextDay = DateUtils.increaseDay(startDay,1+i);
                 list.add(DateUtils.toFormatString(nextDay,"yyyy-MM-dd"));
             }
