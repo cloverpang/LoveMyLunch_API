@@ -32,7 +32,7 @@ public class SummaryController extends BaseController{
     @RequestMapping(value={"/summary"}, method= RequestMethod.GET)
     @ApiOperation(value = "Get order summary", response = SumItem.class,responseContainer =
             "List")
-    public ResponseEntity<ApiCallResult> search(@RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
+    public ResponseEntity<ApiCallResult> summary(@RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
                                                 @RequestParam(value = "endDate", required = false, defaultValue = "") String endDate){
         logger.info("invoke: " + "/summary");
         ApiCallResult result = new ApiCallResult();
