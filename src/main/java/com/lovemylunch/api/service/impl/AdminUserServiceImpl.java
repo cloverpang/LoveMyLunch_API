@@ -1,0 +1,56 @@
+package com.lovemylunch.api.service.impl;
+
+
+import com.lovemylunch.api.dao.mybatis.mapper.AdminUserMapper;
+import com.lovemylunch.common.beans.system.AdminUser;
+import com.lovemylunch.api.service.AdminUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Component
+@Service
+public class AdminUserServiceImpl implements AdminUserService{
+    protected Logger logger = LoggerFactory.getLogger(AdminUserServiceImpl.class);
+
+    @Autowired
+    private AdminUserMapper adminUserMapper;
+
+    @Override
+    public AdminUser login(AdminUser adminUser) throws Exception{
+        try{
+            return adminUserMapper.login(adminUser);
+        }catch (Exception e){
+            throw new Exception("update admin user password failed!",e);
+        }
+    }
+
+    @Override
+    public void updatePassword(AdminUser adminUser) throws Exception {
+        try{
+            adminUserMapper.updatePassword(adminUser);
+        }catch (Exception e){
+            throw new Exception("update admin user password failed!",e);
+        }
+    }
+
+    @Override
+    public boolean delete(String id) throws Exception {
+        try{
+            adminUserMapper.delete(id);
+            return true;
+        }catch (Exception e){
+            logger.error("failed on delete Admin user : " + e.getMessage());
+            throw new Exception("failed on delete Admin user : ",e);
+        }
+    }
+
+    @Override
+    public List<AdminUser> getAll() {
+        return adminUserMapper.getAll();
+    }
+}

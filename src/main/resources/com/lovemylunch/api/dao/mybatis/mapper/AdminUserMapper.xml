@@ -1,0 +1,40 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lovemylunch.api.dao.mybatis.mapper.AdminUserMapper">
+	<select id="login" parameterType="com.lovemylunch.common.beans.system.AdminUser" resultType="com.lovemylunch.common.beans.system.AdminUser">
+		<include refid="search_selectFields"/>
+		<include refid="search_fromClause"/>
+		WHERE a.admin_login = #{admin_login} and a.admin_password = #{admin_password} limit 1
+	</select>
+
+   <select id="getAll" parameterType="map" resultType="com.lovemylunch.common.beans.system.AdminUser">
+      <include refid="search_selectFields"/>
+      <include refid="search_fromClause"/>
+   </select>
+
+	<sql id="search_selectFields">
+	SELECT
+   a.admin_id as admin_id,
+   a.admin_login as admin_login,
+   a.admin_password as admin_password,
+   a.admin_name as admin_name,
+   a.createTime as createTime
+	</sql>
+
+	<sql id="search_fromClause">
+		FROM awf_admin a
+	</sql>
+
+   <update id="updatePassword" parameterType="com.lovemylunch.api.dao.mybatis.mapper.AdminUserMapper">
+      UPDATE awf_admin
+      SET
+      admin_password = #{admin_password,jdbcType=VARCHAR}
+      WHERE admin_login = #{admin_login}
+   </update>
+
+   <delete id="delete" parameterType="string">
+      DELETE FROM awf_admin WHERE admin_id = #{id}
+   </delete>
+</mapper>
