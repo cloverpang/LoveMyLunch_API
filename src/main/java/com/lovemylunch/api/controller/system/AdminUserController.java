@@ -1,8 +1,10 @@
 package com.lovemylunch.api.controller.system;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lovemylunch.api.service.AdminUserService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.system.AdminUser;
+import com.lovemylunch.common.beans.system.LoginBean;
 import com.lovemylunch.common.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +33,14 @@ public class AdminUserController {
     @Autowired
     private AdminUserService adminUserService;
 
-    @RequestMapping(value = "/adminUser/login", method = RequestMethod.POST)
-    @ApiOperation(value = "admin login", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> adminLogin(@RequestBody(required = true) Map map) {
-        String adminLogin = (String) map.get("adminLogin");
-        String adminPassword = (String) map.get("adminPassword");
+    @CrossOrigin(origins = "*", maxAge = 3600)
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/admin/login")
+    @ApiOperation(value = "Admin user login", response = Boolean.class)
+    public ResponseEntity<ApiCallResult> adminLogin(@RequestBody(required = true) LoginBean loginBean, HttpServletRequest request,
+                                                    HttpServletResponse response) throws JsonProcessingException {
+        String adminLogin = loginBean.getAccount();
+        String adminPassword = loginBean.getPassword();
         logger.info("invoke: " + "/adminUser/login/" + adminLogin + "/" +  adminPassword);
         ApiCallResult result = new ApiCallResult();
         try{

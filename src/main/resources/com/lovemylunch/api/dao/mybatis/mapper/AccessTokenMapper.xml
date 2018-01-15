@@ -1,0 +1,64 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lovemylunch.api.dao.mybatis.mapper.AccessTokenMapper">
+	<select id="getByUserId" parameterType="string" resultType="com.lovemylunch.common.beans.system.AccessTokenDO">
+		SELECT
+		id as id,
+		user_id as user_id,
+		token as token,
+		expiry as expiry,
+		created as created,
+		modified as modified
+		FROM awf_admin_tokens
+		WHERE user_id = #{user_id}
+		limit 1
+	</select>
+
+	<select id="getByToken" parameterType="string" resultType="com.lovemylunch.common.beans.system.AccessTokenDO">
+		SELECT
+		id as id,
+		user_id as user_id,
+		token as token,
+		expiry as expiry,
+		created as created,
+		modified as modified
+		FROM awf_admin_tokens
+		WHERE token = #{token}
+		limit 1
+	</select>
+
+	<insert id="saveToken" parameterType="com.lovemylunch.common.beans.system.AccessTokenDO">
+		INSERT INTO awf_admin_tokens (
+		user_id,
+		token,
+		expiry,
+		created,
+		modified
+		) VALUES (
+		#{user_id,jdbcType=NUMERIC},
+		#{token,jdbcType=VARCHAR},
+		#{expiry,jdbcType=TIMESTAMP},
+		#{created,jdbcType=TIMESTAMP},
+		#{modified,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<update id="refreshByToken" parameterType="com.lovemylunch.common.beans.system.AccessTokenDO">
+		UPDATE awf_admin_tokens
+		SET
+		token = #{token,jdbcType=VARCHAR},
+		expiry = #{expiry,jdbcType=TIMESTAMP},
+		modified = #{modified,jdbcType=TIMESTAMP}
+		WHERE user_id = #{user_id}
+	</update>
+
+	<delete id="removeByToken" parameterType="string">
+		DELETE FROM awf_admin_tokens WHERE token = #{token}
+	</delete>
+
+	<delete id="removeByExpiry" parameterType="string">
+		DELETE FROM tokens WHERE expiry > #{expiry}
+	</delete>
+</mapper>

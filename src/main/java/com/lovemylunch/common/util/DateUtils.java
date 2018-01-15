@@ -12,7 +12,7 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 
 //import com.lovemylunch.common.util.StringUtils;
-import com.lovemylunch.common.Exceptions.ValidateException;
+import com.lovemylunch.common.exceptions.ValidateException;
 
 public class DateUtils extends org.apache.commons.lang.time.DateUtils{
     private static final Logger LOGGER = Logger.getLogger(DateUtils.class);

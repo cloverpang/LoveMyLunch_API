@@ -4,6 +4,7 @@ import com.lovemylunch.api.controller.BaseController;
 import com.lovemylunch.api.service.OperationLogService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.PageBean;
+import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.system.OperationLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,6 +47,7 @@ public class OperationLogController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value={"/operationLogs"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search operationLog", response = OperationLog.class,responseContainer =
             "List")

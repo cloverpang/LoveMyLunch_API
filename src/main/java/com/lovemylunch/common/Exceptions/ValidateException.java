@@ -1,4 +1,4 @@
-package com.lovemylunch.common.Exceptions;
+package com.lovemylunch.common.exceptions;
 
 /**
  * Created by Administrator on 2017/12/20.
