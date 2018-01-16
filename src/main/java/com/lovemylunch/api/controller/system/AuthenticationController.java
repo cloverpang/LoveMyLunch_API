@@ -1,32 +1,27 @@
 package com.lovemylunch.api.controller.system;
 
-import com.lovemylunch.common.consts.Consts;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lovemylunch.api.dao.SSOUserServiceDao;
 import com.lovemylunch.api.service.AdminUserService;
 import com.lovemylunch.api.service.AuthenticationService;
-import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.ServiceCallResult;
+import com.lovemylunch.common.beans.annotation.NotLogMethod;
 import com.lovemylunch.common.beans.system.LoginBean;
 import com.lovemylunch.common.util.HttpUtil;
 import com.lovemylunch.common.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @SpringBootApplication
@@ -76,7 +71,7 @@ public class AuthenticationController {
         if (!validateResult) {
             result.setStatusCode(HttpServletResponse.SC_FORBIDDEN);
             result.setResponseString("");
-            result.setReasonPhase("Zoogo API call token not present or invalid for login.");
+            result.setReasonPhase("API call token not present or invalid for login.");
             return mapper.writeValueAsString(result);
         }
         logger.info("start to get user from user-service --> verify pw --> generate tokenSession");
@@ -110,6 +105,7 @@ public class AuthenticationController {
         return mapper.writeValueAsString(result);
     }
 
+    @NotLogMethod
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/auth/verify-token")
     @ApiOperation(value = "Verify Public Api Token", response = String.class)

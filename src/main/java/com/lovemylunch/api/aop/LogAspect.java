@@ -1,9 +1,12 @@
 package com.lovemylunch.api.aop;
 
+import java.lang.reflect.Method;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import com.lovemylunch.common.beans.ApiCallResult;
+import com.lovemylunch.common.beans.annotation.NotLogMethod;
+import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.system.OperationLog;
 import com.lovemylunch.api.service.OperationLogService;
 
@@ -45,13 +48,25 @@ public class LogAspect {
     public Object around(ProceedingJoinPoint pjp,ApiOperation apiOperation) throws Throwable{
         long start = System.currentTimeMillis();
 
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-                .getRequest();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String requestURI = request.getRequestURI();
+        String apiToken = request.getHeader("authorization");
+        String currentUser = "";
+        if(StringUtils.isNotEmpty(apiToken)){
+            String[] apiTokenArr = apiToken.split("\\|");
+            if(apiTokenArr.length > 2){
+                currentUser = apiTokenArr[1];
+            }
+        }
 
         Object[] args = pjp.getArgs();
         Signature sig = pjp.getSignature();
         MethodSignature msig = (MethodSignature) sig;
+
+        Object target = pjp.getTarget();
+        Method currentMethod = target.getClass().getMethod(msig.getName(), msig.getParameterTypes());
+
+        NotLogMethod notLogMethodAnnotation = currentMethod.getAnnotation(NotLogMethod.class);
 
         String operationName = "";
         String resultStr = "";
@@ -67,20 +82,28 @@ public class LogAspect {
             rvt =  pjp.proceed();
             //LOGGER.info("result : " + JsonUtils.toJson(rvt));
 
-            ResponseEntity<ApiCallResult> resultObject = (ResponseEntity<ApiCallResult>) rvt;
-            resultStr = JsonUtils.toJson(resultObject.getBody().getContent());
+            if(isAuthOperation(operationName)){
+                resultStr = JsonUtils.toJson(rvt);
+                //LOGGER.info("resultStr 1: " + resultStr);
+            }else{
+                ResponseEntity<ApiCallResult> resultObject = (ResponseEntity<ApiCallResult>) rvt;
+                resultStr = JsonUtils.toJson(resultObject.getBody().getContent());
+                //LOGGER.info("resultStr 2: " + resultStr);
+            }
 
-            if(null != args && args.length > 0){
-                String[] parameterNames = msig.getParameterNames();
+            if(!isAuthOperation(operationName)){
+                if(null != args && args.length > 0){
+                    String[] parameterNames = msig.getParameterNames();
 
-                for(int i = 0;i<args.length;i++){
-                    //LOGGER.info("para : " + parameterNames[i] + ":" + JsonUtils.toJson(args[i]));
-                    parameterStr.append(parameterNames[i] + ":" + JsonUtils.toJson(args[i]) + " - ");
+                    for(int i = 0;i<args.length;i++){
+                        //LOGGER.info("para : " + parameterNames[i] + ":" + JsonUtils.toJson(args[i]));
+                        parameterStr.append(parameterNames[i] + ":" + JsonUtils.toJson(args[i]) + " - ");
+                    }
                 }
             }
 
         }catch (Exception e){
-            //LOGGER.info("exception : " + e.getMessage());
+            LOGGER.info("exception : " + e.getMessage());
             exceptionStr = e.getMessage();
         }
 
@@ -89,10 +112,10 @@ public class LogAspect {
         long runTime = end - start;
 
         try{
-            if(StringUtils.isNotEmpty(operationName) && !operationName.equals("Search operationLog")){
+            if(null == notLogMethodAnnotation){
                 OperationLog operationLog = new OperationLog();
-                operationLog.setOperationUser("clover");//todo
-                operationLog.setOperationToken("clover token");//todo
+                operationLog.setOperationUser(currentUser);
+                operationLog.setOperationToken(apiToken);
                 operationLog.setOperationName(operationName);
                 operationLog.setRequestParameters(parameterStr.toString());
                 operationLog.setOperationUrl(requestURI);
@@ -109,5 +132,31 @@ public class LogAspect {
         //System.out.println("Run time monitor : " + requestURI + " Run time is " + runTime + "ms");
 
         return rvt;
+    }
+
+    private boolean isAuthOperation(String operationName){
+        boolean c = false;
+
+        if(StringUtils.isEmpty(operationName)) {
+            return c;
+        }
+
+        if(operationName.equals("User Login Then Get Api Token")){
+            c = true;
+        }
+
+        if(operationName.equals("Refresh Api Token")){
+            c = true;
+        }
+
+        if(operationName.equals("Remove Api Token")){
+            c = true;
+        }
+
+        if(operationName.equals("Verify Public Api Token")){
+            c = true;
+        }
+
+        return c;
     }
 }

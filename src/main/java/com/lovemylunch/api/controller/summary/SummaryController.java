@@ -4,6 +4,7 @@ import com.lovemylunch.api.controller.BaseController;
 import com.lovemylunch.api.service.SummaryService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.PageBean;
+import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.order.SumItem;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +30,7 @@ public class SummaryController extends BaseController{
     @Autowired
     private SummaryService summaryService;
 
+    @TokenSecured
     @RequestMapping(value={"/summary"}, method= RequestMethod.GET)
     @ApiOperation(value = "Get order summary", response = SumItem.class,responseContainer =
             "List")

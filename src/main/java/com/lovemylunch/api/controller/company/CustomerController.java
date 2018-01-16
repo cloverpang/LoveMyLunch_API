@@ -4,6 +4,7 @@ import com.lovemylunch.api.controller.BaseController;
 import com.lovemylunch.api.service.CustomerService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.PageBean;
+import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.client.Customer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +28,7 @@ public class CustomerController extends BaseController{
     @Autowired
     private CustomerService customerService;
 
+    @TokenSecured
     @ApiOperation(value="get Customer ", notes="",response = Customer.class)
     @RequestMapping(value={"/customer/{id}"}, method= RequestMethod.GET)
     public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
@@ -46,6 +48,7 @@ public class CustomerController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value={"/customers"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search customer API", response = Customer.class,responseContainer =
             "List")
@@ -69,6 +72,7 @@ public class CustomerController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value = "/customer", method = RequestMethod.POST)
     @ApiOperation(value = "Create customer API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> createCustomer(
@@ -85,6 +89,7 @@ public class CustomerController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value = "/customer", method = RequestMethod.PUT)
     @ApiOperation(value = "Save customer API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> saveCustomer(
@@ -100,7 +105,8 @@ public class CustomerController extends BaseController{
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
+    @TokenSecured
     @RequestMapping(value = "customer/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete customer API", response = boolean.class)
     public ResponseEntity<ApiCallResult> deleteCustomer(

@@ -3,6 +3,7 @@ package com.lovemylunch.api.controller.system;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lovemylunch.api.service.AdminUserService;
 import com.lovemylunch.common.beans.ApiCallResult;
+import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.system.AdminUser;
 import com.lovemylunch.common.beans.system.LoginBean;
 import com.lovemylunch.common.util.StringUtils;
@@ -60,6 +61,7 @@ public class AdminUserController {
         }
     }
 
+    @TokenSecured
     @RequestMapping(value = "//adminUser/updatePassword", method = RequestMethod.POST)
     @ApiOperation(value = "admin updatePassword", response = Boolean.class)
     public ResponseEntity<ApiCallResult> updatePassword(@RequestBody(required = true) Map map) {
@@ -87,6 +89,7 @@ public class AdminUserController {
         }
     }
 
+    @TokenSecured
     @RequestMapping(value = "/adminUser/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete adminUser API", response = boolean.class)
     public ResponseEntity<ApiCallResult> deleteAdminUser(
@@ -104,6 +107,7 @@ public class AdminUserController {
         }
     }
 
+    @TokenSecured
     @RequestMapping(value={"/adminUsers"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search adminUser API", response = AdminUser.class,responseContainer = "List")
     public ResponseEntity<ApiCallResult> search(){

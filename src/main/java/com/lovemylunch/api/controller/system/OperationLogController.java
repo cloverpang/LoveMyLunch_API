@@ -4,6 +4,7 @@ import com.lovemylunch.api.controller.BaseController;
 import com.lovemylunch.api.service.OperationLogService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.PageBean;
+import com.lovemylunch.common.beans.annotation.NotLogMethod;
 import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.system.OperationLog;
 import io.swagger.annotations.Api;
@@ -28,6 +29,7 @@ public class OperationLogController extends BaseController{
     @Autowired
     private OperationLogService operationLogService;
 
+    @TokenSecured
     @ApiOperation(value="get OperationLog", notes="",response = OperationLog.class)
     @RequestMapping(value={"/operationLog/{id}"}, method= RequestMethod.GET)
     public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
@@ -47,6 +49,7 @@ public class OperationLogController extends BaseController{
         }
     }
 
+    @NotLogMethod
     @TokenSecured
     @RequestMapping(value={"/operationLogs"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search operationLog", response = OperationLog.class,responseContainer =
@@ -71,6 +74,7 @@ public class OperationLogController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value = "/operationLog", method = RequestMethod.POST)
     @ApiOperation(value = "Create operationLog API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> createOperationLog(
@@ -86,10 +90,11 @@ public class OperationLogController extends BaseController{
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
+    @TokenSecured
     @RequestMapping(value = "operationLog/{id}", method = RequestMethod.DELETE)
-         @ApiOperation(value = "Delete operationLog API", response = boolean.class)
-         public ResponseEntity<ApiCallResult> deleteOperationLog(
+    @ApiOperation(value = "Delete operationLog API", response = boolean.class)
+    public ResponseEntity<ApiCallResult> deleteOperationLog(
             @ApiParam(value = "id", required = true)
             @PathVariable("id") String id) {
         logger.info("invoke: " + "/operationLog/");
@@ -104,6 +109,7 @@ public class OperationLogController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value = "operationLogs/{ids}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete operationLogs API", response = boolean.class)
     public ResponseEntity<ApiCallResult> batchDeleteOperationLog(

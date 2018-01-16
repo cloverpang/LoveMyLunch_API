@@ -3,6 +3,7 @@ package com.lovemylunch.api.controller.dashboard;
 import com.lovemylunch.api.controller.BaseController;
 import com.lovemylunch.api.service.DashboardService;
 import com.lovemylunch.common.beans.ApiCallResult;
+import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.dashboard.ChartData;
 import com.lovemylunch.common.beans.dashboard.CreateCount;
 import com.lovemylunch.common.beans.dashboard.Dashboard;
@@ -32,6 +33,7 @@ public class DashboardController extends BaseController{
     @Autowired
     private DashboardService dashboardService;
 
+    @TokenSecured
     @RequestMapping(value={"/dashboard/summary"}, method= RequestMethod.GET)
     @ApiOperation(value = "Get  dashboard summary", response = Dashboard.class)
     public ResponseEntity<ApiCallResult> getDashboard(){
@@ -47,6 +49,7 @@ public class DashboardController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value={"/dashboard/order/chart"}, method= RequestMethod.GET)
     @ApiOperation(value = "Get order chart data", response = SumItem.class,responseContainer = "List")
     public ResponseEntity<ApiCallResult> getOrderData(@RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
@@ -63,6 +66,7 @@ public class DashboardController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value={"/dashboard/customer/chart"}, method= RequestMethod.GET)
     @ApiOperation(value = "Get customer chart data", response = SumItem.class,responseContainer = "List")
     public ResponseEntity<ApiCallResult> getCustomerData(@RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,

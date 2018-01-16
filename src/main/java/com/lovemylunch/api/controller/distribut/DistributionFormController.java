@@ -4,6 +4,7 @@ import com.lovemylunch.api.controller.BaseController;
 import com.lovemylunch.api.service.DistributionFormService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.PageBean;
+import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.distribut.DistributionForm;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +30,7 @@ public class DistributionFormController extends BaseController{
     @Autowired
     private DistributionFormService distributionFormService;
 
+    @TokenSecured
     @ApiOperation(value="get DistributionForm ", notes="",response = DistributionForm.class)
     @RequestMapping(value={"/distributionForm/{id}"}, method= RequestMethod.GET)
     public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
@@ -48,6 +50,7 @@ public class DistributionFormController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value={"/distributionForms"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search distributionForm API", response = DistributionForm.class,responseContainer =
             "List")
@@ -71,6 +74,7 @@ public class DistributionFormController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value = "/distributionForm", method = RequestMethod.POST)
     @ApiOperation(value = "Create distributionForm API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> createDistributionForm(
@@ -87,6 +91,7 @@ public class DistributionFormController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value = "/distributionForm", method = RequestMethod.PUT)
     @ApiOperation(value = "Save distributionForm API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> saveDistributionForm(@RequestBody DistributionForm distributionForm) {
@@ -101,7 +106,8 @@ public class DistributionFormController extends BaseController{
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
+    @TokenSecured
     @RequestMapping(value = "distributionForm/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete distributionForm API", response = boolean.class)
     public ResponseEntity<ApiCallResult> deleteDistributionForm(@ApiParam(value = "id", required = true) @PathVariable("id") String id) {
@@ -117,6 +123,7 @@ public class DistributionFormController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value = "distributionForm/generate/{date}", method = RequestMethod.PUT)
     @ApiOperation(value = "Generate distributionForm API", response = boolean.class)
     public ResponseEntity<ApiCallResult> generateDistributionForm(
@@ -134,6 +141,7 @@ public class DistributionFormController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value = "distributionForm/selectDistributer/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "DistributionForm selectDistributer API", response = boolean.class)
     public ResponseEntity<ApiCallResult> selectDistributer(@ApiParam(value = "id", required = true)
@@ -153,6 +161,7 @@ public class DistributionFormController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value = "distributionForm/markArrived/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "MarkArrived distributionForm API", response = boolean.class)
     public ResponseEntity<ApiCallResult> markArrived(
@@ -170,6 +179,7 @@ public class DistributionFormController extends BaseController{
         }
     }
 
+    @TokenSecured
     @RequestMapping(value = "distributionForm/markAllArrived", method = RequestMethod.PUT)
     @ApiOperation(value = "MarkArrived all distributionForm API", response = boolean.class)
     public ResponseEntity<ApiCallResult> markAllArrived() {
