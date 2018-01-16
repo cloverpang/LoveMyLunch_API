@@ -10,6 +10,8 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -36,16 +38,15 @@ import java.util.concurrent.locks.ReentrantLock;
 @Component
 public class RedisUtil {
 
-	private static ServiceConfig serviceConfig;
+	@Resource
+	private  ServiceConfig serviceConfig1;
 
-    public void setServiceConfig(ServiceConfig serviceConfig){
-        System.out.println("injecting serviceConfig into RedisUtil ...");
-        System.out.println("Redis Host : "+serviceConfig.getRedisHost());
-        this.serviceConfig = serviceConfig;
-    }
-    public ServiceConfig getServiceConfig(){
-        return this.serviceConfig;
-    }
+	private  static ServiceConfig serviceConfig;
+
+	@PostConstruct
+	public void init() {
+		this.serviceConfig = serviceConfig1;
+	}
 
 	protected static Logger logger = LoggerFactory.getLogger(RedisUtil.class);
 

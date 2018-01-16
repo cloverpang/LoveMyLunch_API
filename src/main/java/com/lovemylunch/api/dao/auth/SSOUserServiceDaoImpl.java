@@ -156,6 +156,9 @@ public class SSOUserServiceDaoImpl implements SSOUserServiceDao {
 					result.setStatusCode(HttpServletResponse.SC_OK);
 					result.setReasonPhase("Token verified");
 					result.setResponseString("Token verified");
+
+					//todo - maybe need add an new logic, if exprie time - current time < 60 mintues, update token exprie time
+
 				} else  {
 					//expired, please renew with refresh key
 					result.setStatusCode(HttpServletResponse.SC_UNAUTHORIZED);

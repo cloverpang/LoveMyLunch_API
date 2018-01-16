@@ -45,18 +45,15 @@ public class TokenCheckInterceptor extends HandlerInterceptorAdapter {
         if (handler instanceof HandlerMethod) {
             HandlerMethod methodHandler = (HandlerMethod) handler;
             TokenSecured securedAnnotation = methodHandler.getMethodAnnotation(TokenSecured.class);
-
-            System.out.println("start to handle request");
-            System.out.println("base url is : " + baseURL);
+            //System.out.println("start to handle request");
 
             //Check if the method contain the @ClientAccountTokenCheck annotation
             if (securedAnnotation != null) {
 
-                System.out.println("request.getRequestURL() : " + request.getRequestURL());
-                System.out.println("request.getRemoteAddr() : " + request.getRemoteAddr());
-                System.out.println("request.getLocalAddr() : " + request.getLocalAddr());
+//                System.out.println("request.getRequestURL() : " + request.getRequestURL());
+//                System.out.println("request.getRemoteAddr() : " + request.getRemoteAddr());
+//                System.out.println("request.getLocalAddr() : " + request.getLocalAddr());
 
-                System.out.println();
 //                if (request.getRemoteAddr().equals(request.getLocalAddr()) ) {
 //                    //skip for unit test case running or while developing
 //                    return true;

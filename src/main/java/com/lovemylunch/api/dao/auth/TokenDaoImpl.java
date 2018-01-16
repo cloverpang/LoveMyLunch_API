@@ -1,14 +1,11 @@
 package com.lovemylunch.api.dao.auth;
 
-import com.lovemylunch.common.util.DateUtils;
-import com.lovemylunch.common.util.IDGenerator;
-import com.lovemylunch.common.util.StringUtils;
+import com.lovemylunch.common.util.*;
 import com.lovemylunch.common.beans.system.TokenSession;
 import com.lovemylunch.common.exceptions.AwfException;
 import com.alibaba.fastjson.JSON;
 import com.lovemylunch.api.dao.mybatis.mapper.AccessTokenMapper;
 import com.lovemylunch.common.beans.system.AccessTokenDO;
-import com.lovemylunch.common.util.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +67,7 @@ public class TokenDaoImpl {
 //                logger.info("saving tokenSession to Redis for 1 day ...");
 //                RedisUtil.hset(TOKENKEY, sessionId, tokenStr, RedisUtil.HOUR * 24);
 //                logger.info("success!  saved!!!");
-                this.saveTokenInRedisOrDatabase(sessionId, tokenValueStr);
+                this.saveTokenInRedisOrDatabase(sessionId, tokenValueStr,tokenSession);
             }
         }catch (Exception e){
             logger.error("error generateToken",e);
@@ -127,8 +124,9 @@ public class TokenDaoImpl {
     }
 
     public TokenSession getTokenSessionFromRedis(String sessionId){
+//        logger.info("sessionId is : " + sessionId);
         String resultStr = RedisUtil.hget(TOKENKEY, sessionId);
-
+//        logger.info("token resultStr is : " + resultStr);
         if (StringUtils.isBlank(resultStr)) {
             logger.error("can't find session token in redis: " + sessionId);
             return null;
@@ -141,7 +139,7 @@ public class TokenDaoImpl {
         try{
            return this.getTokenSessionFromRedis(sessionId);
         }catch (Exception e){
-            logger.error("get session token in redis field, redis issue!!!");
+            logger.error("get session token in redis field, redis issue!!!" + e.getMessage());
             return null;
         }
     }
@@ -202,9 +200,9 @@ public class TokenDaoImpl {
         return result;
     }
 
-    private void saveTokenInRedisOrDatabase(String sessionId,String tokenStr){
+    private void saveTokenInRedisOrDatabase(String sessionId,String tokenStr,TokenSession tokenSession){
         try{
-            boolean saveTokenToRedis = this.saveTokenInRedis(sessionId, tokenStr);
+            boolean saveTokenToRedis = this.saveTokenInRedis(sessionId, tokenSession);
             if(!saveTokenToRedis){
                 this.saveOrUpdateTokenInDatabase(sessionId, tokenStr);
             }
@@ -213,15 +211,21 @@ public class TokenDaoImpl {
         }
     }
 
-    private boolean saveTokenInRedis(String sessionId,String tokenStr){
+    private boolean saveTokenInRedis(String sessionId,TokenSession tokenSession){
         logger.info("saving tokenSession to Redis for 1 day ...");
-        Long i = RedisUtil.hset(TOKENKEY, sessionId, tokenStr, RedisUtil.HOUR * 24);
-        if(null == i){
-            logger.error("save token to redis field!!!");
-            return  false;
-        }else{
-            logger.info("success save token to redis!  saved!!!");
-            return true;
+
+        try{
+            Long i = RedisUtil.hset(TOKENKEY, sessionId, JsonUtils.toJson(tokenSession), RedisUtil.HOUR * 24);
+            if(null == i){
+                logger.error("save token to redis field!!!");
+                return  false;
+            }else{
+                logger.info("success save token to redis!  saved!!!");
+                return true;
+            }
+        }catch (Exception e) {
+            logger.error("save tokenSession into redis failed, exception:" + e.getMessage());
+            return false;
         }
     }
 
