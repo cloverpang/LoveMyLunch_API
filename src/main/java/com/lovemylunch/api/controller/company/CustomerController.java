@@ -4,6 +4,7 @@ import com.lovemylunch.api.controller.BaseController;
 import com.lovemylunch.api.service.CustomerService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.PageBean;
+import com.lovemylunch.common.beans.annotation.PermssionSecured;
 import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.client.Customer;
 import io.swagger.annotations.Api;
@@ -29,6 +30,7 @@ public class CustomerController extends BaseController{
     private CustomerService customerService;
 
     @TokenSecured
+    @PermssionSecured(value="customer_get_one")
     @ApiOperation(value="get Customer ", notes="",response = Customer.class)
     @RequestMapping(value={"/customer/{id}"}, method= RequestMethod.GET)
     public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
@@ -49,6 +51,7 @@ public class CustomerController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="customer_get_list")
     @RequestMapping(value={"/customers"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search customer API", response = Customer.class,responseContainer =
             "List")
@@ -73,6 +76,7 @@ public class CustomerController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="customer_add")
     @RequestMapping(value = "/customer", method = RequestMethod.POST)
     @ApiOperation(value = "Create customer API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> createCustomer(
@@ -90,6 +94,7 @@ public class CustomerController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="customer_update")
     @RequestMapping(value = "/customer", method = RequestMethod.PUT)
     @ApiOperation(value = "Save customer API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> saveCustomer(
@@ -107,6 +112,7 @@ public class CustomerController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="customer_delete")
     @RequestMapping(value = "customer/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete customer API", response = boolean.class)
     public ResponseEntity<ApiCallResult> deleteCustomer(

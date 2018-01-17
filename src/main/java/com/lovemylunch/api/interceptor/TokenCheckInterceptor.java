@@ -33,9 +33,6 @@ public class TokenCheckInterceptor extends HandlerInterceptorAdapter {
         this.baseURL = baseURL;
     }
 
-    @Autowired
-    private ServiceConfig serviceConfig;
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //Call super to keep the existing process

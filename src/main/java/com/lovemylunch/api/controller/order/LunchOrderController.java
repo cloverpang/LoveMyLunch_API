@@ -4,6 +4,7 @@ import com.lovemylunch.api.controller.BaseController;
 import com.lovemylunch.api.service.LunchOrderService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.PageBean;
+import com.lovemylunch.common.beans.annotation.PermssionSecured;
 import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.order.LunchOrder;
 import io.swagger.annotations.Api;
@@ -29,6 +30,7 @@ public class LunchOrderController extends BaseController{
     private LunchOrderService lunchOrderService;
 
     @TokenSecured
+    @PermssionSecured(value="order_get_one")
     @ApiOperation(value="get LunchOrder ", notes="",response = LunchOrder.class)
     @RequestMapping(value={"/lunchOrder/{id}"}, method= RequestMethod.GET)
     public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
@@ -49,6 +51,7 @@ public class LunchOrderController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="order_get_list")
     @RequestMapping(value={"/lunchOrders"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search lunchOrder API", response = LunchOrder.class,responseContainer =
             "List")
@@ -73,6 +76,7 @@ public class LunchOrderController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="order_add")
     @RequestMapping(value = "/lunchOrder", method = RequestMethod.POST)
     @ApiOperation(value = "Create lunchOrder API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> createLunchOrder(
@@ -90,6 +94,7 @@ public class LunchOrderController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="order_update")
     @RequestMapping(value = "/lunchOrder", method = RequestMethod.PUT)
     @ApiOperation(value = "Save lunchOrder API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> saveLunchOrder(
@@ -107,6 +112,7 @@ public class LunchOrderController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="order_delete")
     @RequestMapping(value = "lunchOrder/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete lunchOrder API", response = boolean.class)
     public ResponseEntity<ApiCallResult> deleteLunchOrder(
@@ -125,6 +131,7 @@ public class LunchOrderController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="order_cancel")
     @RequestMapping(value = "lunchOrder/cancal/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "MarkNotUse lunchOrder API", response = boolean.class)
     public ResponseEntity<ApiCallResult> cancal(

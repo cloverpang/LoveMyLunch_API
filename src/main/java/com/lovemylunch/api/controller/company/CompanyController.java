@@ -4,6 +4,7 @@ import com.lovemylunch.api.controller.BaseController;
 import com.lovemylunch.api.service.CompanyService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.PageBean;
+import com.lovemylunch.common.beans.annotation.PermssionSecured;
 import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.client.Company;
 import com.lovemylunch.common.beans.client.extensions.CompanyExtension;
@@ -30,6 +31,7 @@ public class CompanyController extends BaseController{
     private CompanyService companyService;
 
     @TokenSecured
+    @PermssionSecured(value="company_get_one")
     @ApiOperation(value="get Company ", notes="",response = Company.class)
     @RequestMapping(value={"/company/{id}"}, method= RequestMethod.GET)
     public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
@@ -50,6 +52,7 @@ public class CompanyController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="company_get_list")
     @RequestMapping(value={"/companies"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search company API", response = Company.class,responseContainer =
             "List")
@@ -74,6 +77,7 @@ public class CompanyController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="company_add")
     @RequestMapping(value = "/company", method = RequestMethod.POST)
     @ApiOperation(value = "Create company API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> createCompany(
@@ -91,6 +95,7 @@ public class CompanyController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="company_update")
     @RequestMapping(value = "/company", method = RequestMethod.PUT)
     @ApiOperation(value = "Save company API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> saveCompany(
@@ -108,6 +113,7 @@ public class CompanyController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="company_delete")
     @RequestMapping(value = "company/{id}", method = RequestMethod.DELETE)
          @ApiOperation(value = "Delete company API", response = boolean.class)
          public ResponseEntity<ApiCallResult> deleteCompany(
@@ -126,6 +132,7 @@ public class CompanyController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="company_batch_delete")
     @RequestMapping(value = "companies/{ids}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete companies API", response = boolean.class)
     public ResponseEntity<ApiCallResult> batchDeleteCompany(
@@ -144,6 +151,7 @@ public class CompanyController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="company_get_list")
     @RequestMapping(value={"/companyExtends"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search company API", response = Company.class,responseContainer =
             "List")

@@ -9,8 +9,11 @@ import java.util.List;
 @Component
 @Mapper
 public interface AdminUserMapper {
+    public AdminUser getByLogin(String login);
+    public AdminUser getById(String id);
     public AdminUser login(AdminUser adminUser);
     public List<AdminUser> getAll();
     public void updatePassword(AdminUser adminUser);
+    public void updateBackendPermissions(AdminUser adminUser);
     public void delete(String id);
 }

@@ -5,6 +5,7 @@ import com.lovemylunch.api.service.OperationLogService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.PageBean;
 import com.lovemylunch.common.beans.annotation.NotLogMethod;
+import com.lovemylunch.common.beans.annotation.PermssionSecured;
 import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.system.OperationLog;
 import io.swagger.annotations.Api;
@@ -30,6 +31,7 @@ public class OperationLogController extends BaseController{
     private OperationLogService operationLogService;
 
     @TokenSecured
+    @PermssionSecured(value="operationLog_get_one")
     @ApiOperation(value="get OperationLog", notes="",response = OperationLog.class)
     @RequestMapping(value={"/operationLog/{id}"}, method= RequestMethod.GET)
     public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
@@ -51,6 +53,7 @@ public class OperationLogController extends BaseController{
 
     @NotLogMethod
     @TokenSecured
+    @PermssionSecured(value="operationLog_get_list")
     @RequestMapping(value={"/operationLogs"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search operationLog", response = OperationLog.class,responseContainer =
             "List")
@@ -92,6 +95,7 @@ public class OperationLogController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="operationLog_delete")
     @RequestMapping(value = "operationLog/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete operationLog API", response = boolean.class)
     public ResponseEntity<ApiCallResult> deleteOperationLog(
@@ -110,6 +114,7 @@ public class OperationLogController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="operationLog_batch_delete")
     @RequestMapping(value = "operationLogs/{ids}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete operationLogs API", response = boolean.class)
     public ResponseEntity<ApiCallResult> batchDeleteOperationLog(

@@ -21,11 +21,29 @@ public class AdminUserServiceImpl implements AdminUserService{
     private AdminUserMapper adminUserMapper;
 
     @Override
+    public AdminUser getByLogin(String login) throws Exception {
+        try{
+            return adminUserMapper.getByLogin(login);
+        }catch (Exception e){
+            throw new Exception("get Admin user failed!",e);
+        }
+    }
+
+    @Override
+    public AdminUser getById(String id) throws Exception {
+        try{
+            return adminUserMapper.getById(id);
+        }catch (Exception e){
+            throw new Exception("get Admin user failed!",e);
+        }
+    }
+
+    @Override
     public AdminUser login(AdminUser adminUser) throws Exception{
         try{
             return adminUserMapper.login(adminUser);
         }catch (Exception e){
-            throw new Exception("update admin user password failed!",e);
+            throw new Exception("admin login  failed!",e);
         }
     }
 
@@ -52,5 +70,14 @@ public class AdminUserServiceImpl implements AdminUserService{
     @Override
     public List<AdminUser> getAll() {
         return adminUserMapper.getAll();
+    }
+
+    @Override
+    public void updateBackendPermissions(AdminUser adminUser) throws Exception {
+        try{
+            adminUserMapper.updateBackendPermissions(adminUser);
+        }catch (Exception e){
+            throw new Exception("update admin backend permissions failed!",e);
+        }
     }
 }

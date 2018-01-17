@@ -4,6 +4,7 @@ import com.lovemylunch.api.controller.BaseController;
 import com.lovemylunch.api.service.DistributerService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.PageBean;
+import com.lovemylunch.common.beans.annotation.PermssionSecured;
 import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.distribut.Distributer;
 import io.swagger.annotations.Api;
@@ -29,6 +30,7 @@ public class DistributerController extends BaseController{
     private DistributerService distributerService;
 
     @TokenSecured
+    @PermssionSecured(value="distributer_get_one")
     @ApiOperation(value="get Distributer ", notes="",response = Distributer.class)
     @RequestMapping(value={"/distributer/{id}"}, method= RequestMethod.GET)
     public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
@@ -49,6 +51,7 @@ public class DistributerController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="distributer_get_list")
     @RequestMapping(value={"/distributers"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search distributer API", response = Distributer.class,responseContainer =
             "List")
@@ -73,6 +76,7 @@ public class DistributerController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="distributer_add")
     @RequestMapping(value = "/distributer", method = RequestMethod.POST)
     @ApiOperation(value = "Create distributer API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> createDistributer(
@@ -90,6 +94,7 @@ public class DistributerController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="distributer_update")
     @RequestMapping(value = "/distributer", method = RequestMethod.PUT)
     @ApiOperation(value = "Save distributer API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> saveDistributer(
@@ -107,6 +112,7 @@ public class DistributerController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="distributer_delete")
     @RequestMapping(value = "distributer/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete distributer API", response = boolean.class)
     public ResponseEntity<ApiCallResult> deleteDistributer(

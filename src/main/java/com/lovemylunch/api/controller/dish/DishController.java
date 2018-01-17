@@ -4,6 +4,7 @@ import com.lovemylunch.api.controller.BaseController;
 import com.lovemylunch.api.service.DishService;
 import com.lovemylunch.common.beans.ApiCallResult;
 import com.lovemylunch.common.beans.PageBean;
+import com.lovemylunch.common.beans.annotation.PermssionSecured;
 import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.food.Dish;
 import io.swagger.annotations.Api;
@@ -29,6 +30,7 @@ public class DishController extends BaseController{
     private DishService dishService;
 
     @TokenSecured
+    @PermssionSecured(value="dish_get_one")
     @ApiOperation(value="get Dish ", notes="",response = Dish.class)
     @RequestMapping(value={"/dish/{id}"}, method= RequestMethod.GET)
     public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
@@ -49,6 +51,7 @@ public class DishController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="dish_get_list")
     @RequestMapping(value={"/dishs"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search dish API", response = Dish.class,responseContainer =
             "List")
@@ -73,6 +76,7 @@ public class DishController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="dish_add")
     @RequestMapping(value = "/dish", method = RequestMethod.POST)
     @ApiOperation(value = "Create dish API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> createDish(
@@ -90,6 +94,7 @@ public class DishController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="dish_update")
     @RequestMapping(value = "/dish", method = RequestMethod.PUT)
     @ApiOperation(value = "Save dish API", response = Boolean.class)
     public ResponseEntity<ApiCallResult> saveDish(
@@ -107,6 +112,7 @@ public class DishController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="dish_delete")
     @RequestMapping(value = "dish/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete dish API", response = boolean.class)
     public ResponseEntity<ApiCallResult> deleteDish(
@@ -125,6 +131,7 @@ public class DishController extends BaseController{
     }
 
     @TokenSecured
+    @PermssionSecured(value="dish_marknotuse")
     @RequestMapping(value = "dish/markNotUse/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "MarkNotUse dish API", response = boolean.class)
     public ResponseEntity<ApiCallResult> makeNotUse(

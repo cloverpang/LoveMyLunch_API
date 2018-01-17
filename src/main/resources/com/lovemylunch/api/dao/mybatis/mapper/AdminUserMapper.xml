@@ -3,6 +3,18 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lovemylunch.api.dao.mybatis.mapper.AdminUserMapper">
+   <select id="getByLogin" parameterType="string" resultType="com.lovemylunch.common.beans.system.AdminUser">
+      <include refid="search_selectFields"/>
+      <include refid="search_fromClause"/>
+      WHERE a.admin_login = #{login} limit 1
+   </select>
+
+   <select id="getById" parameterType="string" resultType="com.lovemylunch.common.beans.system.AdminUser">
+      <include refid="search_selectFields"/>
+      <include refid="search_fromClause"/>
+      WHERE a.admin_id = #{id} limit 1
+   </select>
+
 	<select id="login" parameterType="com.lovemylunch.common.beans.system.AdminUser" resultType="com.lovemylunch.common.beans.system.AdminUser">
 		<include refid="search_selectFields"/>
 		<include refid="search_fromClause"/>
@@ -20,6 +32,8 @@
    a.admin_login as admin_login,
    a.admin_password as admin_password,
    a.admin_name as admin_name,
+   a.frontend_permissions as frontend_permissions,
+   a.backend_permissions as backend_permissions,
    a.createTime as createTime
 	</sql>
 
@@ -31,6 +45,13 @@
       UPDATE awf_admin
       SET
       admin_password = #{admin_password,jdbcType=VARCHAR}
+      WHERE admin_login = #{admin_login}
+   </update>
+
+   <update id="updateBackendPermissions" parameterType="com.lovemylunch.api.dao.mybatis.mapper.AdminUserMapper">
+      UPDATE awf_admin
+      SET
+      backend_permissions = #{backend_permissions,jdbcType=VARCHAR}
       WHERE admin_login = #{admin_login}
    </update>
 
