@@ -152,4 +152,29 @@ public class AdminUserController {
         }
     }
 
+    @TokenSecured
+    @PermssionSecured(value="adminUser_update_front_permission")
+    @RequestMapping(value = "/adminUser/updateFrontendPermissions", method = RequestMethod.PUT)
+    @ApiOperation(value = "Admin updateBackendPermissions", response = Boolean.class)
+    public ResponseEntity<ApiCallResult> updateFrontendPermissions(@RequestBody(required = true) Map map) {
+        String admin_login = (String) map.get("admin_login");
+        List<String> admin_frontend_permission = ( List<String>) map.get("admin_frontend_permission");
+        String frontend_permission = StringUtils.join(admin_frontend_permission,",");
+        logger.info("invoke: " + "/adminUser/updateBackendPermissions/" + admin_login );
+        ApiCallResult result = new ApiCallResult();
+        try{
+            Boolean excute = false;
+            AdminUser adminUser = new AdminUser();
+            adminUser.setAdmin_login(admin_login);
+            adminUser.setFrontend_permissions(frontend_permission);
+            adminUserService.updateFrontendPermissions(adminUser);
+            excute = true;
+            result.setContent(excute);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (Exception e){
+            result.setMessage("Admin user update front permissions failed : " + ExceptionUtils.getFullStackTrace(e));
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

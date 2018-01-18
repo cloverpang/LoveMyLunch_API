@@ -12,4 +12,5 @@ public interface AdminUserService {
     boolean delete(String id) throws Exception;
     public List<AdminUser> getAll();
     void updateBackendPermissions(AdminUser adminUser) throws Exception;
+    void updateFrontendPermissions(AdminUser adminUser) throws Exception;
 }

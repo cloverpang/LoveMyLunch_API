@@ -80,4 +80,13 @@ public class AdminUserServiceImpl implements AdminUserService{
             throw new Exception("update admin backend permissions failed!",e);
         }
     }
+
+    @Override
+    public void updateFrontendPermissions(AdminUser adminUser) throws Exception {
+        try{
+            adminUserMapper.updateFrontendPermissions(adminUser);
+        }catch (Exception e){
+            throw new Exception("update admin frontend permissions failed!",e);
+        }
+    }
 }

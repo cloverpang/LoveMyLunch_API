@@ -1,5 +1,6 @@
 package com.lovemylunch.api.service.impl;
 
+import com.lovemylunch.common.beans.system.TokenAndInfo;
 import com.lovemylunch.common.security.MD5;
 import com.lovemylunch.common.util.IDGenerator;
 import com.lovemylunch.common.beans.ServiceCallResult;
@@ -70,8 +71,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 TokenSession tokenSession = tokenDao.generateToken(user.getAdmin_login(), user.getAdmin_id(), IDGenerator.uuid(), userType);
 
                 if (tokenSession != null) {
-                    String token = JSON.toJSONString(tokenSession);
-                    result.setResponseString(token);
+                    TokenAndInfo tokenAndInfo = new TokenAndInfo();
+                    tokenAndInfo.setTokenSession(tokenSession);
+                    tokenAndInfo.setAdminUser(user);
+                    //String token = JSON.toJSONString(tokenSession);
+                    //result.setResponseString(token);
+                    result.setResponseString(JSON.toJSONString(tokenAndInfo));
                     result.setStatusCode(HttpServletResponse.SC_OK);
                     result.setReasonPhase("User credential verified and token generated.");
                 } else {

@@ -15,5 +15,6 @@ public interface AdminUserMapper {
     public List<AdminUser> getAll();
     public void updatePassword(AdminUser adminUser);
     public void updateBackendPermissions(AdminUser adminUser);
+    public void updateFrontendPermissions(AdminUser adminUser);
     public void delete(String id);
 }
