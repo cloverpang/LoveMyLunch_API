@@ -159,14 +159,17 @@ public class AdminUserController {
     public ResponseEntity<ApiCallResult> updateFrontendPermissions(@RequestBody(required = true) Map map) {
         String admin_login = (String) map.get("admin_login");
         List<String> admin_frontend_permission = ( List<String>) map.get("admin_frontend_permission");
+        List<String> admin_backend_permission = ( List<String>) map.get("admin_backend_permission");
         String frontend_permission = StringUtils.join(admin_frontend_permission,",");
-        logger.info("invoke: " + "/adminUser/updateBackendPermissions/" + admin_login );
+        String backend_permissions = StringUtils.join(admin_backend_permission,",");
+        logger.info("invoke: " + "/adminUser/updateFrontendPermissions/" + admin_login );
         ApiCallResult result = new ApiCallResult();
         try{
             Boolean excute = false;
             AdminUser adminUser = new AdminUser();
             adminUser.setAdmin_login(admin_login);
             adminUser.setFrontend_permissions(frontend_permission);
+            adminUser.setBackend_permissions(backend_permissions);
             adminUserService.updateFrontendPermissions(adminUser);
             excute = true;
             result.setContent(excute);

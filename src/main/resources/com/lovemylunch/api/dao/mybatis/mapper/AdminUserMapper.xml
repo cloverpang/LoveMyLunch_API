@@ -58,7 +58,8 @@
    <update id="updateFrontendPermissions" parameterType="com.lovemylunch.api.dao.mybatis.mapper.AdminUserMapper">
       UPDATE awf_admin
       SET
-      frontend_permissions = #{frontend_permissions,jdbcType=VARCHAR}
+      frontend_permissions = #{frontend_permissions,jdbcType=VARCHAR},
+      backend_permissions = #{backend_permissions,jdbcType=VARCHAR}
       WHERE admin_login = #{admin_login}
    </update>
 
