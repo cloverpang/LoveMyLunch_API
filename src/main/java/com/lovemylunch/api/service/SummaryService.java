@@ -5,5 +5,5 @@ import com.lovemylunch.common.beans.order.SumItem;
 import java.util.List;
 
 public interface SummaryService {
-    List<SumItem> getSummary(String startDate,String endDate) throws Exception;
+    List<SumItem> getSummary(String center,String startDate,String endDate) throws Exception;
 }

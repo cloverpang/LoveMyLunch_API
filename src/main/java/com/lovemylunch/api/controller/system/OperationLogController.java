@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SpringBootApplication
-//@RequestMapping("/operationLog")
+@RequestMapping(value={"/{center}"})
 @Api(tags = {"operationLog"}, description = "OperationLog APIs")
 public class OperationLogController extends BaseController{
     protected Logger logger = LoggerFactory.getLogger(OperationLogController.class);
@@ -34,7 +34,7 @@ public class OperationLogController extends BaseController{
     @PermssionSecured(value="operationLog_get_one")
     @ApiOperation(value="get OperationLog", notes="",response = OperationLog.class)
     @RequestMapping(value={"/operationLog/{id}"}, method= RequestMethod.GET)
-    public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
+    public ResponseEntity<ApiCallResult> get(@PathVariable String center,@PathVariable("id") String id){
         logger.info("invoke: " + "/operationLog/" + id);
         ApiCallResult result = new ApiCallResult();
         try{
@@ -57,7 +57,8 @@ public class OperationLogController extends BaseController{
     @RequestMapping(value={"/operationLogs"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search operationLog", response = OperationLog.class,responseContainer =
             "List")
-    public ResponseEntity<ApiCallResult> search(@RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
+    public ResponseEntity<ApiCallResult> search(@PathVariable String center,
+                                                @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
                                                 @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
                                                 @ApiParam(value = "column name")
                                                 @RequestParam(value = "sortColumn", required = false, defaultValue = "createTime") String sortColumn,
@@ -68,6 +69,7 @@ public class OperationLogController extends BaseController{
         logger.info("invoke: " + "/operationLogs");
         ApiCallResult result = new ApiCallResult();
         try{
+            conditionsStr = conditionsStr + "$operationCenterCode::=::" + center;
             PageBean<OperationLog> operationLogPageBean = operationLogService.page(conditionsStr, pageSize, pageNumber, sortColumn, sortType);
             result.setContent(operationLogPageBean);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -80,11 +82,12 @@ public class OperationLogController extends BaseController{
     @TokenSecured
     @RequestMapping(value = "/operationLog", method = RequestMethod.POST)
     @ApiOperation(value = "Create operationLog API", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> createOperationLog(
+    public ResponseEntity<ApiCallResult> createOperationLog(@PathVariable String center,
             @RequestBody OperationLog operationLog) {
         logger.info("invoke: " + "/operationLog/");
         ApiCallResult result = new ApiCallResult();
         try{
+            operationLog.setOperationCenterCode(center);
             Boolean excute = operationLogService.insert(operationLog);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -98,7 +101,7 @@ public class OperationLogController extends BaseController{
     @PermssionSecured(value="operationLog_delete")
     @RequestMapping(value = "operationLog/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete operationLog API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> deleteOperationLog(
+    public ResponseEntity<ApiCallResult> deleteOperationLog(@PathVariable String center,
             @ApiParam(value = "id", required = true)
             @PathVariable("id") String id) {
         logger.info("invoke: " + "/operationLog/");
@@ -117,7 +120,7 @@ public class OperationLogController extends BaseController{
     @PermssionSecured(value="operationLog_batch_delete")
     @RequestMapping(value = "operationLogs/{ids}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete operationLogs API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> batchDeleteOperationLog(
+    public ResponseEntity<ApiCallResult> batchDeleteOperationLog(@PathVariable String center,
             @ApiParam(value = "ids", required = true)
             @PathVariable("ids") String ids) {
         logger.info("invoke: " + "/operationLogs/" + ids);

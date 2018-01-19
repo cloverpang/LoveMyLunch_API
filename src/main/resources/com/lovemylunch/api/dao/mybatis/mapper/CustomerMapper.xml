@@ -42,6 +42,7 @@
    a.customerScore as customerScore,
    a.customerType as customerType,
    a.status as status,
+   a.operationCenterCode as operationCenterCode,
    a.createTime as createTime
 	</sql>
 
@@ -62,6 +63,7 @@
     customerScore,
     customerType,
     status,
+    operationCenterCode,
     createTime
 		) VALUES (
 		#{customerId,jdbcType=VARCHAR},
@@ -75,6 +77,7 @@
 		#{customerScore,jdbcType=NUMERIC},
 		#{customerType,jdbcType=NUMERIC},
 		#{status,jdbcType=NUMERIC},
+		#{operationCenterCode,jdbcType=VARCHAR},
 		#{createTime,jdbcType=TIMESTAMP}
 		)
 	</insert>

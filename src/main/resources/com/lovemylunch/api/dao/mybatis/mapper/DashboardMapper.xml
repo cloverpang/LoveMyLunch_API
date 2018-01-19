@@ -5,12 +5,12 @@
 <mapper namespace="com.lovemylunch.api.dao.mybatis.mapper.DashboardMapper">
 	<select id="getDashborad" parameterType="string" resultType="com.lovemylunch.common.beans.dashboard.Dashboard">
 select
-(select count(1) from awf_dish) as dishQuantity,
-(select count(1) from awf_lunchorder) as orderQuantity,
-(select count(1) from awf_company) as companyQuantity,
-(select count(1) from awf_customer) as customerQuantity,
-(select avg(realPrice) from awf_lunchorder) as averageOrderPrice,
-(select sum(realPrice) from awf_lunchorder) as totalIncome
+(select count(1) from awf_dish where operationCenterCode=#{center}) as dishQuantity,
+(select count(1) from awf_lunchorder where operationCenterCode=#{center} and orderStatus != 2) as orderQuantity,
+(select count(1) from awf_company where operationCenterCode=#{center}) as companyQuantity,
+(select count(1) from awf_customer where operationCenterCode=#{center} and status != 1) as customerQuantity,
+(select avg(realPrice) from awf_lunchorder where operationCenterCode=#{center} ) as averageOrderPrice,
+(select sum(realPrice) from awf_lunchorder where operationCenterCode=#{center} ) as totalIncome
  from dual;
 	</select>
 
@@ -19,7 +19,7 @@ select
 		DATE_FORMAT(d.createTime,'%Y-%m-%d') as createdDate,
 		count(1) as createdCount
 		FROM awf_lunchorder d
-		where d.createTime between #{startDate} and #{endDate}
+		where (d.createTime between #{startDate} and #{endDate}) and orderStatus != 2 and operationCenterCode=#{center}
 		GROUP BY createdDate
 </select>
 
@@ -28,7 +28,7 @@ select
 		DATE_FORMAT(d.createTime,'%Y-%m-%d') as createdDate,
 		count(1) as createdCount
 		FROM awf_customer d
-		where d.createTime between #{startDate} and #{endDate}
+		where (d.createTime between #{startDate} and #{endDate}) and operationCenterCode=#{center}
 		GROUP BY createdDate
 </select>
 </mapper>

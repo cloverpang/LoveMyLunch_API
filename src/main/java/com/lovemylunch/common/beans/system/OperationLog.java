@@ -13,6 +13,7 @@ public class OperationLog {
     private String operationUser;
     private String operationToken;
     private Long runTime;
+    private String operationCenterCode;
     private Date createTime;
 
     public String getOperationId() {
@@ -93,5 +94,13 @@ public class OperationLog {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getOperationCenterCode() {
+        return operationCenterCode;
+    }
+
+    public void setOperationCenterCode(String operationCenterCode) {
+        this.operationCenterCode = operationCenterCode;
     }
 }

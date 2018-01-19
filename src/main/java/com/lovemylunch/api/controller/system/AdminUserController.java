@@ -27,7 +27,7 @@ import java.util.Map;
 
 @RestController
 @SpringBootApplication
-//@RequestMapping("/AdminUser")
+@RequestMapping(value={"/{center}"})
 @Api(tags = {"AdminUser"}, description = "AdminUser APIs")
 public class AdminUserController {
     protected Logger logger = LoggerFactory.getLogger(AdminUserController.class);
@@ -39,7 +39,7 @@ public class AdminUserController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.PUT, value = "/admin/login")
     @ApiOperation(value = "Admin user login", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> adminLogin(@RequestBody(required = true) LoginBean loginBean, HttpServletRequest request,
+    public ResponseEntity<ApiCallResult> adminLogin(@PathVariable String center,@RequestBody(required = true) LoginBean loginBean, HttpServletRequest request,
                                                     HttpServletResponse response) throws JsonProcessingException {
         String adminLogin = loginBean.getAccount();
         String adminPassword = loginBean.getPassword();
@@ -66,7 +66,7 @@ public class AdminUserController {
     @PermssionSecured(value="adminUser_updatePassword")
     @RequestMapping(value = "/adminUser/updatePassword", method = RequestMethod.PUT)
     @ApiOperation(value = "Admin updatePassword", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> updatePassword(@RequestBody(required = true) Map map) {
+    public ResponseEntity<ApiCallResult> updatePassword(@PathVariable String center,@RequestBody(required = true) Map map) {
         String adminLogin = (String) map.get("adminLogin");
         String adminPassword = (String) map.get("adminPassword");
         String newAdminPassword = (String) map.get("newAdminPassword");
@@ -95,7 +95,7 @@ public class AdminUserController {
     @PermssionSecured(value="adminUser_delete")
     @RequestMapping(value = "/adminUser/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete adminUser API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> deleteAdminUser(
+    public ResponseEntity<ApiCallResult> deleteAdminUser(@PathVariable String center,
             @ApiParam(value = "id", required = true)
             @PathVariable("id") String id) {
         logger.info("invoke: " + "/adminUser/" + id);
@@ -114,7 +114,7 @@ public class AdminUserController {
     @PermssionSecured(value="adminUser_getAll")
     @RequestMapping(value={"/adminUsers"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search adminUser API", response = AdminUser.class,responseContainer = "List")
-    public ResponseEntity<ApiCallResult> search(){
+    public ResponseEntity<ApiCallResult> search(@PathVariable String center){
         logger.info("invoke: " + "/adminUsers");
         ApiCallResult result = new ApiCallResult();
         try{
@@ -131,7 +131,7 @@ public class AdminUserController {
     @PermssionSecured(value="adminUser_update_backend_permission")
     @RequestMapping(value = "/adminUser/updateBackendPermissions", method = RequestMethod.PUT)
     @ApiOperation(value = "Admin updateBackendPermissions", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> updateBackendPermissions(@RequestBody(required = true) Map map) {
+    public ResponseEntity<ApiCallResult> updateBackendPermissions(@PathVariable String center,@RequestBody(required = true) Map map) {
         String admin_login = (String) map.get("admin_login");
         List<String> admin_backend_permission = ( List<String>) map.get("admin_backend_permission");
         String backend_permissions = StringUtils.join(admin_backend_permission,",");
@@ -156,7 +156,7 @@ public class AdminUserController {
     @PermssionSecured(value="adminUser_update_front_permission")
     @RequestMapping(value = "/adminUser/updateFrontendPermissions", method = RequestMethod.PUT)
     @ApiOperation(value = "Admin updateBackendPermissions", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> updateFrontendPermissions(@RequestBody(required = true) Map map) {
+    public ResponseEntity<ApiCallResult> updateFrontendPermissions(@PathVariable String center,@RequestBody(required = true) Map map) {
         String admin_login = (String) map.get("admin_login");
         List<String> admin_frontend_permission = ( List<String>) map.get("admin_frontend_permission");
         List<String> admin_backend_permission = ( List<String>) map.get("admin_backend_permission");

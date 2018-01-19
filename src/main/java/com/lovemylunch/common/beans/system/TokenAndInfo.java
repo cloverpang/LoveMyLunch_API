@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class TokenAndInfo implements Serializable{
     private AdminUser adminUser;
     private TokenSession tokenSession;
+    private String operationCenterCode;//运营中心代码
 
     public AdminUser getAdminUser() {
         return adminUser;
@@ -25,5 +26,13 @@ public class TokenAndInfo implements Serializable{
 
     public void setTokenSession(TokenSession tokenSession) {
         this.tokenSession = tokenSession;
+    }
+
+    public String getOperationCenterCode() {
+        return operationCenterCode;
+    }
+
+    public void setOperationCenterCode(String operationCenterCode) {
+        this.operationCenterCode = operationCenterCode;
     }
 }

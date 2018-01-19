@@ -20,12 +20,12 @@ public interface DistributionFormService {
 
     Boolean selectDistributer(String id,String distributerId,String distributerName) throws Exception;
 
-    Boolean makeAllArrived() throws Exception;
+    Boolean makeAllArrived(String center) throws Exception;
 
     PageBean<DistributionForm> page(String conditionsStr, int pageSize, int pageNo,
                         String sortColumn, String sortType) throws Exception;
 
     List<DistributionForm> search(String conditionsStr, int pageSize, int pageNo, String sortColumn, String sortType) throws Exception;
 
-    int generateDistributionForm(String orderDate) throws Exception;
+    int generateDistributionForm(String center,String orderDate) throws Exception;
 }

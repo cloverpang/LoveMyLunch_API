@@ -34,6 +34,7 @@
    a.admin_name as admin_name,
    a.frontend_permissions as frontend_permissions,
    a.backend_permissions as backend_permissions,
+   a.operationCenterCode as operationCenterCode,
    a.createTime as createTime
 	</sql>
 

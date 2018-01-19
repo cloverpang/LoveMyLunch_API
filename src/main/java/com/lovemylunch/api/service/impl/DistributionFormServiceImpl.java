@@ -130,9 +130,9 @@ public class DistributionFormServiceImpl extends BaseService implements Distribu
     }
 
     @Override
-    public Boolean makeAllArrived() throws Exception {
+    public Boolean makeAllArrived(String center) throws Exception {
         try{
-            distributionFormMapper.makeAllArrived();
+            distributionFormMapper.makeAllArrived(center);
             return true;
         }catch (Exception e){
             logger.error("Mark All DistributionForm arrived failed: " + e.getMessage());
@@ -192,12 +192,12 @@ public class DistributionFormServiceImpl extends BaseService implements Distribu
 
     @Transactional
     @Override
-    public int generateDistributionForm(String orderDate) throws Exception {
+    public int generateDistributionForm(String center,String orderDate) throws Exception {
         int generateQuantity = 0;
         String startTime = orderDate +  " 00:00:00";
         String endTime = orderDate + " 23:59:59";
 
-        String conditionStr = "bookTime::between::" + startTime + "," + endTime;
+        String conditionStr = "bookTime::between::" + startTime + "," + endTime + "$operationCenterCode::=::" + center;
         List<LunchOrder> orders = lunchOrderService.search(conditionStr, 10000, 1, "", "");
 
         if(CollectionUtils.isEmpty(orders)){

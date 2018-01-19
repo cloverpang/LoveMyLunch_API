@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SpringBootApplication
-//@RequestMapping("/lunchOrder")
+@RequestMapping(value={"/{center}"})
 @Api(tags = {"lunchOrder"}, description = "LunchOrder APIs")
 public class LunchOrderController extends BaseController{
     protected Logger logger = LoggerFactory.getLogger(LunchOrderController.class);
@@ -33,7 +33,7 @@ public class LunchOrderController extends BaseController{
     @PermssionSecured(value="order_get_one")
     @ApiOperation(value="get LunchOrder ", notes="",response = LunchOrder.class)
     @RequestMapping(value={"/lunchOrder/{id}"}, method= RequestMethod.GET)
-    public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
+    public ResponseEntity<ApiCallResult> get(@PathVariable String center,@PathVariable("id") String id){
         logger.info("invoke: " + "/lunchOrder/" + id);
         ApiCallResult result = new ApiCallResult();
         try{
@@ -55,7 +55,8 @@ public class LunchOrderController extends BaseController{
     @RequestMapping(value={"/lunchOrders"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search lunchOrder API", response = LunchOrder.class,responseContainer =
             "List")
-    public ResponseEntity<ApiCallResult> search(@RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
+    public ResponseEntity<ApiCallResult> search(@PathVariable String center,
+                                                @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
                                                 @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
                                                 @ApiParam(value = "column name")
                                                 @RequestParam(value = "sortColumn", required = false, defaultValue = "createTime") String sortColumn,
@@ -66,6 +67,7 @@ public class LunchOrderController extends BaseController{
         logger.info("invoke: " + "/lunchOrders");
         ApiCallResult result = new ApiCallResult();
         try{
+            conditionsStr = conditionsStr + "$operationCenterCode::=::" + center;
             PageBean<LunchOrder> lunchOrderPageBean = lunchOrderService.page(conditionsStr, pageSize, pageNumber, sortColumn, sortType);
             result.setContent(lunchOrderPageBean);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -79,11 +81,12 @@ public class LunchOrderController extends BaseController{
     @PermssionSecured(value="order_add")
     @RequestMapping(value = "/lunchOrder", method = RequestMethod.POST)
     @ApiOperation(value = "Create lunchOrder API", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> createLunchOrder(
+    public ResponseEntity<ApiCallResult> createLunchOrder(@PathVariable String center,
             @RequestBody LunchOrder lunchOrder) {
         logger.info("invoke: " + "/lunchOrder/");
         ApiCallResult result = new ApiCallResult();
         try{
+            lunchOrder.setOperationCenterCode(center);
             Boolean excute = lunchOrderService.insert(lunchOrder);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -97,11 +100,12 @@ public class LunchOrderController extends BaseController{
     @PermssionSecured(value="order_update")
     @RequestMapping(value = "/lunchOrder", method = RequestMethod.PUT)
     @ApiOperation(value = "Save lunchOrder API", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> saveLunchOrder(
+    public ResponseEntity<ApiCallResult> saveLunchOrder(@PathVariable String center,
             @RequestBody LunchOrder lunchOrder) {
         logger.info("invoke: " + "/lunchOrder/");
         ApiCallResult result = new ApiCallResult();
         try{
+            lunchOrder.setOperationCenterCode(center);
             Boolean excute = lunchOrderService.update(lunchOrder);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -115,7 +119,7 @@ public class LunchOrderController extends BaseController{
     @PermssionSecured(value="order_delete")
     @RequestMapping(value = "lunchOrder/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete lunchOrder API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> deleteLunchOrder(
+    public ResponseEntity<ApiCallResult> deleteLunchOrder(@PathVariable String center,
             @ApiParam(value = "id", required = true)
             @PathVariable("id") String id) {
         logger.info("invoke: " + "/lunchOrder/" + id);
@@ -134,7 +138,7 @@ public class LunchOrderController extends BaseController{
     @PermssionSecured(value="order_cancel")
     @RequestMapping(value = "lunchOrder/cancal/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "MarkNotUse lunchOrder API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> cancal(
+    public ResponseEntity<ApiCallResult> cancal(@PathVariable String center,
             @ApiParam(value = "id", required = true)
             @PathVariable("id") String id) {
         logger.info("invoke: " + "/lunchOrder/cancal/" + id);

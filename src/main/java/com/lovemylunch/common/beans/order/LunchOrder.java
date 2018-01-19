@@ -36,6 +36,7 @@ public class LunchOrder {
     private Integer orderStatus;//订单状态 0 待确认 1 已确认 2 取消 9 配送中 10 已完成
     private Integer paymentStatus;//支付状态 0 未支付 1 已支付 2 部分支付
 
+    private String operationCenterCode;//运营中心代码
     private Date createTime;
 
     private List<Dish> dishs;//菜品集合 包括 汤 饭 等
@@ -206,5 +207,13 @@ public class LunchOrder {
 
     public void setLunchTime(Date lunchTime) {
         this.lunchTime = lunchTime;
+    }
+
+    public String getOperationCenterCode() {
+        return operationCenterCode;
+    }
+
+    public void setOperationCenterCode(String operationCenterCode) {
+        this.operationCenterCode = operationCenterCode;
     }
 }

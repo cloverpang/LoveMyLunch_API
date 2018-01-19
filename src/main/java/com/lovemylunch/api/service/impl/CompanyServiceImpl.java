@@ -132,6 +132,7 @@ public class CompanyServiceImpl extends BaseService implements com.lovemylunch.a
             Map<String, Object> criteriaMap = CriteriaMapUtils.commonCriteriaMapGenerate("","",conditionsStr,
                     pageSize,pageNo,sortColumn,sortType);
 
+
             PageBean<Company> companyPageBean = new PageBean<Company>();
             int totalRecords = companyMapper.count(criteriaMap);
 

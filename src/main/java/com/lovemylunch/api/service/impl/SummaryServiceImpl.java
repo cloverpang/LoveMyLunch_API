@@ -33,12 +33,13 @@ public class SummaryServiceImpl extends BaseService implements SummaryService{
     private DishService dishService;
 
     @Override
-    public List<SumItem> getSummary(String startDate, String endDate) throws Exception {
+    public List<SumItem> getSummary(String center,String startDate, String endDate) throws Exception {
         String startTime = startDate +  " 00:00:00";
         String endTime = endDate + " 23:59:59";
 
         List<SumItem> sumItems = new ArrayList<SumItem>();
-        String conditionStr = "lunchTime::between::" + startTime + "," + endTime;
+        String conditionStr = "lunchTime::between::" + startTime + "," + endTime + "$operationCenterCode::=::" + center;
+        conditionStr = conditionStr + "$orderStatus::noteq::2";
         List<LunchOrder> orders = lunchOrderService.search(conditionStr, 10000, 1, "", "");
 
         //start to group

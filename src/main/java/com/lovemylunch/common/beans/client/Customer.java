@@ -18,6 +18,7 @@ public class Customer {
     private Integer customerType;// 客户类型 0 普通客户 1 主客户
     private Integer status;// 状态 0 正常 1 注销 2 禁用
 
+    private String operationCenterCode;//运营中心代码
     private Date createTime;//注册日期
 
     public String getCustomerId() {
@@ -114,5 +115,13 @@ public class Customer {
 
     public void setCustomerType(Integer customerType) {
         this.customerType = customerType;
+    }
+
+    public String getOperationCenterCode() {
+        return operationCenterCode;
+    }
+
+    public void setOperationCenterCode(String operationCenterCode) {
+        this.operationCenterCode = operationCenterCode;
     }
 }

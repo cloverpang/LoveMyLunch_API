@@ -20,7 +20,7 @@ public interface DistributionFormMapper {
 
     public void makeArrived(String id);
 
-    public void makeAllArrived();
+    public void makeAllArrived(String center);
 
     public void delete(String id);
 

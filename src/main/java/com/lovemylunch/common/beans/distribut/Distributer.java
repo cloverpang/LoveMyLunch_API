@@ -10,6 +10,7 @@ public class Distributer {
     private String photoPath;
     private Integer distributerTimes;
     private Integer status;// 0 正常 1 已注销
+    private String operationCenterCode;//运营中心代码
     private Date createTime;
 
     public String getDistributerId() {
@@ -66,5 +67,13 @@ public class Distributer {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getOperationCenterCode() {
+        return operationCenterCode;
+    }
+
+    public void setOperationCenterCode(String operationCenterCode) {
+        this.operationCenterCode = operationCenterCode;
     }
 }

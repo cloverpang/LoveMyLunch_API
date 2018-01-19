@@ -17,16 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @SpringBootApplication
-//@RequestMapping("/dashboard")
+@RequestMapping(value={"/{center}"})
 @Api(tags = {"dashboard"}, description = "Dashboard APIs")
 public class DashboardController extends BaseController{
     protected Logger logger = LoggerFactory.getLogger(DashboardController.class);
@@ -38,11 +35,11 @@ public class DashboardController extends BaseController{
     @PermssionSecured(value="dashboard_summary")
     @RequestMapping(value={"/dashboard/summary"}, method= RequestMethod.GET)
     @ApiOperation(value = "Get  dashboard summary", response = Dashboard.class)
-    public ResponseEntity<ApiCallResult> getDashboard(){
+    public ResponseEntity<ApiCallResult> getDashboard(@PathVariable String center){
         logger.info("invoke: " + "/dashboard/summary");
         ApiCallResult result = new ApiCallResult();
         try{
-            Dashboard dashboard = dashboardService.getDashoard();
+            Dashboard dashboard = dashboardService.getDashoard(center);
             result.setContent(dashboard);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
@@ -55,12 +52,13 @@ public class DashboardController extends BaseController{
     @PermssionSecured(value="dashboard_order_chart")
     @RequestMapping(value={"/dashboard/order/chart"}, method= RequestMethod.GET)
     @ApiOperation(value = "Get order chart data", response = SumItem.class,responseContainer = "List")
-    public ResponseEntity<ApiCallResult> getOrderData(@RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
-                                                         @RequestParam(value = "endDate", required = false, defaultValue = "") String endDate){
+    public ResponseEntity<ApiCallResult> getOrderData(@PathVariable String center,
+                                                      @RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
+                                                      @RequestParam(value = "endDate", required = false, defaultValue = "") String endDate){
         logger.info("invoke: " + "/dashboard/order");
         ApiCallResult result = new ApiCallResult();
         try{
-            ChartData orderChartData = dashboardService.getOrderData(startDate, endDate);
+            ChartData orderChartData = dashboardService.getOrderData(center,startDate, endDate);
             result.setContent(orderChartData);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
@@ -73,12 +71,13 @@ public class DashboardController extends BaseController{
     @PermssionSecured(value="dashboard_customer_chart")
     @RequestMapping(value={"/dashboard/customer/chart"}, method= RequestMethod.GET)
     @ApiOperation(value = "Get customer chart data", response = SumItem.class,responseContainer = "List")
-    public ResponseEntity<ApiCallResult> getCustomerData(@RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
-                                                @RequestParam(value = "endDate", required = false, defaultValue = "") String endDate){
+    public ResponseEntity<ApiCallResult> getCustomerData(@PathVariable String center,
+                                                         @RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
+                                                         @RequestParam(value = "endDate", required = false, defaultValue = "") String endDate){
         logger.info("invoke: " + "/dashboard/customer");
         ApiCallResult result = new ApiCallResult();
         try{
-            ChartData customerChartData = dashboardService.getCustomerData(startDate,endDate);
+            ChartData customerChartData = dashboardService.getCustomerData(center,startDate,endDate);
             result.setContent(customerChartData);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){

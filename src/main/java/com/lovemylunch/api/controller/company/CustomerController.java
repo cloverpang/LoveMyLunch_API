@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SpringBootApplication
-//@RequestMapping("/customer")
+@RequestMapping(value={"/{center}"})
 @Api(tags = {"customer"}, description = "Customer APIs")
 public class CustomerController extends BaseController{
     protected Logger logger = LoggerFactory.getLogger(CustomerController.class);
@@ -33,7 +33,7 @@ public class CustomerController extends BaseController{
     @PermssionSecured(value="customer_get_one")
     @ApiOperation(value="get Customer ", notes="",response = Customer.class)
     @RequestMapping(value={"/customer/{id}"}, method= RequestMethod.GET)
-    public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
+    public ResponseEntity<ApiCallResult> get(@PathVariable String center,@PathVariable("id") String id){
         logger.info("invoke: " + "/customer/" + id);
         ApiCallResult result = new ApiCallResult();
         try{
@@ -55,7 +55,8 @@ public class CustomerController extends BaseController{
     @RequestMapping(value={"/customers"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search customer API", response = Customer.class,responseContainer =
             "List")
-    public ResponseEntity<ApiCallResult> search(@RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
+    public ResponseEntity<ApiCallResult> search(@PathVariable String center,
+                                                @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
                                                 @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
                                                 @ApiParam(value = "column name")
                                                 @RequestParam(value = "sortColumn", required = false, defaultValue = "createTime") String sortColumn,
@@ -66,6 +67,7 @@ public class CustomerController extends BaseController{
         logger.info("invoke: " + "/customers");
         ApiCallResult result = new ApiCallResult();
         try{
+            conditionsStr = conditionsStr + "$operationCenterCode::=::" + center;
             PageBean<Customer> customerPageBean = customerService.page(conditionsStr, pageSize, pageNumber, sortColumn, sortType);
             result.setContent(customerPageBean);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -79,11 +81,12 @@ public class CustomerController extends BaseController{
     @PermssionSecured(value="customer_add")
     @RequestMapping(value = "/customer", method = RequestMethod.POST)
     @ApiOperation(value = "Create customer API", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> createCustomer(
+    public ResponseEntity<ApiCallResult> createCustomer(@PathVariable String center,
             @RequestBody Customer customer) {
         logger.info("invoke: " + "/customer/");
         ApiCallResult result = new ApiCallResult();
         try{
+            customer.setOperationCenterCode(center);
             Boolean excute = customerService.insert(customer);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -97,11 +100,12 @@ public class CustomerController extends BaseController{
     @PermssionSecured(value="customer_update")
     @RequestMapping(value = "/customer", method = RequestMethod.PUT)
     @ApiOperation(value = "Save customer API", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> saveCustomer(
+    public ResponseEntity<ApiCallResult> saveCustomer(@PathVariable String center,
             @RequestBody Customer customer) {
         logger.info("invoke: " + "/customer/");
         ApiCallResult result = new ApiCallResult();
         try{
+            customer.setOperationCenterCode(center);
             Boolean excute = customerService.update(customer);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);

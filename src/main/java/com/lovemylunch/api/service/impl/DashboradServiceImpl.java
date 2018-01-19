@@ -29,12 +29,12 @@ public class DashboradServiceImpl extends BaseService implements DashboardServic
     DashboardMapper dashboardMapper;
 
     @Override
-    public Dashboard getDashoard() throws Exception {
-        return dashboardMapper.getDashborad();
+    public Dashboard getDashoard(String center) throws Exception {
+        return dashboardMapper.getDashborad(center);
     }
 
     @Override
-    public ChartData getOrderData(String startDate, String endDate) throws Exception {
+    public ChartData getOrderData(String center,String startDate, String endDate) throws Exception {
         String startTime = startDate +  " 00:00:00";
         String endTime = endDate + " 23:59:59";
         Map<String, Object> criteriaMap = new HashMap<String, Object>();
@@ -44,6 +44,8 @@ public class DashboradServiceImpl extends BaseService implements DashboardServic
         if(StringUtils.isNotEmpty(endDate)){
             criteriaMap.put("endDate", endTime);
         }
+
+        criteriaMap.put("center", center);
 
         List<CreateCount> orderCount = dashboardMapper.getOrderCreated(criteriaMap);
         String[] dayArr = generateDayListArr(startDate, endDate);
@@ -56,7 +58,7 @@ public class DashboradServiceImpl extends BaseService implements DashboardServic
     }
 
     @Override
-    public ChartData getCustomerData(String startDate, String endDate) throws Exception {
+    public ChartData getCustomerData(String center,String startDate, String endDate) throws Exception {
         String startTime = startDate +  " 00:00:00";
         String endTime = endDate + " 23:59:59";
         Map<String, Object> criteriaMap = new HashMap<String, Object>();
@@ -66,6 +68,8 @@ public class DashboradServiceImpl extends BaseService implements DashboardServic
         if(StringUtils.isNotEmpty(endDate)){
             criteriaMap.put("endDate", endTime);
         }
+
+        criteriaMap.put("center", center);
 
         List<CreateCount> customerCount =  dashboardMapper.getCustomerCreated(criteriaMap);
 

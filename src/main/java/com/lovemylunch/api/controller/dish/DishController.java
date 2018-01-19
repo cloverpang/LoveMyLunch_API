@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SpringBootApplication
-//@RequestMapping("/dish")
+@RequestMapping(value={"/{center}"})
 @Api(tags = {"dish"}, description = "Dish APIs")
 public class DishController extends BaseController{
     protected Logger logger = LoggerFactory.getLogger(DishController.class);
@@ -33,7 +33,7 @@ public class DishController extends BaseController{
     @PermssionSecured(value="dish_get_one")
     @ApiOperation(value="get Dish ", notes="",response = Dish.class)
     @RequestMapping(value={"/dish/{id}"}, method= RequestMethod.GET)
-    public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
+    public ResponseEntity<ApiCallResult> get(@PathVariable String center,@PathVariable("id") String id){
         logger.info("invoke: " + "/dish/" + id);
         ApiCallResult result = new ApiCallResult();
         try{
@@ -55,7 +55,8 @@ public class DishController extends BaseController{
     @RequestMapping(value={"/dishs"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search dish API", response = Dish.class,responseContainer =
             "List")
-    public ResponseEntity<ApiCallResult> search(@RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
+    public ResponseEntity<ApiCallResult> search(@PathVariable String center,
+                                                @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
                                                 @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
                                                 @ApiParam(value = "column name")
                                                 @RequestParam(value = "sortColumn", required = false, defaultValue = "createTime") String sortColumn,
@@ -66,6 +67,7 @@ public class DishController extends BaseController{
         logger.info("invoke: " + "/dishs");
         ApiCallResult result = new ApiCallResult();
         try{
+            conditionsStr = conditionsStr + "$operationCenterCode::=::" + center;
             PageBean<Dish> dishPageBean = dishService.page(conditionsStr, pageSize, pageNumber, sortColumn, sortType);
             result.setContent(dishPageBean);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -79,11 +81,12 @@ public class DishController extends BaseController{
     @PermssionSecured(value="dish_add")
     @RequestMapping(value = "/dish", method = RequestMethod.POST)
     @ApiOperation(value = "Create dish API", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> createDish(
+    public ResponseEntity<ApiCallResult> createDish(@PathVariable String center,
             @RequestBody Dish dish) {
         logger.info("invoke: " + "/dish/");
         ApiCallResult result = new ApiCallResult();
         try{
+            dish.setOperationCenterCode(center);
             Boolean excute = dishService.insert(dish);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -97,11 +100,12 @@ public class DishController extends BaseController{
     @PermssionSecured(value="dish_update")
     @RequestMapping(value = "/dish", method = RequestMethod.PUT)
     @ApiOperation(value = "Save dish API", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> saveDish(
+    public ResponseEntity<ApiCallResult> saveDish(@PathVariable String center,
             @RequestBody Dish dish) {
         logger.info("invoke: " + "/dish/");
         ApiCallResult result = new ApiCallResult();
         try{
+            dish.setOperationCenterCode(center);
             Boolean excute = dishService.update(dish);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -115,7 +119,7 @@ public class DishController extends BaseController{
     @PermssionSecured(value="dish_delete")
     @RequestMapping(value = "dish/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete dish API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> deleteDish(
+    public ResponseEntity<ApiCallResult> deleteDish(@PathVariable String center,
             @ApiParam(value = "id", required = true)
             @PathVariable("id") String id) {
         logger.info("invoke: " + "/dish/" + id);
@@ -134,7 +138,7 @@ public class DishController extends BaseController{
     @PermssionSecured(value="dish_marknotuse")
     @RequestMapping(value = "dish/markNotUse/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "MarkNotUse dish API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> makeNotUse(
+    public ResponseEntity<ApiCallResult> makeNotUse(@PathVariable String center,
             @ApiParam(value = "id", required = true)
             @PathVariable("id") String id) {
         logger.info("invoke: " + "/dish/markNotUse/" + id);

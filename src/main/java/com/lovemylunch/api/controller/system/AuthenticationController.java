@@ -41,9 +41,9 @@ public class AuthenticationController {
 
     @CrossOrigin(origins = "*", maxAge = 3600)
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/auth/token")
+    @RequestMapping(method = RequestMethod.POST, value = "/{center}/auth/token")
     @ApiOperation(value = "User Login Then Get Api Token", response = String.class)
-    public String userLogin(@ApiParam(required = true) @RequestBody LoginBean loginBean, HttpServletRequest request,
+    public String userLogin(@PathVariable String center,@ApiParam(required = true) @RequestBody LoginBean loginBean, HttpServletRequest request,
                             HttpServletResponse response) throws JsonProcessingException {
         logger.info("user login ......");
         // user can be client or employee
@@ -81,9 +81,9 @@ public class AuthenticationController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.PUT, value = "/auth/refresh-token")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{center}/auth/refresh-token")
     @ApiOperation(value = "Refresh Api Token", response = String.class)
-    public String refreshAPIToken(HttpServletRequest request, HttpServletResponse response)
+    public String refreshAPIToken(@PathVariable String center,HttpServletRequest request, HttpServletResponse response)
             throws JsonProcessingException {
 
         logger.info("refresh token ...........");
@@ -94,9 +94,9 @@ public class AuthenticationController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.PUT, value = "/auth/remove-token")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{center}/auth/remove-token")
     @ApiOperation(value = "Remove Api Token", response = String.class)
-    public String removeAPIToken(HttpServletRequest request, HttpServletResponse response)
+    public String removeAPIToken(@PathVariable String center,HttpServletRequest request, HttpServletResponse response)
             throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         logger.info("remove token ...........");

@@ -30,6 +30,7 @@
    a.mobile as mobile,
    a.photoPath as photoPath,
    a.status as status,
+   a.operationCenterCode as operationCenterCode,
    (select count(distributionFormId) from awf_distribution_form where distributerId = a.distributerId and status = 1) as distributerTimes,
    a.createTime as createTime
 	</sql>
@@ -45,6 +46,7 @@
 		mobile,
 		photoPath,
 		status,
+        operationCenterCode,
 		createTime
 		) VALUES (
 		#{distributerId,jdbcType=VARCHAR},
@@ -52,6 +54,7 @@
 		#{mobile,jdbcType=VARCHAR},
 		#{photoPath,jdbcType=VARCHAR},
 		#{status,jdbcType=NUMERIC},
+		#{operationCenterCode,jdbcType=VARCHAR},
 		#{createTime,jdbcType=TIMESTAMP}
 		)
 	</insert>

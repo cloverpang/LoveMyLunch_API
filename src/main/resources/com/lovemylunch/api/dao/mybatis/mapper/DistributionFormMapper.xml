@@ -41,6 +41,7 @@
    a.distributerName as distributerName,
    a.orderIds as orderIds,
    a.status as status,
+   a.operationCenterCode as operationCenterCode,
    a.createTime as createTime
 	</sql>
 
@@ -60,6 +61,7 @@
 		distributerName,
 		orderIds,
 		status,
+		operationCenterCode,
 		createTime
 		) VALUES (
 		#{distributionFormId,jdbcType=VARCHAR},
@@ -72,6 +74,7 @@
 		#{distributerName,jdbcType=VARCHAR},
 		#{orderIds,jdbcType=VARCHAR},
 		#{status,jdbcType=NUMERIC},
+		#{operationCenterCode,jdbcType=VARCHAR},
 		#{createTime,jdbcType=TIMESTAMP}
 		)
 	</insert>
@@ -95,11 +98,12 @@
 		WHERE distributionFormId = #{id}
 	</update>
 
-	<update id="makeAllArrived">
+	<update id="makeAllArrived" parameterType="string">
 		UPDATE awf_distribution_form
 		SET
 		lastArriveTime = sysdate(),
 		status = 1
+		where operationCenterCode = #{center}
 	</update>
 
 	<delete id="delete" parameterType="string">

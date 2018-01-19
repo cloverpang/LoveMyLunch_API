@@ -23,7 +23,7 @@ import java.util.Map;
 
 @RestController
 @SpringBootApplication
-//@RequestMapping("/distributionForm")
+@RequestMapping(value={"/{center}"})
 @Api(tags = {"distributionForm"}, description = "DistributionForm APIs")
 public class DistributionFormController extends BaseController{
     protected Logger logger = LoggerFactory.getLogger(DistributionFormController.class);
@@ -35,7 +35,7 @@ public class DistributionFormController extends BaseController{
     @PermssionSecured(value="distributionForm_get_one")
     @ApiOperation(value="get DistributionForm ", notes="",response = DistributionForm.class)
     @RequestMapping(value={"/distributionForm/{id}"}, method= RequestMethod.GET)
-    public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
+    public ResponseEntity<ApiCallResult> get(@PathVariable String center,@PathVariable("id") String id){
         logger.info("invoke: " + "/distributionForm/" + id);
         ApiCallResult result = new ApiCallResult();
         try{
@@ -57,7 +57,8 @@ public class DistributionFormController extends BaseController{
     @RequestMapping(value={"/distributionForms"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search distributionForm API", response = DistributionForm.class,responseContainer =
             "List")
-    public ResponseEntity<ApiCallResult> search(@RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
+    public ResponseEntity<ApiCallResult> search(@PathVariable String center,
+                                                @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
                                                 @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
                                                 @ApiParam(value = "column name")
                                                 @RequestParam(value = "sortColumn", required = false, defaultValue = "createTime") String sortColumn,
@@ -68,6 +69,7 @@ public class DistributionFormController extends BaseController{
         logger.info("invoke: " + "/distributionForms");
         ApiCallResult result = new ApiCallResult();
         try{
+            conditionsStr = conditionsStr + "$operationCenterCode::=::" + center;
             PageBean<DistributionForm> distributionFormPageBean = distributionFormService.page(conditionsStr, pageSize, pageNumber, sortColumn, sortType);
             result.setContent(distributionFormPageBean);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -81,11 +83,12 @@ public class DistributionFormController extends BaseController{
     @PermssionSecured(value="distributionForm_add")
     @RequestMapping(value = "/distributionForm", method = RequestMethod.POST)
     @ApiOperation(value = "Create distributionForm API", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> createDistributionForm(
+    public ResponseEntity<ApiCallResult> createDistributionForm(@PathVariable String center,
             @RequestBody DistributionForm distributionForm) {
         logger.info("invoke: " + "/distributionForm/");
         ApiCallResult result = new ApiCallResult();
         try{
+            distributionForm.setOperationCenterCode(center);
             Boolean excute = distributionFormService.insert(distributionForm);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -99,10 +102,12 @@ public class DistributionFormController extends BaseController{
     @PermssionSecured(value="distributionForm_update")
     @RequestMapping(value = "/distributionForm", method = RequestMethod.PUT)
     @ApiOperation(value = "Save distributionForm API", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> saveDistributionForm(@RequestBody DistributionForm distributionForm) {
+    public ResponseEntity<ApiCallResult> saveDistributionForm(@PathVariable String center,
+                                                              @RequestBody DistributionForm distributionForm) {
         logger.info("invoke: " + "/distributionForm/");
         ApiCallResult result = new ApiCallResult();
         try{
+            distributionForm.setOperationCenterCode(center);
             Boolean excute = distributionFormService.update(distributionForm);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -116,7 +121,8 @@ public class DistributionFormController extends BaseController{
     @PermssionSecured(value="distributionForm_delete")
     @RequestMapping(value = "distributionForm/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete distributionForm API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> deleteDistributionForm(@ApiParam(value = "id", required = true) @PathVariable("id") String id) {
+    public ResponseEntity<ApiCallResult> deleteDistributionForm(@PathVariable String center,
+                                                                @ApiParam(value = "id", required = true) @PathVariable("id") String id) {
         logger.info("invoke: " + "/distributionForm/" + id);
         ApiCallResult result = new ApiCallResult();
         try{
@@ -133,13 +139,13 @@ public class DistributionFormController extends BaseController{
     @PermssionSecured(value="distributionForm_generate")
     @RequestMapping(value = "distributionForm/generate/{date}", method = RequestMethod.PUT)
     @ApiOperation(value = "Generate distributionForm API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> generateDistributionForm(
+    public ResponseEntity<ApiCallResult> generateDistributionForm(@PathVariable String center,
             @ApiParam(value = "date", required = true)
             @PathVariable("date") String date) {
         logger.info("invoke: " + "/distributionForm/generate/" + date);
         ApiCallResult result = new ApiCallResult();
         try{
-            int excute = distributionFormService.generateDistributionForm(date);
+            int excute = distributionFormService.generateDistributionForm(center,date);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
@@ -152,7 +158,8 @@ public class DistributionFormController extends BaseController{
     @PermssionSecured(value="distributionForm_select_dirstributer")
     @RequestMapping(value = "distributionForm/selectDistributer/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "DistributionForm selectDistributer API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> selectDistributer(@ApiParam(value = "id", required = true)
+    public ResponseEntity<ApiCallResult> selectDistributer(@PathVariable String center,
+                                                           @ApiParam(value = "id", required = true)
                                                            @PathVariable("id") String id,
                                                            @RequestBody(required = true) Map map) {
         logger.info("invoke: " + "/distributionForm/selectDistributer/" + id);
@@ -173,7 +180,7 @@ public class DistributionFormController extends BaseController{
     @PermssionSecured(value="distributionForm_mark_arrived")
     @RequestMapping(value = "distributionForm/markArrived/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "MarkArrived distributionForm API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> markArrived(
+    public ResponseEntity<ApiCallResult> markArrived(@PathVariable String center,
             @ApiParam(value = "id", required = true)
             @PathVariable("id") String id) {
         logger.info("invoke: " + "/distributionForm/markArrived/" + id);
@@ -192,11 +199,11 @@ public class DistributionFormController extends BaseController{
     @PermssionSecured(value="distributionForm_mark_all_arrived")
     @RequestMapping(value = "distributionForm/markAllArrived", method = RequestMethod.PUT)
     @ApiOperation(value = "MarkArrived all distributionForm API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> markAllArrived() {
+    public ResponseEntity<ApiCallResult> markAllArrived(@PathVariable String center) {
         logger.info("invoke: " + "/distributionForm/markArrived" );
         ApiCallResult result = new ApiCallResult();
         try{
-            Boolean excute = distributionFormService.makeAllArrived();
+            Boolean excute = distributionFormService.makeAllArrived(center);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){

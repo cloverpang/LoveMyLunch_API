@@ -36,6 +36,7 @@
    a.dishStyle as dishStyle,
    a.component as component,
    a.pepper as pepper,
+   a.operationCenterCode as operationCenterCode,
    a.createTime as createTime
 	</sql>
 
@@ -56,6 +57,7 @@
 		dishStyle,
 		component,
 		pepper,
+        operationCenterCode,
 		createTime
 		) VALUES (
 		#{dishId,jdbcType=VARCHAR},
@@ -69,6 +71,7 @@
 		#{dishStyle,jdbcType=VARCHAR},
 		#{component,jdbcType=NUMERIC},
 		#{pepper,jdbcType=NUMERIC},
+		#{operationCenterCode,jdbcType=VARCHAR},
 		#{createTime,jdbcType=TIMESTAMP}
 		)
 	</insert>

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SpringBootApplication
-//@RequestMapping("/distributer")
+@RequestMapping(value={"/{center}"})
 @Api(tags = {"distributer"}, description = "Distributer APIs")
 public class DistributerController extends BaseController{
     protected Logger logger = LoggerFactory.getLogger(DistributerController.class);
@@ -33,7 +33,7 @@ public class DistributerController extends BaseController{
     @PermssionSecured(value="distributer_get_one")
     @ApiOperation(value="get Distributer ", notes="",response = Distributer.class)
     @RequestMapping(value={"/distributer/{id}"}, method= RequestMethod.GET)
-    public ResponseEntity<ApiCallResult> get(@PathVariable("id") String id){
+    public ResponseEntity<ApiCallResult> get(@PathVariable String center,@PathVariable("id") String id){
         logger.info("invoke: " + "/distributer/" + id);
         ApiCallResult result = new ApiCallResult();
         try{
@@ -55,7 +55,8 @@ public class DistributerController extends BaseController{
     @RequestMapping(value={"/distributers"}, method= RequestMethod.GET)
     @ApiOperation(value = "Search distributer API", response = Distributer.class,responseContainer =
             "List")
-    public ResponseEntity<ApiCallResult> search(@RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
+    public ResponseEntity<ApiCallResult> search(@PathVariable String center,
+                                                @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize,
                                                 @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
                                                 @ApiParam(value = "column name")
                                                 @RequestParam(value = "sortColumn", required = false, defaultValue = "createTime") String sortColumn,
@@ -66,6 +67,7 @@ public class DistributerController extends BaseController{
         logger.info("invoke: " + "/distributers");
         ApiCallResult result = new ApiCallResult();
         try{
+            conditionsStr = conditionsStr + "$operationCenterCode::=::" + center;
             PageBean<Distributer> distributerPageBean = distributerService.page(conditionsStr, pageSize, pageNumber, sortColumn, sortType);
             result.setContent(distributerPageBean);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -79,11 +81,12 @@ public class DistributerController extends BaseController{
     @PermssionSecured(value="distributer_add")
     @RequestMapping(value = "/distributer", method = RequestMethod.POST)
     @ApiOperation(value = "Create distributer API", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> createDistributer(
+    public ResponseEntity<ApiCallResult> createDistributer(@PathVariable String center,
             @RequestBody Distributer distributer) {
         logger.info("invoke: " + "/distributer/");
         ApiCallResult result = new ApiCallResult();
         try{
+            distributer.setOperationCenterCode(center);
             Boolean excute = distributerService.insert(distributer);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -97,11 +100,12 @@ public class DistributerController extends BaseController{
     @PermssionSecured(value="distributer_update")
     @RequestMapping(value = "/distributer", method = RequestMethod.PUT)
     @ApiOperation(value = "Save distributer API", response = Boolean.class)
-    public ResponseEntity<ApiCallResult> saveDistributer(
+    public ResponseEntity<ApiCallResult> saveDistributer(@PathVariable String center,
             @RequestBody Distributer distributer) {
         logger.info("invoke: " + "/distributer/");
         ApiCallResult result = new ApiCallResult();
         try{
+            distributer.setOperationCenterCode(center);
             Boolean excute = distributerService.update(distributer);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -115,7 +119,7 @@ public class DistributerController extends BaseController{
     @PermssionSecured(value="distributer_delete")
     @RequestMapping(value = "distributer/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete distributer API", response = boolean.class)
-    public ResponseEntity<ApiCallResult> deleteDistributer(
+    public ResponseEntity<ApiCallResult> deleteDistributer(@PathVariable String center,
             @ApiParam(value = "id", required = true)
             @PathVariable("id") String id) {
         logger.info("invoke: " + "/distributer/" + id);

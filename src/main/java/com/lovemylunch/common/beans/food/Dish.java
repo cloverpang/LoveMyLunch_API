@@ -26,6 +26,7 @@ public class Dish {
 
     private Integer pepper; // 辣椒指数 0,1,2,3,4,5
 
+    private String operationCenterCode;//运营中心代码
     private Date createTime;
 
     public String getDishId() {
@@ -130,5 +131,13 @@ public class Dish {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getOperationCenterCode() {
+        return operationCenterCode;
+    }
+
+    public void setOperationCenterCode(String operationCenterCode) {
+        this.operationCenterCode = operationCenterCode;
     }
 }

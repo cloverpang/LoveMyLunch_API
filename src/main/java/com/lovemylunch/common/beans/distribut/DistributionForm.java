@@ -25,6 +25,7 @@ public class DistributionForm {
 
     private Integer status;// 0 未送达 1 已送达
 
+    private String operationCenterCode;//运营中心代码
     private Date createTime;
 
     public String getDistributionFormId() {
@@ -121,5 +122,13 @@ public class DistributionForm {
 
     public void setFormNumber(String formNumber) {
         this.formNumber = formNumber;
+    }
+
+    public String getOperationCenterCode() {
+        return operationCenterCode;
+    }
+
+    public void setOperationCenterCode(String operationCenterCode) {
+        this.operationCenterCode = operationCenterCode;
     }
 }

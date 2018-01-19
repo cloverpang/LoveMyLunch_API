@@ -12,7 +12,7 @@ import java.util.Map;
 @Component
 @Mapper
 public interface DashboardMapper {
-    Dashboard getDashborad();
+    Dashboard getDashborad(String center);
 
     List<CreateCount> getOrderCreated(Map<String, Object> param);
 

@@ -9,6 +9,7 @@ public class AdminUser {
     private String admin_name;
     private String frontend_permissions;
     private String backend_permissions;
+    private String operationCenterCode;//运营中心代码
     private Date createTime;
 
     public String getAdmin_id() {
@@ -67,6 +68,14 @@ public class AdminUser {
         this.createTime = createTime;
     }
 
+    public String getOperationCenterCode() {
+        return operationCenterCode;
+    }
+
+    public void setOperationCenterCode(String operationCenterCode) {
+        this.operationCenterCode = operationCenterCode;
+    }
+
     @Override
     public String toString() {
         return "AdminUser{" +
@@ -76,6 +85,7 @@ public class AdminUser {
                 ", admin_name='" + admin_name + '\'' +
                 ", frontend_permissions='" + frontend_permissions + '\'' +
                 ", backend_permissions='" + backend_permissions + '\'' +
+                ", operationCenterCode='" + operationCenterCode + '\'' +
                 ", createTime=" + createTime +
                 '}';
     }

@@ -101,7 +101,6 @@
 		SET
 		companyName = #{companyName,jdbcType=VARCHAR},
 		companyCode = #{companyCode,jdbcType=VARCHAR},
-		operationCenterCode = #{operationCenterCode,jdbcType=VARCHAR},
 		companyAddress = #{companyAddress,jdbcType=VARCHAR},
 		companyLogoPath = #{companyLogoPath,jdbcType=VARCHAR},
 		status = #{status,jdbcType=NUMERIC},

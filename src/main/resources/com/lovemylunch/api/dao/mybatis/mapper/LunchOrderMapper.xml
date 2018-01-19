@@ -44,6 +44,7 @@
    a.appraise as appraise,
    a.orderStatus as orderStatus,
    a.paymentStatus as paymentStatus,
+   a.operationCenterCode as operationCenterCode,
    a.createTime as createTime
 	</sql>
 
@@ -72,6 +73,7 @@
 		appraise,
 		orderStatus,
 		paymentStatus,
+		operationCenterCode,
 		createTime
 		) VALUES (
 		#{orderId,jdbcType=VARCHAR},
@@ -93,6 +95,7 @@
 		#{appraise,jdbcType=VARCHAR},
 		#{orderStatus,jdbcType=NUMERIC},
 		#{paymentStatus,jdbcType=NUMERIC},
+		#{operationCenterCode,jdbcType=VARCHAR},
 		#{createTime,jdbcType=TIMESTAMP}
 		)
 	</insert>

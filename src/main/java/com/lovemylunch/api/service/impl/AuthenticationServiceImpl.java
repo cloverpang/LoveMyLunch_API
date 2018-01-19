@@ -74,6 +74,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     TokenAndInfo tokenAndInfo = new TokenAndInfo();
                     tokenAndInfo.setTokenSession(tokenSession);
                     tokenAndInfo.setAdminUser(user);
+                    tokenAndInfo.setOperationCenterCode(user.getOperationCenterCode());
                     //String token = JSON.toJSONString(tokenSession);
                     //result.setResponseString(token);
                     result.setResponseString(JSON.toJSONString(tokenAndInfo));

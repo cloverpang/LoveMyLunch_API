@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @SpringBootApplication
-//@RequestMapping("/summary")
+@RequestMapping(value={"/{center}"})
 @Api(tags = {"summary"}, description = "Summary APIs")
 public class SummaryController extends BaseController{
     protected Logger logger = LoggerFactory.getLogger(SummaryController.class);
@@ -36,12 +36,13 @@ public class SummaryController extends BaseController{
     @RequestMapping(value={"/summary"}, method= RequestMethod.GET)
     @ApiOperation(value = "Get order summary", response = SumItem.class,responseContainer =
             "List")
-    public ResponseEntity<ApiCallResult> summary(@RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
-                                                @RequestParam(value = "endDate", required = false, defaultValue = "") String endDate){
+    public ResponseEntity<ApiCallResult> summary(@PathVariable String center,
+                                                 @RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
+                                                 @RequestParam(value = "endDate", required = false, defaultValue = "") String endDate){
         logger.info("invoke: " + "/summary");
         ApiCallResult result = new ApiCallResult();
         try{
-            List<SumItem> sumItems = summaryService.getSummary(startDate,endDate);
+            List<SumItem> sumItems = summaryService.getSummary(center,startDate,endDate);
             result.setContent(sumItems);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
