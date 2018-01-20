@@ -59,6 +59,7 @@ public class SSOUserServiceDaoImpl implements SSOUserServiceDao {
 				final String tokenSessionId = tokenArr[3];
 				final String userType = tokenArr[4];
 				final String exprieTimeStr = tokenArr[5];
+				final String operationCenter = tokenArr[6];
 
 				String oldToken = tokenDao.getTokenFromRedisOrDatabase(token, tokenSessionId);
 	            //TokenSession oldToken = tokenDao.getTokenSessionFromRedis(tokenSessionId);
@@ -68,12 +69,12 @@ public class SSOUserServiceDaoImpl implements SSOUserServiceDao {
 					TokenSession oldTokenSession = tokenDao.getTokenSessionFromRedis(tokenSessionId);
 					if(null != oldTokenSession){
 						tokenSession = tokenDao.generateToken(tokenUserLogin, oldTokenSession.getUserId(),
-								oldTokenSession.getId(), userType);
+								oldTokenSession.getId(), userType,operationCenter);
 						LOGGER.info("refresh generate token in redis");
 					}else{
 						LOGGER.info("redis have issue!!!");
 						tokenSession = tokenDao.generateToken(tokenUserLogin, tokenUserId,
-								IDGenerator.uuid(), userType);
+								IDGenerator.uuid(), userType,operationCenter);
 						LOGGER.info("refresh generate token in database");
 					}
 	            }
@@ -136,6 +137,7 @@ public class SSOUserServiceDaoImpl implements SSOUserServiceDao {
 				final String tokenSessionId = tokenArr[3];
 				final String userType = tokenArr[4];
 				final String exprieTimeStr = tokenArr[5];
+				final String operationCenter = tokenArr[6];
 				LOGGER.info("userid: " + tokenUserId + ", usertype: " + userType);
 				LOGGER.info("requested url: " + requestedURL);
 
@@ -147,6 +149,17 @@ public class SSOUserServiceDaoImpl implements SSOUserServiceDao {
 					result.setStatusCode(HttpServletResponse.SC_UNAUTHORIZED);
 					result.setReasonPhase("Bad token");
 					result.setResponseString("Bad token");
+					return result;
+				}
+
+				//check the token center is equal to current request center
+				String[] requestUrlArr =  requestedURL.split("/");
+				String currentRequestCenter = requestUrlArr[2];
+				LOGGER.info("currentRequestCenter: " + currentRequestCenter);
+				if(!operationCenter.equals(currentRequestCenter)){
+					result.setStatusCode(HttpServletResponse.SC_FORBIDDEN);
+					result.setReasonPhase("You are not belong to this operation center!");
+					result.setResponseString("You are not belong to this operation center!");
 					return result;
 				}
 

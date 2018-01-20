@@ -68,8 +68,8 @@ public class AdminUserServiceImpl implements AdminUserService{
     }
 
     @Override
-    public List<AdminUser> getAll() {
-        return adminUserMapper.getAll();
+    public List<AdminUser> getAll(String center) {
+        return adminUserMapper.getAll(center);
     }
 
     @Override

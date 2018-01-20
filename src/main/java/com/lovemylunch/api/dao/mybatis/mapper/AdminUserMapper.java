@@ -12,7 +12,7 @@ public interface AdminUserMapper {
     public AdminUser getByLogin(String login);
     public AdminUser getById(String id);
     public AdminUser login(AdminUser adminUser);
-    public List<AdminUser> getAll();
+    public List<AdminUser> getAll(String center);
     public void updatePassword(AdminUser adminUser);
     public void updateBackendPermissions(AdminUser adminUser);
     public void updateFrontendPermissions(AdminUser adminUser);

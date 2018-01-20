@@ -10,7 +10,7 @@ public interface AdminUserService {
     AdminUser login(AdminUser adminUser) throws Exception;
     void updatePassword(AdminUser adminUser) throws Exception;
     boolean delete(String id) throws Exception;
-    public List<AdminUser> getAll();
+    public List<AdminUser> getAll(String center);
     void updateBackendPermissions(AdminUser adminUser) throws Exception;
     void updateFrontendPermissions(AdminUser adminUser) throws Exception;
 }

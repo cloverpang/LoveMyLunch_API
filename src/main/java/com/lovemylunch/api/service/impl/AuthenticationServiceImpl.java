@@ -68,7 +68,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             if(user != null){
                 foundUserInDataBase = true;
 
-                TokenSession tokenSession = tokenDao.generateToken(user.getAdmin_login(), user.getAdmin_id(), IDGenerator.uuid(), userType);
+                TokenSession tokenSession = tokenDao.generateToken(user.getAdmin_login(), user.getAdmin_id(), IDGenerator.uuid(), userType,user.getOperationCenterCode());
 
                 if (tokenSession != null) {
                     TokenAndInfo tokenAndInfo = new TokenAndInfo();

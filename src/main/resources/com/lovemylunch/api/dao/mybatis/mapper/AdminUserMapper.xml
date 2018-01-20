@@ -21,9 +21,10 @@
 		WHERE a.admin_login = #{admin_login} and a.admin_password = #{admin_password} limit 1
 	</select>
 
-   <select id="getAll" parameterType="map" resultType="com.lovemylunch.common.beans.system.AdminUser">
+   <select id="getAll" parameterType="String" resultType="com.lovemylunch.common.beans.system.AdminUser">
       <include refid="search_selectFields"/>
       <include refid="search_fromClause"/>
+      WHERE operationCenterCode=#{center}
    </select>
 
 	<sql id="search_selectFields">

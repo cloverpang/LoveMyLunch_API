@@ -31,7 +31,7 @@ public class TokenDaoImpl {
     private AccessTokenMapper accessTokenMapper;
 
     //@CachePut(value = "publicAPIToken",key = "#sessionId")//create or update-----function will run every called
-    public TokenSession generateToken(final String login, final String userId, String sessionId, final String userType){
+    public TokenSession generateToken(final String login, final String userId, String sessionId, final String userType,final String operationCenter){
         TokenSession tokenSession = new TokenSession();
         try {
             if (sessionId.isEmpty()) {
@@ -51,7 +51,7 @@ public class TokenDaoImpl {
             tokenSession.setValidBefore(exprieTimeStr);
 
             String tokenValueStr = generateValidateCode() + "|" + login + "|" + userId + "|" + sessionId + "|" +
-                    userType + "|" + exprieTimeStr;
+                    userType + "|" + exprieTimeStr + "|" + operationCenter;
 
             tokenSession.setToken(tokenValueStr);
 

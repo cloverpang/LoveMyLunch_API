@@ -118,7 +118,7 @@ public class AdminUserController {
         logger.info("invoke: " + "/adminUsers");
         ApiCallResult result = new ApiCallResult();
         try{
-            List<AdminUser> adminUsers = adminUserService.getAll();
+            List<AdminUser> adminUsers = adminUserService.getAll(center);
             result.setContent(adminUsers);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
