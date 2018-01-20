@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,9 +45,16 @@ public class CompanyServiceImpl extends BaseService implements com.lovemylunch.a
     }
 
     @Override
-    public Company getByCode(String code) throws Exception {
+    public Company getByCode(String code,String center) throws Exception {
         try{
-            return companyMapper.getByCode(code);
+            Map<String, Object> criteriaMap = new HashMap<String, Object>();
+            if(StringUtils.isNotEmpty(code)){
+                criteriaMap.put("code", code);
+            }
+            if(StringUtils.isNotEmpty(center)){
+                criteriaMap.put("center", center);
+            }
+            return companyMapper.getByCode(criteriaMap);
         }catch (Exception e){
             logger.error("failed on get company info : " + e.getMessage());
             throw new Exception("failed on get company : ",e);
@@ -60,7 +68,7 @@ public class CompanyServiceImpl extends BaseService implements com.lovemylunch.a
                 throw new Exception("company code cannot empty! ");
             }
 
-            Company originCompany = getByCode(company.getCompanyCode());
+            Company originCompany = getByCode(company.getCompanyCode(),company.getOperationCenterCode());
             if(null != originCompany){
                 throw new Exception("This customer code is existing, please change an new company code! ");
             }

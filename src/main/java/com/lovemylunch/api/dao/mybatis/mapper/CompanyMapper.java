@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public interface CompanyMapper {
     public Company get(String id);
 
-    public Company getByCode(String code);
+    public Company getByCode(Map<String, Object> param);
 
     public void insert(Company Company);
 

@@ -52,10 +52,14 @@ public class LogAspect {
         String requestURI = request.getRequestURI();
         String apiToken = request.getHeader("authorization");
         String currentUser = "";
+        String currentUserOperationCenter = "";
         if(StringUtils.isNotEmpty(apiToken)){
             String[] apiTokenArr = apiToken.split("\\|");
             if(apiTokenArr.length > 2){
                 currentUser = apiTokenArr[1];
+            }
+            if(apiTokenArr.length > 6){
+                currentUserOperationCenter = apiTokenArr[6];
             }
         }
 
@@ -121,6 +125,7 @@ public class LogAspect {
                 operationLog.setOperationUrl(requestURI);
                 operationLog.setOperationReturn(resultStr);
                 operationLog.setOperationException(exceptionStr);
+                operationLog.setOperationCenterCode(currentUserOperationCenter);
                 operationLog.setRunTime(runTime);
                 operationLogService.insert(operationLog);
             }
