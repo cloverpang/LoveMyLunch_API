@@ -12,7 +12,7 @@
 	<select id="getByCode" parameterType="map" resultType="com.lovemylunch.common.beans.client.Company">
 		<include refid="search_selectFields"/>
 		<include refid="search_fromClause"/>
-		WHERE a.companyCode = #{code} and a.operationCenterCode = ${center} limit 1
+		WHERE a.companyCode = #{code} and a.operationCenterCode = #{center} limit 1
 	</select>
 
 	<select id="search" parameterType="map" resultType="com.lovemylunch.common.beans.client.Company">

@@ -25,8 +25,8 @@ public class Swagger2 {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("艾智能 私募基金 APIs")
-                .description("艾智能 私募基金 APIs")
+                .title("Love my lunch APIs")
+                .description("Love my lunch APIs")
                 .termsOfServiceUrl("http://www.cnblogs.com/qingzhou")
                 .contact("Clover")
                 .version("1.0")
