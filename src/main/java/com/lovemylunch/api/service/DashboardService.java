@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface DashboardService {
-    Dashboard getDashoard(String center) throws Exception;
+    Dashboard getDashoard(String center,String force) throws Exception;
 
-    ChartData getOrderData(String center,String startDate, String endDate) throws Exception;
+    ChartData getOrderData(String center,String startDate, String endDate,String force) throws Exception;
 
-    ChartData getCustomerData(String center,String startDate, String endDate) throws Exception;
+    ChartData getCustomerData(String center,String startDate, String endDate,String force) throws Exception;
 }

@@ -3,6 +3,7 @@ package com.lovemylunch.api.service.impl;
 import com.lovemylunch.api.dao.mybatis.mapper.CompanyMapper;
 import com.lovemylunch.api.service.BaseService;
 import com.lovemylunch.common.beans.PageBean;
+import com.lovemylunch.common.beans.annotation.QueryCache;
 import com.lovemylunch.common.beans.client.Company;
 import com.lovemylunch.common.beans.client.extensions.CompanyExtension;
 import com.lovemylunch.common.beans.client.extensions.CustomerExtension;
@@ -135,7 +136,8 @@ public class CompanyServiceImpl extends BaseService implements com.lovemylunch.a
     }
 
     @Override
-    public PageBean<Company> page(String conditionsStr, int pageSize, int pageNo, String sortColumn, String sortType) throws Exception {
+    @QueryCache
+    public PageBean<Company> page(String conditionsStr, int pageSize, int pageNo, String sortColumn, String sortType,String force) throws Exception {
         try{
             Map<String, Object> criteriaMap = CriteriaMapUtils.commonCriteriaMapGenerate("","",conditionsStr,
                     pageSize,pageNo,sortColumn,sortType);

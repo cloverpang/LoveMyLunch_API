@@ -11,6 +11,7 @@ import com.lovemylunch.common.beans.dashboard.Dashboard;
 import com.lovemylunch.common.beans.order.SumItem;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,12 @@ public class DashboardController extends BaseController{
     @PermssionSecured(value="dashboard_summary")
     @RequestMapping(value={"/dashboard/summary"}, method= RequestMethod.GET)
     @ApiOperation(value = "Get  dashboard summary", response = Dashboard.class)
-    public ResponseEntity<ApiCallResult> getDashboard(@PathVariable String center){
+    public ResponseEntity<ApiCallResult> getDashboard(@PathVariable String center,                                                @ApiParam(value = "forceData")
+    @RequestParam(value = "force", required = false, defaultValue = "notForceData") String force){
         logger.info("invoke: " + "/dashboard/summary");
         ApiCallResult result = new ApiCallResult();
         try{
-            Dashboard dashboard = dashboardService.getDashoard(center);
+            Dashboard dashboard = dashboardService.getDashoard(center,force);
             result.setContent(dashboard);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
@@ -54,11 +56,13 @@ public class DashboardController extends BaseController{
     @ApiOperation(value = "Get order chart data", response = SumItem.class,responseContainer = "List")
     public ResponseEntity<ApiCallResult> getOrderData(@PathVariable String center,
                                                       @RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
-                                                      @RequestParam(value = "endDate", required = false, defaultValue = "") String endDate){
+                                                      @RequestParam(value = "endDate", required = false, defaultValue = "") String endDate,
+                                                      @ApiParam(value = "force")
+                                                      @RequestParam(value = "force", required = false, defaultValue = "notForceData") String force){
         logger.info("invoke: " + "/dashboard/order");
         ApiCallResult result = new ApiCallResult();
         try{
-            ChartData orderChartData = dashboardService.getOrderData(center,startDate, endDate);
+            ChartData orderChartData = dashboardService.getOrderData(center,startDate, endDate,force);
             result.setContent(orderChartData);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
@@ -73,11 +77,13 @@ public class DashboardController extends BaseController{
     @ApiOperation(value = "Get customer chart data", response = SumItem.class,responseContainer = "List")
     public ResponseEntity<ApiCallResult> getCustomerData(@PathVariable String center,
                                                          @RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
-                                                         @RequestParam(value = "endDate", required = false, defaultValue = "") String endDate){
+                                                         @RequestParam(value = "endDate", required = false, defaultValue = "") String endDate,
+                                                         @ApiParam(value = "force")
+                                                         @RequestParam(value = "force", required = false, defaultValue = "notForceData") String force){
         logger.info("invoke: " + "/dashboard/customer");
         ApiCallResult result = new ApiCallResult();
         try{
-            ChartData customerChartData = dashboardService.getCustomerData(center,startDate,endDate);
+            ChartData customerChartData = dashboardService.getCustomerData(center,startDate,endDate,force);
             result.setContent(customerChartData);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){

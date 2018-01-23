@@ -42,7 +42,7 @@ public class LunchOrderServiceImpl extends BaseService implements LunchOrderServ
             LunchOrder lunchOrder = lunchOrderMapper.get(id);
             if(StringUtils.isNotEmpty(lunchOrder.getDishIds())){
                 String conditionStr = "dishId::=::" + lunchOrder.getDishIds();
-                List<Dish> dishs = dishService.search(conditionStr,100,1,"dishType","desc");
+                List<Dish> dishs = dishService.search(conditionStr,1000,1,"dishType","desc");
                 if(CollectionUtils.isNotEmpty(dishs)){
                     lunchOrder.setDishs(dishs);
                 }

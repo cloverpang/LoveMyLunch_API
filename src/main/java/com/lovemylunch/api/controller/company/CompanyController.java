@@ -64,12 +64,14 @@ public class CompanyController extends BaseController{
                                                 @ApiParam(value = "desc or asc,default value is desc")
                                                 @RequestParam(value = "sortType", required = false, defaultValue = "desc") String sortType,
                                                 @ApiParam(value = "like this - name::like::clover$type::=::AI")
-                                                @RequestParam(value = "conditionsStr", required = false, defaultValue = "") String conditionsStr){
+                                                @RequestParam(value = "conditionsStr", required = false, defaultValue = "") String conditionsStr,
+                                                @ApiParam(value = "force")
+                                                @RequestParam(value = "force", required = false, defaultValue = "notForceData") String force){
         logger.info("invoke: " + "/companies");
         ApiCallResult result = new ApiCallResult();
         try{
             conditionsStr = conditionsStr + "$operationCenterCode::=::" + center;
-            PageBean<Company> companyPageBean = companyService.page(conditionsStr, pageSize, pageNumber, sortColumn, sortType);
+            PageBean<Company> companyPageBean = companyService.page(conditionsStr, pageSize, pageNumber, sortColumn, sortType,force);
             result.setContent(companyPageBean);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){

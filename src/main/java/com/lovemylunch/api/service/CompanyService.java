@@ -22,7 +22,7 @@ public interface CompanyService {
     Boolean batchDelete(String ids) throws Exception;
 
     PageBean<Company> page(String conditionsStr, int pageSize, int pageNo,
-                             String sortColumn, String sortType) throws Exception;
+                             String sortColumn, String sortType,String force) throws Exception;
 
     List<Company> search(String conditionsStr, int pageSize, int pageNo, String sortColumn, String sortType) throws Exception;
 

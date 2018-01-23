@@ -1,5 +1,6 @@
 package com.lovemylunch;
 
+import com.lovemylunch.common.util.RedisUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -19,6 +20,16 @@ public class LoveMyLunchBackendApiApplication {
 	@RequestMapping("/")
 	public String index(){
 		return "Hello This is APIs! ";
+	}
+
+	@RequestMapping("/admin/flushAllRedis")
+	public String flushAllRedis(){
+		try{
+			RedisUtil.flushAll();
+			return "flushAllRedis success! ";
+		}catch (Exception e){
+			return "flushAllRedis failed : " + e.getMessage();
+		}
 	}
 
 	public static void main(String[] args) {

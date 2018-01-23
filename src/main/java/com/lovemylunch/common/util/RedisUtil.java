@@ -13,6 +13,7 @@ import redis.clients.jedis.JedisPoolConfig;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
@@ -132,7 +133,7 @@ public class RedisUtil {
 				jedis = pool.getResource();
 			}
 		} catch (Exception e) {
-			logger.error("Get jedis error : ",e);
+			logger.error("Get jedis error : ", e);
 		} finally{
 			//returnResource(jedis2);
 			lockJedis.unlock();
@@ -326,9 +327,19 @@ public class RedisUtil {
 		}
 	}
 
-	private synchronized static void flushAll(){
+	public synchronized static void flushAll(){
 		Jedis jedis = getJedis();
 		jedis.flushAll();
+	}
+
+	public synchronized static void batchDelete(String keyPrefix){
+		Jedis jedis = getJedis();
+		Set<String> set = jedis.keys(keyPrefix +"*");
+		Iterator<String> it = set.iterator();
+		while(it.hasNext()){
+			String keyStr = it.next();
+			jedis.del(keyStr);
+		}
 	}
 
 	@SuppressWarnings("static-access")

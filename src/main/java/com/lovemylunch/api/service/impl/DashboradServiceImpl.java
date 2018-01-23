@@ -4,6 +4,7 @@ package com.lovemylunch.api.service.impl;
 import com.lovemylunch.api.dao.mybatis.mapper.DashboardMapper;
 import com.lovemylunch.api.service.BaseService;
 import com.lovemylunch.api.service.DashboardService;
+import com.lovemylunch.common.beans.annotation.QueryCache;
 import com.lovemylunch.common.beans.dashboard.ChartData;
 import com.lovemylunch.common.beans.dashboard.CreateCount;
 import com.lovemylunch.common.beans.dashboard.Dashboard;
@@ -29,12 +30,14 @@ public class DashboradServiceImpl extends BaseService implements DashboardServic
     DashboardMapper dashboardMapper;
 
     @Override
-    public Dashboard getDashoard(String center) throws Exception {
+    @QueryCache
+    public Dashboard getDashoard(String center,String force) throws Exception {
         return dashboardMapper.getDashborad(center);
     }
 
     @Override
-    public ChartData getOrderData(String center,String startDate, String endDate) throws Exception {
+    @QueryCache
+    public ChartData getOrderData(String center,String startDate, String endDate,String force) throws Exception {
         String startTime = startDate +  " 00:00:00";
         String endTime = endDate + " 23:59:59";
         Map<String, Object> criteriaMap = new HashMap<String, Object>();
@@ -58,7 +61,8 @@ public class DashboradServiceImpl extends BaseService implements DashboardServic
     }
 
     @Override
-    public ChartData getCustomerData(String center,String startDate, String endDate) throws Exception {
+    @QueryCache
+    public ChartData getCustomerData(String center,String startDate, String endDate,String force) throws Exception {
         String startTime = startDate +  " 00:00:00";
         String endTime = endDate + " 23:59:59";
         Map<String, Object> criteriaMap = new HashMap<String, Object>();
