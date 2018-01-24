@@ -42,12 +42,12 @@ public class PermissionCheckInterceptor extends HandlerInterceptorAdapter {
         if (handler instanceof HandlerMethod) {
             HandlerMethod methodHandler = (HandlerMethod) handler;
             PermssionSecured securedAnnotation = methodHandler.getMethodAnnotation(PermssionSecured.class);
-            System.out.println("start to check permission");
+            //System.out.println("start to check permission");
 
             //Check if the method contain the @ClientAccountTokenCheck annotation
             if (securedAnnotation != null) {
                 String currentPermissionCode = securedAnnotation.value();
-                logger.info("currentPermissionCode is : " + currentPermissionCode);
+                //logger.info("currentPermissionCode is : " + currentPermissionCode);
                 if(StringUtils.isNotEmpty(currentPermissionCode)){
                     return permissionVerified(request, response,currentPermissionCode);
                 }
@@ -90,7 +90,7 @@ public class PermissionCheckInterceptor extends HandlerInterceptorAdapter {
                 }
             }
         }catch(Exception e){
-            logger.info("check permission have exception : " + e.getMessage());
+            logger.error("check permission have exception : " + e.getMessage());
             response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Check Permission have exception");
             return false;
         }

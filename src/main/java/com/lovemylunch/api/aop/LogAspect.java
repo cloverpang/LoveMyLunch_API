@@ -107,7 +107,7 @@ public class LogAspect {
             }
 
         }catch (Exception e){
-            LOGGER.info("exception : " + e.getMessage());
+            LOGGER.error("log aop aspect exception : " + e.getMessage());
             exceptionStr = e.getMessage();
         }
 

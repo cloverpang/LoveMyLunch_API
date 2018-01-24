@@ -51,22 +51,22 @@ public class TokenCheckInterceptor extends HandlerInterceptorAdapter {
 //                System.out.println("request.getRemoteAddr() : " + request.getRemoteAddr());
 //                System.out.println("request.getLocalAddr() : " + request.getLocalAddr());
 
-//                if (request.getRemoteAddr().equals(request.getLocalAddr()) ) {
-//                    //skip for unit test case running or while developing
-//                    return true;
-//                }
+                if (request.getRemoteAddr().equals(request.getLocalAddr()) ) {
+                    //skip for unit test case running or while developing
+                    return true;
+                }
 
-                System.out.println("referer page is : " + request.getHeader("referer"));
+                //System.out.println("referer page is : " + request.getHeader("referer"));
 
                 if (null != request.getHeader("referer")){
-                    System.out.println("request.getHeader(\"referer\") : " + request.getHeader("referer"));
+                    //System.out.println("request.getHeader(\"referer\") : " + request.getHeader("referer"));
 
                     String requestedHost = request.getHeader("referer").replaceAll("/doc/index.html", "");
                     //String requestedURLNew = requestedHost + request.getRequestURI();
                     String requestedURLNew = requestedHost + request.getRequestURI().replaceAll("api/", "");
 
-                    System.out.println("request.getRequestURL() : " + request.getRequestURL());
-                    System.out.println("requestedURLNew : " + requestedURLNew);
+                    //System.out.println("request.getRequestURL() : " + request.getRequestURL());
+                    //System.out.println("requestedURLNew : " + requestedURLNew);
                     if (request.getRequestURL().toString().equalsIgnoreCase(requestedURLNew)) {
                         //skip for request from swagger document 'try-it-out'
                         return true;
@@ -94,7 +94,7 @@ public class TokenCheckInterceptor extends HandlerInterceptorAdapter {
         //check user token exists
         final String header = request.getHeader("authorization");
         if (header == null) {
-            logger.error("No token found");
+            //logger.error("No token found");
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No valid authentication token found");
             return false;
         }

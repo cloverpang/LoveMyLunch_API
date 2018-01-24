@@ -75,25 +75,25 @@ public class QueryCacheAspect {
             if(froceCache(args,sig,msig)){
                 rvt =  pjp.proceed();
                 saveOrUpdateCache(key, rvt);
-                LOGGER.info("refresh the cache : " + key);
+                //LOGGER.info("refresh the cache : " + key);
                 return rvt;
             }
 
             Object target = pjp.getTarget();
             Method currentMethod = target.getClass().getMethod(msig.getName(), msig.getParameterTypes());
             Class tClass = currentMethod.getReturnType();
-            LOGGER.info("return object is : " + tClass.getName());
+            //LOGGER.info("return object is : " + tClass.getName());
             rvt = cache.get(key,tClass);
             //if not get cache, re-set it
             if(null == rvt){
                 rvt =  pjp.proceed();
                 saveOrUpdateCache(key,rvt);
             }else{
-                LOGGER.info("get the result from cache : " + JsonUtils.toJson(rvt));
+                //LOGGER.info("get the result from cache : " + JsonUtils.toJson(rvt));
             }
         }catch (Exception e){
             rvt =  pjp.proceed();
-            LOGGER.error("run on cache aspect exception: " + e.getMessage());
+            //LOGGER.error("run on cache aspect exception: " + e.getMessage());
         }
 
         return rvt;
@@ -102,9 +102,9 @@ public class QueryCacheAspect {
     private void saveOrUpdateCache(String key,Object rvt){
         try{
             cache.set(key, rvt, CACHE_DATA_EXPIRE_SECONDS);
-            LOGGER.info("set the result into cache success: " + JsonUtils.toJson(rvt));
+            //LOGGER.info("set the result into cache success: " + JsonUtils.toJson(rvt));
         }catch (Exception e){
-            LOGGER.info("set the result into cache failed: " + e.getMessage());
+            LOGGER.error("set the result into cache failed: " + e.getMessage());
         }
     }
 
@@ -122,11 +122,11 @@ public class QueryCacheAspect {
                    }
                 }
             }catch (Exception e){
-                LOGGER.info("catch the force para exception:: " + e.getMessage());
+                LOGGER.error("catch the force para exception:: " + e.getMessage());
             }
         }
 
-        LOGGER.info("The force flag is ["+forceFlag+"]");
+        //LOGGER.info("The force flag is ["+forceFlag+"]");
         return StringUtils.isTrue(forceFlag);
     }
 
@@ -148,7 +148,7 @@ public class QueryCacheAspect {
                 LOGGER.error("paras append error: " + e.getMessage());
             }
         }else{
-            LOGGER.info("paras is null : ");
+            //LOGGER.info("paras is null : ");
         }
 
 
