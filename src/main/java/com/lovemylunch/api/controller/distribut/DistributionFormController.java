@@ -7,6 +7,10 @@ import com.lovemylunch.common.beans.PageBean;
 import com.lovemylunch.common.beans.annotation.PermssionSecured;
 import com.lovemylunch.common.beans.annotation.TokenSecured;
 import com.lovemylunch.common.beans.distribut.DistributionForm;
+import com.lovemylunch.common.beans.order.LunchOrder;
+import com.lovemylunch.common.beans.order.LunchOrderExportExcel;
+import com.lovemylunch.common.util.DateUtils;
+import com.lovemylunch.common.util.ExcelUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -19,6 +23,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
@@ -145,7 +153,7 @@ public class DistributionFormController extends BaseController{
         logger.info("invoke: " + "/distributionForm/generate/" + date);
         ApiCallResult result = new ApiCallResult();
         try{
-            int excute = distributionFormService.generateDistributionForm(center,date);
+            int excute = distributionFormService.generateDistributionForm(center, date);
             result.setContent(excute);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
@@ -209,6 +217,51 @@ public class DistributionFormController extends BaseController{
         }catch (Exception e){
             result.setMessage("MarkArrived all distributionForm failed : " + ExceptionUtils.getFullStackTrace(e));
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @TokenSecured
+    @ApiOperation(value="export one DistributionForm orders", notes="",response = DistributionForm.class)
+    @RequestMapping(value={"/distributionForm/export/{id}"}, method= RequestMethod.GET)
+    public void export(@PathVariable String center,@PathVariable("id") String id,
+                       HttpServletRequest request,
+                       HttpServletResponse response){
+        logger.info("invoke: " + "/distributionForm/export/" + id);
+        ServletOutputStream out = null;
+        try{
+            DistributionForm distributionForm = distributionFormService.get(id);
+            if(distributionForm != null && distributionForm.getOrders().size() > 0){
+                //response.setHeader("Content-disposition", "data.xlsx");
+                response.setContentType("application/vnd.ms-excel");
+                //response.setHeader("Content-disposition", "attachment;filename=" + "data.xlsx");
+                //response.setHeader("Pragma", "No-cache");
+                //response.setContentType("application/binary;charset=UTF-8");
+                response.setHeader("Content-disposition", "attachment; filename=" + "data.xls");
+                out = response.getOutputStream();
+
+                ArrayList<LunchOrderExportExcel> exportList = new ArrayList<>();
+                int i = 1;
+                for(LunchOrder item : distributionForm.getOrders()){
+                    LunchOrderExportExcel excel = new LunchOrderExportExcel();
+                    excel.setNumber(i);
+                    i++;
+                    excel.setContent(item.getContent());
+                    excel.setCustomerMobile(item.getCustomerMobile());
+                    excel.setCustomerName(item.getCustomerName());
+                    excel.setLunchTime(DateUtils.toFormatString(item.getLunchTime(), DateUtils.Format.DATE_OLD_FORMAT_2.getValue()));
+                    excel.setOrderNumber(item.getOrderNumber());
+                    excel.setRemark(item.getRemark());
+                    exportList.add(excel);
+                }
+
+                ExcelUtil<LunchOrderExportExcel> util = new ExcelUtil();
+                String[] headers = { "序号", "订单号", "就餐日期", "下单人", "手机", "订单详细", "备注" };
+                util.exportExcel("sheet1", headers, exportList, out, DateUtils.Format.DATE_OLD_FORMAT_2.getValue());
+            }
+        }catch (Exception e) {
+            logger.error("export distributionForm by id failed : " + e.getStackTrace());
+        }finally{
+
         }
     }
 }

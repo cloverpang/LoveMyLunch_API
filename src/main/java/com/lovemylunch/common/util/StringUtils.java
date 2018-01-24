@@ -12,6 +12,13 @@ import java.util.regex.Pattern;
 public class StringUtils extends org.apache.commons.lang.StringUtils {
     private static final Pattern EMPTY_STRING_Pattern = Pattern.compile("\\s*");
 
+    private static String[] strArr = {
+            "0","1","2","3","4","5","6","7","8","9",
+            "a","b","c","d","e","f","g","h","i","j",
+            "k","l","m","n","o","p","q","r","s","t",
+            "u","v","w","x","y","z","A","B","C","D"
+    };
+
     /**
      * Decodes a string using UTF-8 encoding scheme.
      *
@@ -581,5 +588,31 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
         } else {
             return "";
         }
+    }
+
+    public static String characterEncode (String str){
+        if(!isEmpty(str))str = str.replaceAll("[^\u4e00-\u9fa5a-zA-Z0-9`~!@#$%^&*()-_+= |{}':;,\\[\\].<>?！￥…（）—【】‘；：”“’《》·，、？\"]", "");
+        return str;
+    }
+
+    /**
+     * 获取一个随机字符
+     * @return
+     */
+    public static String getRandomChar() {
+        return strArr[(int)(Math.random()*strArr.length)];
+    }
+
+    /**
+     * 获取一个随机字符串
+     * @param length 字符串长度
+     * @return
+     */
+    public static String getRandomString(int length) {
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<length; i++) {
+            sb.append(getRandomChar());
+        }
+        return sb.toString();
     }
 }
