@@ -11,17 +11,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.*;
 
 @RestController
 @SpringBootApplication
-@RequestMapping(value={"/{center}"})
+//@RequestMapping(value={"/{center}"})
 @Api(tags = {"file"}, description = "File APIs")
 public class FileController extends BaseController{
     protected Logger logger = LoggerFactory.getLogger(FileController.class);

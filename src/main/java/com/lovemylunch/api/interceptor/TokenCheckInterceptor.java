@@ -51,10 +51,11 @@ public class TokenCheckInterceptor extends HandlerInterceptorAdapter {
 //                System.out.println("request.getRemoteAddr() : " + request.getRemoteAddr());
 //                System.out.println("request.getLocalAddr() : " + request.getLocalAddr());
 
-                if (request.getRemoteAddr().equals(request.getLocalAddr()) ) {
-                    //skip for unit test case running or while developing
-                    return true;
-                }
+                //此处可在开发阶段放开
+//                if (request.getRemoteAddr().equals(request.getLocalAddr()) ) {
+//                    //skip for unit test case running or while developing
+//                    return true;
+//                }
 
                 //System.out.println("referer page is : " + request.getHeader("referer"));
 

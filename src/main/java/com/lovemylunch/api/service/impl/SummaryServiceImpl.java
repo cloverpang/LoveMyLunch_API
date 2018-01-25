@@ -75,7 +75,7 @@ public class SummaryServiceImpl extends BaseService implements SummaryService{
         String dishIdListStr = String.join(",", dishIdList);
 
 
-        List<Dish> dishs = dishService.search("dishId::=" + dishIdListStr, 1000, 1, "", "");
+        List<Dish> dishs = dishService.search("dishId::=::" + dishIdListStr, 1000, 1, "", "");
 
         Map<String,Dish> dishMap = new HashMap<String,Dish>();
         for(Dish d : dishs){
