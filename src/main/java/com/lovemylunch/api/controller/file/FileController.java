@@ -36,8 +36,8 @@ public class FileController extends BaseController{
         logger.info("invoke: " + "/file/upload");
         ApiCallResult result = new ApiCallResult();
         try{
-            //String path = request.getSession().getServletContext().getRealPath("/") + "UploadFile/";
-            String path = uploadFileDir;
+            String path = request.getSession().getServletContext().getRealPath("/") + "UploadFile/";
+            //String path = uploadFileDir;
             String fileName = file.getOriginalFilename();
 
             //logger.info("fileName=" + fileName);
