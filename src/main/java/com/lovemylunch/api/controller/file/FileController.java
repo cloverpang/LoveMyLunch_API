@@ -33,7 +33,7 @@ public class FileController extends BaseController{
             String path = request.getSession().getServletContext().getRealPath("/UploadFile");
             String fileName = file.getOriginalFilename();
 
-            logger.info("fileName=" + fileName);
+            //logger.info("fileName=" + fileName);
 
             String saveFileName = "";
             String suffix = "";
@@ -45,13 +45,13 @@ public class FileController extends BaseController{
                 long now = System.currentTimeMillis();
                 saveFileName =  now  + suffix;
 
-                logger.info("saveFileName=" + saveFileName);
+                //logger.info("saveFileName=" + saveFileName);
             }
 
             File targetFile = new File(path, saveFileName);
 
-            if(!targetFile.exists()){
-                targetFile.mkdirs();
+            if(!targetFile.getParentFile().exists()){
+                targetFile.getParentFile().mkdirs();
             }
 
             file.transferTo(targetFile);
