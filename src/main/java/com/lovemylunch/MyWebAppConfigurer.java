@@ -6,9 +6,13 @@ import com.lovemylunch.api.interceptor.TokenCheckInterceptor;
 import com.lovemylunch.api.service.AdminUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import javax.servlet.MultipartConfigElement;
 
 @Configuration
 public class MyWebAppConfigurer
@@ -32,6 +36,20 @@ public class MyWebAppConfigurer
         registry.addInterceptor(tokenCheckInterceptor).addPathPatterns("/**");
         registry.addInterceptor(permissionCheckInterceptor).addPathPatterns("/**");
         super.addInterceptors(registry);
+    }
+
+    /**
+     * 文件上传配置
+     * @return
+     */
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        //单个文件最大
+        factory.setMaxFileSize("10240KB"); //KB,MB
+        /// 设置总上传数据总大小
+        factory.setMaxRequestSize("102400KB");
+        return factory.createMultipartConfig();
     }
 
 }

@@ -2,11 +2,13 @@ package com.lovemylunch.api.controller.file;
 
 import com.lovemylunch.api.controller.BaseController;
 import com.lovemylunch.common.beans.ApiCallResult;
+import com.lovemylunch.common.beans.annotation.NotLogMethod;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +26,18 @@ import java.io.File;
 public class FileController extends BaseController{
     protected Logger logger = LoggerFactory.getLogger(FileController.class);
 
+    @Value("${uploadFileDir}")
+    private String uploadFileDir;
+
+    @NotLogMethod
     @ApiOperation(value="file upload", notes="",response = String.class)
     @RequestMapping(value = "/file/upload", method = RequestMethod.POST)
     public ResponseEntity<ApiCallResult> upload(HttpServletRequest request, HttpServletResponse response, MultipartFile file) {
         logger.info("invoke: " + "/file/upload");
         ApiCallResult result = new ApiCallResult();
         try{
-            String path = request.getSession().getServletContext().getRealPath("/UploadFile");
+            //String path = request.getSession().getServletContext().getRealPath("/") + "UploadFile/";
+            String path = uploadFileDir;
             String fileName = file.getOriginalFilename();
 
             //logger.info("fileName=" + fileName);
