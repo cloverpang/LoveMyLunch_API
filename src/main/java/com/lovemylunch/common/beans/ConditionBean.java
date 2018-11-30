@@ -7,6 +7,7 @@ import java.util.Arrays;
  */
 public class ConditionBean {
     private String conditionName;
+    private String[] conditionNameArr;
     private String conditionExpression;
     private String conditionValue;
     private String[] conditionValueArr;
@@ -17,6 +18,14 @@ public class ConditionBean {
 
     public void setConditionName(String conditionName) {
         this.conditionName = conditionName;
+    }
+
+    public String[] getConditionNameArr() {
+        return conditionNameArr;
+    }
+
+    public void setConditionNameArr(String[] conditionNameArr) {
+        this.conditionNameArr = conditionNameArr;
     }
 
     public String getConditionExpression() {
@@ -47,6 +56,7 @@ public class ConditionBean {
     public String toString() {
         return "ConditionBean{" +
                 "conditionName='" + conditionName + '\'' +
+                ", conditionNameArr=" + Arrays.toString(conditionNameArr) +
                 ", conditionExpression='" + conditionExpression + '\'' +
                 ", conditionValue='" + conditionValue + '\'' +
                 ", conditionValueArr=" + Arrays.toString(conditionValueArr) +

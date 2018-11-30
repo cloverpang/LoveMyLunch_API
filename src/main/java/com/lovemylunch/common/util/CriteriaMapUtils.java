@@ -61,6 +61,8 @@ public class CriteriaMapUtils {
                     try{
                         ConditionBean conditionBean = new ConditionBean();
                         conditionBean.setConditionName(condition[0]);
+                        String[] conditionNameArr = condition[0].split(Consts.COMMA);
+                        conditionBean.setConditionNameArr(conditionNameArr);
                         conditionBean.setConditionExpression(condition[1]);
                         String[] conditionValueArr = condition[2].split(Consts.COMMA);
                         conditionBean.setConditionValue(condition[2]);

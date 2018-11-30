@@ -49,7 +49,9 @@
 					</when>
 
 					<when test="condition.conditionExpression != null and condition.conditionExpression == 'like'.toString() ">
-						(${condition.conditionName} is not null AND UPPER(${condition.conditionName}) LIKE UPPER('%${condition.conditionValue}%'))
+						<foreach item="conditonName" collection="condition.conditionNameArr" open="(" separator="or" close=")">
+							(${conditonName} is not null AND UPPER(${conditonName}) LIKE UPPER('%${condition.conditionValue}%'))
+						</foreach>
 					</when>
 
 					<otherwise>
