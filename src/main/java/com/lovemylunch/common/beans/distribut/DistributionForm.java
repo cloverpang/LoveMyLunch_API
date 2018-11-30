@@ -5,7 +5,7 @@ import com.lovemylunch.common.beans.order.LunchOrder;
 import java.util.Date;
 import java.util.List;
 
-//ÅäËÍµ¥
+//é…é€å•
 public class DistributionForm {
     private String distributionFormId;
 
@@ -19,13 +19,13 @@ public class DistributionForm {
     private String distributerId;
     private String distributerName;
 
-    private String orderIds;//¶©µ¥ id ¼¯ºÏ
+    private String orderIds;//è®¢å• id é›†åˆ
 
-    List<LunchOrder> orders;//¶©µ¥ÏêÏ¸
+    List<LunchOrder> orders;//è®¢å•è¯¦ç»†
 
-    private Integer status;// 0 Î´ËÍ´ï 1 ÒÑËÍ´ï
+    private Integer status;// 0 æœªé€è¾¾ 1 å·²é€è¾¾
 
-    private String operationCenterCode;//ÔËÓªÖÐÐÄ´úÂë
+    private String operationCenterCode;//è¿è¥ä¸­å¿ƒä»£ç 
     private Date createTime;
 
     public String getDistributionFormId() {

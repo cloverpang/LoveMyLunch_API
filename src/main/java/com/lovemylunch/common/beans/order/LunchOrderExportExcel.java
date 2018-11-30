@@ -1,16 +1,16 @@
 package com.lovemylunch.common.beans.order;
 
 public class LunchOrderExportExcel {
-    private int number;//ĞòºÅ
-    private String orderNumber;//¶©µ¥ºÅ R-AsiaInspection-1700001
+    private int number;//åºå·
+    private String orderNumber;//è®¢å•å· R-AsiaInspection-1700001
 
-    private String lunchTime;//¶©²ÍÊ¹ÓÃÊ±¼ä
+    private String lunchTime;//è®¢é¤ä½¿ç”¨æ—¶é—´
 
-    private String customerName;//ÏÂµ¥ÈËĞÕÃû
-    private String customerMobile;//ÏÂµ¥ÈËµç»°
+    private String customerName;//ä¸‹å•äººå§“å
+    private String customerMobile;//ä¸‹å•äººç”µè¯
 
-    private String content;// ¶©µ¥ÄÚÈİ £¨²ËÆ·Ãû³Æ¼¯ºÏ£©
-    private String remark;//ÏÂµ¥±¸×¢
+    private String content;// è®¢å•å†…å®¹ ï¼ˆèœå“åç§°é›†åˆï¼‰
+    private String remark;//ä¸‹å•å¤‡æ³¨
 
     public int getNumber() {
         return number;

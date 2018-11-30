@@ -11,35 +11,35 @@ public class LunchOrder {
     public LunchOrder() {
     }
 
-    private String orderId;//¶©µ¥Ö÷¼ü
-    private String orderNumber;//¶©µ¥ºÅ R-AsiaInspection-1700001
-    private String distributNumber; //ÅäËÍµ¥ºÅ DL-AsiaInspection-171211
+    private String orderId;//è®¢å•ä¸»é”®
+    private String orderNumber;//è®¢å•å· R-AsiaInspection-1700001
+    private String distributNumber; //é…é€å•å· DL-AsiaInspection-171211
 
-    private Date bookTime;//ÏÂµ¥Ê±¼ä
-    private Date lunchTime;//¶©²ÍÊ¹ÓÃÊ±¼ä
-    private String customerName;//ÏÂµ¥ÈËĞÕÃû
-    private String customerMobile;//ÏÂµ¥ÈËµç»°
+    private Date bookTime;//ä¸‹å•æ—¶é—´
+    private Date lunchTime;//è®¢é¤ä½¿ç”¨æ—¶é—´
+    private String customerName;//ä¸‹å•äººå§“å
+    private String customerMobile;//ä¸‹å•äººç”µè¯
 
     private String customerId;
     private String companyId;
 
-    private String content;// ¶©µ¥ÄÚÈİ £¨²ËÆ·Ãû³Æ¼¯ºÏ£©
-    private String dishIds;// ²ËÆ·ID¼¯ºÏ
-    private String remark;//ÏÂµ¥±¸×¢
+    private String content;// è®¢å•å†…å®¹ ï¼ˆèœå“åç§°é›†åˆï¼‰
+    private String dishIds;// èœå“IDé›†åˆ
+    private String remark;//ä¸‹å•å¤‡æ³¨
 
-    private Double originPrice;//Ô­Ê¼¼Û¸ñ
-    private Double discoutPrice;//ÕÛ¿Û
-    private Double realPrice;//¶©µ¥¼Û¸ñ
-    private Integer star;//ÆÀ·Ö
-    private String appraise;//ÆÀ¼ÛÏêÏ¸
+    private Double originPrice;//åŸå§‹ä»·æ ¼
+    private Double discoutPrice;//æŠ˜æ‰£
+    private Double realPrice;//è®¢å•ä»·æ ¼
+    private Integer star;//è¯„åˆ†
+    private String appraise;//è¯„ä»·è¯¦ç»†
 
-    private Integer orderStatus;//¶©µ¥×´Ì¬ 0 ´ıÈ·ÈÏ 1 ÒÑÈ·ÈÏ 2 È¡Ïû 9 ÅäËÍÖĞ 10 ÒÑÍê³É
-    private Integer paymentStatus;//Ö§¸¶×´Ì¬ 0 Î´Ö§¸¶ 1 ÒÑÖ§¸¶ 2 ²¿·ÖÖ§¸¶
+    private Integer orderStatus;//è®¢å•çŠ¶æ€ 0 å¾…ç¡®è®¤ 1 å·²ç¡®è®¤ 2 å–æ¶ˆ 9 é…é€ä¸­ 10 å·²å®Œæˆ
+    private Integer paymentStatus;//æ”¯ä»˜çŠ¶æ€ 0 æœªæ”¯ä»˜ 1 å·²æ”¯ä»˜ 2 éƒ¨åˆ†æ”¯ä»˜
 
-    private String operationCenterCode;//ÔËÓªÖĞĞÄ´úÂë
+    private String operationCenterCode;//è¿è¥ä¸­å¿ƒä»£ç 
     private Date createTime;
 
-    private List<Dish> dishs;//²ËÆ·¼¯ºÏ °üÀ¨ ÌÀ ·¹ µÈ
+    private List<Dish> dishs;//èœå“é›†åˆ åŒ…æ‹¬ æ±¤ é¥­ ç­‰
 
     public String getOrderId() {
         return orderId;

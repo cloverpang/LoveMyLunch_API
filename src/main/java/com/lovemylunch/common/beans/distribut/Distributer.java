@@ -2,15 +2,15 @@ package com.lovemylunch.common.beans.distribut;
 
 import java.util.Date;
 
-//ÅäËÍÕß
+//é…é€è€…
 public class Distributer {
     private String distributerId;
     private String distributerName;
     private String mobile;
     private String photoPath;
     private Integer distributerTimes;
-    private Integer status;// 0 Õı³£ 1 ÒÑ×¢Ïú
-    private String operationCenterCode;//ÔËÓªÖĞĞÄ´úÂë
+    private Integer status;// 0 æ­£å¸¸ 1 å·²æ³¨é”€
+    private String operationCenterCode;//è¿è¥ä¸­å¿ƒä»£ç 
     private Date createTime;
 
     public String getDistributerId() {

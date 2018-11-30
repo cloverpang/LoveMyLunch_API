@@ -6,7 +6,7 @@ import com.lovemylunch.common.beans.client.Company;
  * Created by Administrator on 2017/12/25.
  */
 public class CompanyExtension  extends Company{
-    private Integer companyCustomerQuantity; //服务人数
+    private Integer companyCustomerQuantity; //鏈嶅姟浜烘暟
 
     public Integer getCompanyCustomerQuantity() {
         return companyCustomerQuantity;

@@ -7,22 +7,22 @@ import com.lovemylunch.common.beans.client.Customer;
  */
 public class CustomerExtension extends Customer
 {
-    private Integer orderQuantity; // 累计订单数量
-    private Integer totalCost;// 累计消费金额
-
-    public Integer getOrderQuantity() {
-        return orderQuantity;
-    }
-
-    public void setOrderQuantity(Integer orderQuantity) {
-        this.orderQuantity = orderQuantity;
-    }
-
-    public Integer getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(Integer totalCost) {
-        this.totalCost = totalCost;
-    }
+//    private Integer orderQuantity; // 绱璁㈠崟鏁伴噺
+//    private Integer totalCost;// 绱娑堣垂閲戦
+//
+//    public Integer getOrderQuantity() {
+//        return orderQuantity;
+//    }
+//
+//    public void setOrderQuantity(Integer orderQuantity) {
+//        this.orderQuantity = orderQuantity;
+//    }
+//
+//    public Integer getTotalCost() {
+//        return totalCost;
+//    }
+//
+//    public void setTotalCost(Integer totalCost) {
+//        this.totalCost = totalCost;
+//    }
 }

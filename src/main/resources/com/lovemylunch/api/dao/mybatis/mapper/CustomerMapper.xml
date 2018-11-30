@@ -43,7 +43,9 @@
    a.customerType as customerType,
    a.status as status,
    a.operationCenterCode as operationCenterCode,
-   a.createTime as createTime
+   a.createTime as createTime,
+   (select count(orderId) from awf_lunchorder where customerId = a.customerId and orderStatus != 2) as orderCount,
+   (select sum(realPrice) from awf_lunchorder where customerId = a.customerId and orderStatus != 2) as totalCost
 	</sql>
 
 	<sql id="search_fromClause">

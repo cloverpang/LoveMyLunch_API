@@ -4,22 +4,25 @@ import java.util.Date;
 
 public class Customer {
     private String customerId;//
-    private String customerLogin;//¿Í»§µÇÂ¼ÕËºÅ
-    private String customerPassword;//¿Í»§ÃÜÂë
-    private String customerName;//¿Í»§ĞÕÃû
+    private String customerLogin;//å®¢æˆ·ç™»å½•è´¦å·
+    private String customerPassword;//å®¢æˆ·å¯†ç 
+    private String customerName;//å®¢æˆ·å§“å
 
-    private String companyId;//¹«Ë¾Ö÷¼üID
-    private String companyName;//¹«Ë¾Ãû³Æ
+    private String companyId;//å…¬å¸ä¸»é”®ID
+    private String companyName;//å…¬å¸åç§°
 
-    private String weChatAccount;//Î¢ĞÅÕËºÅ
-    private String mobileNumber;//µç»°ºÅÂë
+    private String weChatAccount;//å¾®ä¿¡è´¦å·
+    private String mobileNumber;//ç”µè¯å·ç 
 
-    private Integer customerScore;//ÓÃ»§»ı·Ö
-    private Integer customerType;// ¿Í»§ÀàĞÍ 0 ÆÕÍ¨¿Í»§ 1 Ö÷¿Í»§
-    private Integer status;// ×´Ì¬ 0 Õı³£ 1 ×¢Ïú 2 ½ûÓÃ
+    private Integer customerScore;//ç”¨æˆ·ç§¯åˆ†
+    private Integer customerType;// å®¢æˆ·ç±»å‹ 0 æ™®é€šå®¢æˆ· 1 ä¸»å®¢æˆ·
+    private Integer status;// çŠ¶æ€ 0 æ­£å¸¸ 1 æ³¨é”€ 2 ç¦ç”¨
 
-    private String operationCenterCode;//ÔËÓªÖĞĞÄ´úÂë
-    private Date createTime;//×¢²áÈÕÆÚ
+    private String operationCenterCode;//è¿è¥ä¸­å¿ƒä»£ç 
+    private Date createTime;//æ³¨å†Œæ—¥æœŸ
+
+    private Integer orderCount;
+    private Double totalCost;
 
     public String getCustomerId() {
         return customerId;
@@ -123,5 +126,21 @@ public class Customer {
 
     public void setOperationCenterCode(String operationCenterCode) {
         this.operationCenterCode = operationCenterCode;
+    }
+
+    public Integer getOrderCount() {
+        return orderCount;
+    }
+
+    public void setOrderCount(Integer orderCount) {
+        this.orderCount = orderCount;
+    }
+
+    public Double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(Double totalCost) {
+        this.totalCost = totalCost;
     }
 }

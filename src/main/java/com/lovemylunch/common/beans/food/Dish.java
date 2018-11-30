@@ -7,26 +7,26 @@ public class Dish {
     public Dish() {
     }
 
-    private String dishId;//²ËÆ·Ö÷¼üID
-    private String dishName;//²ËÆ·Ãû³Æ
+    private String dishId;//èœå“ä¸»é”®ID
+    private String dishName;//èœå“åç§°
 
-    private String dishType; // ÀàĞÍ dish,soup ...
+    private String dishType; // ç±»å‹ dish,soup ...
 
-    private Integer dishPrice;//²ËÆ·¼Û¸ñ 1,3,5,7,9,11 or 2,4,6,8,10,12
-    private Integer status;//²ËÆ·ÊÇ·ñ¿ª·Å 0 ¿ª·Å 1 ²»¿ª·Å
+    private Integer dishPrice;//èœå“ä»·æ ¼ 1,3,5,7,9,11 or 2,4,6,8,10,12
+    private Integer status;//èœå“æ˜¯å¦å¼€æ”¾ 0 å¼€æ”¾ 1 ä¸å¼€æ”¾
 
-    private String dishImageSmall;//²ËÆ·Ğ¡Í¼
+    private String dishImageSmall;//èœå“å°å›¾
     private String dishImageMiddle;
     private String dishImageLarge;
 
-    private List<String> dishImageList;//Í¼ÏñÁĞ±í
+    private List<String> dishImageList;//å›¾åƒåˆ—è¡¨
 
-    private String dishStyle; //²ËÆ··ç¸ñ
-    private String component; //²ËÆ·×é³É
+    private String dishStyle; //èœå“é£æ ¼
+    private String component; //èœå“ç»„æˆ
 
-    private Integer pepper; // À±½·Ö¸Êı 0,1,2,3,4,5
+    private Integer pepper; // è¾£æ¤’æŒ‡æ•° 0,1,2,3,4,5
 
-    private String operationCenterCode;//ÔËÓªÖĞĞÄ´úÂë
+    private String operationCenterCode;//è¿è¥ä¸­å¿ƒä»£ç 
     private Date createTime;
 
     public String getDishId() {
