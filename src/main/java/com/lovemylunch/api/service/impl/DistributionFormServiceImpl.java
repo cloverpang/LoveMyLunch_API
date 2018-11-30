@@ -77,7 +77,9 @@ public class DistributionFormServiceImpl extends BaseService implements Distribu
 
             DistributionForm originDistributionForm = getByNumber(distributionForm.getFormNumber());
             if(null != originDistributionForm){
-                throw new Exception("This Distribution form number is existing, cannot insert again! ");
+                //throw new Exception("This Distribution form number is existing, cannot insert again! ");
+                //if this company distribution form is existing, we should remove it first then create an new one
+                delete(originDistributionForm.getDistributionFormId());
             }
 
             //re-set the DistributionFormId
@@ -239,6 +241,8 @@ public class DistributionFormServiceImpl extends BaseService implements Distribu
                     //use company default distributer
                     distributionForm.setDistributerId(company.getDistributerId());
                     distributionForm.setDistributerName(company.getDistributerName());
+
+                    distributionForm.setOperationCenterCode(company.getOperationCenterCode());
                 }
 
                 //insert real form
