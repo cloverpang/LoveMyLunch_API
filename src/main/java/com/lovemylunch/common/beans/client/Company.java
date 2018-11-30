@@ -3,16 +3,18 @@ package com.lovemylunch.common.beans.client;
 import java.util.Date;
 
 public class Company {
-    private String companyId;//¹«Ë¾ID
-    private String companyName;//¹«Ë¾Ãû³Æ
-    private String companyCode;//¹«Ë¾´úÂë (AsiaInspection)
-    private String operationCenterCode;//ÔËÓªÖÐÐÄ´úÂë
+    private String companyId;//ï¿½ï¿½Ë¾ID
+    private String companyName;//ï¿½ï¿½Ë¾ï¿½ï¿½ï¿½ï¿½
+    private String companyCode;//ï¿½ï¿½Ë¾ï¿½ï¿½ï¿½ï¿½ (AsiaInspection)
+    private String operationCenterCode;//ï¿½ï¿½Óªï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½
 
     private String companyAddress;//address
     private String companyLogoPath;// logo
-    private Integer status;// ×´Ì¬ 0 Õý³£ 1 ×¢Ïú
+    private String distributerId;
+    private String distributerName;
+    private Integer status;// ×´Ì¬ 0 ï¿½ï¿½ï¿½ï¿½ 1 ×¢ï¿½ï¿½
 
-    private Date joinTime;//¼ÓÈëÊ±¼ä
+    private Date joinTime;//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 
     private Date createTime;
 
@@ -54,6 +56,22 @@ public class Company {
 
     public void setCompanyLogoPath(String companyLogoPath) {
         this.companyLogoPath = companyLogoPath;
+    }
+
+    public String getDistributerId() {
+        return distributerId;
+    }
+
+    public void setDistributerId(String distributerId) {
+        this.distributerId = distributerId;
+    }
+
+    public String getDistributerName() {
+        return distributerName;
+    }
+
+    public void setDistributerName(String distributerName) {
+        this.distributerName = distributerName;
     }
 
     public Integer getStatus() {

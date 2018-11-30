@@ -26,6 +26,8 @@ CREATE TABLE `awf_company` (
   `operationCenterCode` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `companyAddress` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `companyLogoPath` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `distributerId` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `distributerName` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` int(4) DEFAULT '0' COMMENT '0 正常 1 已注销不活动的',
   `joinTime` datetime DEFAULT NULL,
   `createTime` datetime DEFAULT NULL,
@@ -58,3 +60,6 @@ INSERT INTO `awf_company` VALUES ('d4d645753a5f4adeb664a6bf94a3f234', 'asdfasdf 
 INSERT INTO `awf_company` VALUES ('eb28b3d87ab44f9da30d57021876b72d', '发生的撒打发斯蒂芬但是', 'A20', 'kexing', null, '', '0', '2017-12-20 14:30:23', '2017-12-22 15:06:47');
 INSERT INTO `awf_company` VALUES ('f3f29e617dee48bf983e50e703aada77', '阿萨斯大多sasdsddsf', 'dsadf', 'kexing', 'adfadfadfdfsss', '', '0', '2018-01-20 09:56:39', '2018-01-20 09:56:39');
 INSERT INTO `awf_company` VALUES ('fa3026dd5daf4216a75a9d4ac5e22f90', '阿萨斯大多sasdsddsfSDFASDASD', 'dsadfASDASASD', 'kexing', 'adfadfadfdfsss', '', '0', '2018-01-20 11:35:39', '2018-01-20 11:35:39');
+
+
+update awf_company set distributerId = '5e54d21529b94a7fa26eea45d88db1e1',distributerName='clover';

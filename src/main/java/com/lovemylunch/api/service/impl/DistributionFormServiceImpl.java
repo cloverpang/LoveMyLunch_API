@@ -236,6 +236,9 @@ public class DistributionFormServiceImpl extends BaseService implements Distribu
                     distributionForm.setCompanyAddress(company.getCompanyAddress());
                     distributionForm.setFormNumber(company.getCompanyCode() + "_" + orderDate);
                     distributionForm.setStatus(0);
+                    //use company default distributer
+                    distributionForm.setDistributerId(company.getDistributerId());
+                    distributionForm.setDistributerName(company.getDistributerName());
                 }
 
                 //insert real form

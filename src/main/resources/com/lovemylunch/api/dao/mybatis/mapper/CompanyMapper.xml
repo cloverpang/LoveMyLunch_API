@@ -45,6 +45,8 @@
    a.operationCenterCode as operationCenterCode,
    a.companyAddress as companyAddress,
    a.companyLogoPath as companyLogoPath,
+   a.distributerId as distributerId,
+   a.distributerName as distributerName,
    a.status as status,
    a.joinTime as joinTime,
    a.createTime as createTime
@@ -58,6 +60,8 @@
 		a.operationCenterCode as operationCenterCode,
 		a.companyAddress as companyAddress,
 		a.companyLogoPath as companyLogoPath,
+		a.distributerId as distributerId,
+		a.distributerName as distributerName,
 		a.status as status,
 		a.joinTime as joinTime,
 		a.createTime as createTime,
@@ -78,7 +82,9 @@
 		companyLogoPath,
 		status,
 		joinTime,
-		createTime
+		createTime,
+		distributerId,
+		distributerName
 		) VALUES (
 		#{companyId,jdbcType=VARCHAR},
 		#{companyCode,jdbcType=VARCHAR},
@@ -88,7 +94,9 @@
 		#{companyLogoPath,jdbcType=VARCHAR},
 		#{status,jdbcType=NUMERIC},
 		#{joinTime,jdbcType=TIMESTAMP},
-		#{createTime,jdbcType=TIMESTAMP}
+		#{createTime,jdbcType=TIMESTAMP},
+		#{distributerId,jdbcType=VARCHAR},
+		#{distributerName,jdbcType=VARCHAR}
 		)
 	</insert>
 
@@ -103,6 +111,8 @@
 		companyCode = #{companyCode,jdbcType=VARCHAR},
 		companyAddress = #{companyAddress,jdbcType=VARCHAR},
 		companyLogoPath = #{companyLogoPath,jdbcType=VARCHAR},
+		distributerId = #{distributerId,jdbcType=VARCHAR},
+		distributerName = #{distributerName,jdbcType=VARCHAR},
 		status = #{status,jdbcType=NUMERIC},
 		joinTime = #{joinTime,jdbcType=TIMESTAMP}
 		WHERE companyId = #{companyId}
