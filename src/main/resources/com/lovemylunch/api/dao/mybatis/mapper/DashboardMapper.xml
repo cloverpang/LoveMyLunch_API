@@ -9,8 +9,8 @@ select
 (select count(1) from awf_lunchorder where operationCenterCode=#{center} and orderStatus != 2) as orderQuantity,
 (select count(1) from awf_company where operationCenterCode=#{center}) as companyQuantity,
 (select count(1) from awf_customer where operationCenterCode=#{center} and status != 1) as customerQuantity,
-(select avg(realPrice) from awf_lunchorder where operationCenterCode=#{center} ) as averageOrderPrice,
-(select sum(realPrice) from awf_lunchorder where operationCenterCode=#{center} ) as totalIncome
+(select avg(realPrice) from awf_lunchorder where operationCenterCode=#{center}  and orderStatus != 2) as averageOrderPrice,
+(select sum(realPrice) from awf_lunchorder where operationCenterCode=#{center}  and orderStatus != 2) as totalIncome
  from dual;
 	</select>
 
